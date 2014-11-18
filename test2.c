@@ -4,10 +4,16 @@
 */ 
 
 #include <stdio.h>
+#include <stdio.h>
 
 int test();
 
-int main()
+
+int y    ;
+int 
+main()
 {
-	printf("haha");
+	int    x   ;
+	printf("PORRA");
+	scanf("haha", x);
 }

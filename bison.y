@@ -1,7 +1,7 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
-//#include"listaBison.h"
+#include "analise.h"
 #include <string.h>
 
 extern int contadorDeLinhas;
@@ -77,6 +77,7 @@ Prot_Parametros2:
 
 VGlobais:
 	/* Empty */
+	| Declaracao
 	;
 
 Funcoes:
@@ -85,7 +86,7 @@ Funcoes:
 	;
 
 Funcao: 
-	TIPO T_STRING LEFT_PAR Parametros1 RIGHT_PAR Estrutura
+	TIPO NewLine T_STRING LEFT_PAR Parametros1 RIGHT_PAR Estrutura
 	;
 
 Parametros1:
@@ -99,17 +100,26 @@ Parametros2:
 	;
 
 Estrutura:
-	ABRE_CHAVE Bloco_Comando FECHA_CHAVE
+	ABRE_CHAVE Bloco FECHA_CHAVE
 	;
 
-Bloco_Comando:
+Bloco:
+	Declaracao_Bloco Comando_Bloco
+	;
+
+Declaracao_Bloco:
 	/* Empty */
-	| Comando Bloco_Comando;
+	| Declaracao Declaracao_Bloco
 	;
 
-Comando:
-	Printf
-	| Scanf
+Declaracao:
+	TIPO {analise();} T_STRING {analise();} FIM_COMANDO {analise();}
+	;
+
+Comando_Bloco:
+	/* Empty */
+	| Printf Comando_Bloco
+	| Scanf Comando_Bloco
 	;
 
 Printf:
@@ -117,7 +127,20 @@ Printf:
 	;
 
 Scanf:
-	SCANF LEFT_PAR 
+	SCANF LEFT_PAR TEXTO Esc_Var FIM_COMANDO
+	;
+
+Esc_Var:
+	RIGHT_PAR
+	| VIRGULA T_STRING Esc_Var
+	;
+
+
+
+NewLine:
+	/* Empty */
+	| "\n" 
+	;
 
 %%
 

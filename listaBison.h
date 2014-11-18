@@ -4,7 +4,6 @@
 #define MAX 500
 
 int qntFuncao = 0;
-int qntLinha = 0;
 int qntIf = 0;
 int qntEstru = 0;
 int qntCondicao = 0;
