@@ -80,15 +80,14 @@ extern int yydebug;
     LCOMENT = 290,
     TIPO = 291,
     PVIRGULA = 292,
-    FIM_COMANDO = 293,
-    LEFT_PAR = 294,
-    RIGHT_PAR = 295,
-    VIRGULA = 296,
-    ABRE_CHAVE = 297,
-    FECHA_CHAVE = 298,
-    PRINTF = 299,
-    SCANF = 300,
-    VARUSE = 301
+    LEFT_PAR = 293,
+    RIGHT_PAR = 294,
+    VIRGULA = 295,
+    ABRE_CHAVE = 296,
+    FECHA_CHAVE = 297,
+    PRINTF = 298,
+    SCANF = 299,
+    VARUSE = 300
   };
 #endif
 
@@ -102,7 +101,7 @@ union YYSTYPE
    char * strval;
    int    intval;
 
-#line 106 "bison.h" /* yacc.c:1909  */
+#line 105 "bison.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

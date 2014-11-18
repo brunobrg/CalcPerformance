@@ -22,7 +22,7 @@ extern int contadorDeLinhas;
 
 //novos
 %token INCLUDE PH BCOMENT ECOMENT LCOMENT TIPO
-%token PVIRGULA FIM_COMANDO LEFT_PAR RIGHT_PAR VIRGULA
+%token PVIRGULA LEFT_PAR RIGHT_PAR VIRGULA
 %token ABRE_CHAVE FECHA_CHAVE
 %token <strval> PRINTF SCANF VARUSE
 
@@ -66,7 +66,7 @@ _Prototipos:
 	;
 
 Prototipo:
-	TIPO Func_Declaracao LEFT_PAR Prot_Parametros1 RIGHT_PAR FIM_COMANDO
+	TIPO Func_Declaracao LEFT_PAR Prot_Parametros1 RIGHT_PAR PVIRGULA
 	;
 
 Func_Declaracao:
@@ -121,7 +121,7 @@ Declaracao_Bloco:
 	;
 
 Declaracao:
-	TIPO {analise(0, 0);} T_STRING {analise(0, 0);} FIM_COMANDO {analise(0, 0);}
+	TIPO {analise(0, 0);} T_STRING {analise(0, 0);} PVIRGULA {analise(0, 0);}
 	;
 
 Comando_Bloco:
@@ -131,11 +131,11 @@ Comando_Bloco:
 	;
 
 Printf:
-	PRINTF {analise(0, 0);} LEFT_PAR {analise(0, 0);} TEXTO {analise(0, 0);} RIGHT_PAR {analise(0, 0);} FIM_COMANDO {analise(0, 0);}
+	PRINTF {analise(0, 0);} LEFT_PAR {analise(0, 0);} TEXTO {analise(0, 0);} RIGHT_PAR {analise(0, 0);} PVIRGULA {analise(0, 0);}
 	;
 
 Scanf:
-	SCANF LEFT_PAR TEXTO Esc_Var FIM_COMANDO
+	SCANF LEFT_PAR TEXTO Esc_Var PVIRGULA
 	;
 
 Esc_Var:

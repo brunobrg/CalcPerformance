@@ -19,7 +19,6 @@ NUMBER [0-9]
 "/*"								return BCOMENT;
 "*/"								return ECOMENT;
 "*"								return LCOMENT;
-";\n"					    		return FIM_COMANDO;
 ";"									return PVIRGULA;
 ","									return VIRGULA;
 "espera"							return ESPERA;
