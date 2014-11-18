@@ -7,6 +7,7 @@
 extern int contadorDeLinhas;
 int needLines = 0;
 int needSpace = 0;
+int tab = 0;
 %}
 
 %union {
@@ -52,7 +53,7 @@ Comentario_Texto:
 
 Includes:
 	/* Empty */
-	| INCLUDE {analise(needSpace, needLines);} MENOR T_STRING PH MAIOR Includes
+	| INCLUDE {analise(getTab(), needLines);} MENOR T_STRING PH MAIOR Includes
 	;
 
 Structs:
@@ -65,49 +66,49 @@ Prototipos:
 	;
 
 Prototipo: 
-	TIPO Func_Declaracao LEFT_PAR Prot_Parametros1 RIGHT_PAR PVIRGULA
-	;
-
-Func_Declaracao:
-	T_STRING
+	TIPO {analise(getTab(), needLines); needLines = 0;} T_STRING {analise(1, needLines);} LEFT_PAR {analise(0, needLines);} Prot_Parametros1 RIGHT_PAR {analise(0, needLines);} PVIRGULA {analise(needSpace, 0); needLines = 1;}
 	;
 
 Prot_Parametros1:
 	/* Empty */
-	| TIPO Prot_Parametros2
+	| TIPO {analise(0, needLines);} Prot_Parametros2
 	;
 
 Prot_Parametros2:
 	/* Empty */
-	| VIRGULA TIPO Prot_Parametros2
+	| VIRGULA {analise(0, needLines);} TIPO {analise(1, needLines);} Prot_Parametros2
 	;
 
 VGlobais:
 	/* Empty */
-	| STATIC {analise(needSpace, needLines); needLines = 0;} Declaracao VGlobais
+	| STATIC {analise(getTab(), needLines); needLines = 0;} Dec_Global VGlobais
+	;
+
+Dec_Global:
+	TIPO {analise(1, needLines);} T_STRING {analise(1, 0);} PVIRGULA {analise(0, 0); needLines = 1;}
 	;
 
 Funcoes:
 	/* Empty */
-	| {needLines = 3;} Funcao Funcoes
+	| {needLines = 2;} Funcao Funcoes
 	;
 
 Funcao: 
-	TIPO NewLine T_STRING LEFT_PAR Parametros1 RIGHT_PAR Estrutura
+	TIPO {analise(getTab(), needLines); needLines = 1;} T_STRING {analise(getTab(), needLines); needLines = 0;} LEFT_PAR {analise(0, needLines);} Parametros1 RIGHT_PAR {analise(0, 0);} Estrutura
 	;
 
 Parametros1:
 	/* Empty */
-	| TIPO T_STRING Parametros2
+	| TIPO {analise(0, needLines);} T_STRING {analise(1, needLines);} Parametros2
 	;
 
 Parametros2:
 	/* Empty */
-	| VIRGULA TIPO T_STRING Parametros2
+	| VIRGULA {analise(0, needLines);} TIPO {analise(1, needLines);} T_STRING {analise(1, needLines);} Parametros2
 	;
 
 Estrutura:
-	ABRE_CHAVE Bloco FECHA_CHAVE
+	{analise(getTab(), needLines = 1); addTab();} ABRE_CHAVE Bloco FECHA_CHAVE {remTab();}
 	;
 
 Bloco:
@@ -120,7 +121,7 @@ Declaracao_Bloco:
 	;
 
 Declaracao:
-	TIPO {analise(needSpace, needLines);} T_STRING {analise(1, 0);} PVIRGULA {analise(0, 0); needLines = 1;}
+	TIPO {analise(getTab(), needLines);} T_STRING {analise(1, 0);} PVIRGULA {analise(0, 0); needLines = 1;}
 	;
 
 Comando_Bloco:
@@ -142,12 +143,6 @@ Esc_Var:
 	| VIRGULA T_STRING Esc_Var
 	;
 
-
-
-NewLine:
-	/* Empty */
-	| "\n" 
-	;
 
 %%
 

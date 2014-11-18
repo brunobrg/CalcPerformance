@@ -15,7 +15,7 @@ NUMBER [0-9]
 
 %% /*REGRAS:*/
 " "									{espacos++;}
-"\n"								{contadorDeLinhas++; linhas_puladas++;}
+"\n"								{contadorDeLinhas++; linhas_puladas++; espacos = 0;}
 "/*"								return BCOMENT;
 "*/"								return ECOMENT;
 "*"								return LCOMENT;

@@ -6,7 +6,7 @@
 extern int espacos;
 extern int linhas_puladas;
 extern int contadorDeLinhas;
-
+extern int tab;
 //prototipos
 void inicializaAnalise();
 void analise(int, int);
@@ -30,4 +30,19 @@ void analise(int e, int l)
 	}
 	linhas_puladas = 0;
 	espacos = 0;
+}
+
+void addTab()
+{
+	tab = tab + 4;
+}
+
+void remTab()
+{
+	tab = tab - 4;
+}
+
+int getTab()
+{
+	return tab;
 }

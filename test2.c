@@ -12,10 +12,11 @@ static int x;
 static int y;
 static float a;
 
-int main()
+int
+main()
 {
-	int x;
-	int y;
+    int x;
+    int y;
 
 	printf("hahaha");
 }
