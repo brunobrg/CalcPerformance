@@ -66,7 +66,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include"listaBison.h"
+//#include"listaBison.h"
 #include <string.h>
 
 //extern int contadorDeLinhas;
@@ -110,34 +110,33 @@ extern int yydebug;
     AND = 262,
     OU = 263,
     IF = 264,
-    ELSEIF = 265,
-    DO = 266,
-    THEN = 267,
-    WHILE = 268,
-    ELSE = 269,
-    NOT = 270,
-    VIRGULA = 271,
-    TERMINOU = 272,
-    DECLARACAO = 273,
-    FIMFUNC = 274,
-    FUNCAO = 275,
-    ESPERA = 276,
-    EXECUTE = 277,
-    PASSA = 278,
-    PRINT = 279,
-    READ = 280,
-    LOCAL = 281,
-    MAIOR = 282,
-    MENOR = 283,
-    IGUAL = 284,
-    SOMA = 285,
-    SUBT = 286,
-    MULT = 287,
-    DIVIDE = 288,
-    ATRIBUI = 289,
-    LEFT_PAR = 290,
-    RIGHT_PAR = 291,
-    NUMERICAL = 292
+    DO = 265,
+    THEN = 266,
+    WHILE = 267,
+    ELSE = 268,
+    NOT = 269,
+    VIRGULA = 270,
+    TERMINOU = 271,
+    DECLARACAO = 272,
+    FIMFUNC = 273,
+    FUNCAO = 274,
+    ESPERA = 275,
+    EXECUTE = 276,
+    PASSA = 277,
+    PRINT = 278,
+    READ = 279,
+    LOCAL = 280,
+    MAIOR = 281,
+    MENOR = 282,
+    IGUAL = 283,
+    SOMA = 284,
+    SUBT = 285,
+    MULT = 286,
+    DIVIDE = 287,
+    ATRIBUI = 288,
+    LEFT_PAR = 289,
+    RIGHT_PAR = 290,
+    NUMERICAL = 291
   };
 #endif
 /* Tokens.  */
@@ -148,34 +147,33 @@ extern int yydebug;
 #define AND 262
 #define OU 263
 #define IF 264
-#define ELSEIF 265
-#define DO 266
-#define THEN 267
-#define WHILE 268
-#define ELSE 269
-#define NOT 270
-#define VIRGULA 271
-#define TERMINOU 272
-#define DECLARACAO 273
-#define FIMFUNC 274
-#define FUNCAO 275
-#define ESPERA 276
-#define EXECUTE 277
-#define PASSA 278
-#define PRINT 279
-#define READ 280
-#define LOCAL 281
-#define MAIOR 282
-#define MENOR 283
-#define IGUAL 284
-#define SOMA 285
-#define SUBT 286
-#define MULT 287
-#define DIVIDE 288
-#define ATRIBUI 289
-#define LEFT_PAR 290
-#define RIGHT_PAR 291
-#define NUMERICAL 292
+#define DO 265
+#define THEN 266
+#define WHILE 267
+#define ELSE 268
+#define NOT 269
+#define VIRGULA 270
+#define TERMINOU 271
+#define DECLARACAO 272
+#define FIMFUNC 273
+#define FUNCAO 274
+#define ESPERA 275
+#define EXECUTE 276
+#define PASSA 277
+#define PRINT 278
+#define READ 279
+#define LOCAL 280
+#define MAIOR 281
+#define MENOR 282
+#define IGUAL 283
+#define SOMA 284
+#define SUBT 285
+#define MULT 286
+#define DIVIDE 287
+#define ATRIBUI 288
+#define LEFT_PAR 289
+#define RIGHT_PAR 290
+#define NUMERICAL 291
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -187,7 +185,7 @@ union YYSTYPE
    char * strval;
    int    intval;
 
-#line 191 "y.tab.c" /* yacc.c:355  */
+#line 189 "y.tab.c" /* yacc.c:355  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
@@ -202,7 +200,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 206 "y.tab.c" /* yacc.c:358  */
+#line 204 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -442,18 +440,18 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  2
+#define YYFINAL  12
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   85
+#define YYLAST   35
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  39
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  54
+#define YYNNTS  6
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  91
+#define YYNRULES  13
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  121
+#define YYNSTATES  23
 
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
@@ -503,16 +501,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    29,    29,    31,    35,    39,    43,    44,    45,    49,
-      49,    53,    54,    55,    56,    57,    61,    61,    61,    61,
-      65,    66,    70,    71,    72,    72,    73,    73,    77,    77,
-      80,    82,    83,    87,    87,    87,    91,    91,    95,    95,
-      95,    99,    99,    99,    99,    99,   103,   106,   107,   108,
-     109,   110,   116,   116,   120,   121,   122,   122,   123,   123,
-     132,   132,   136,   137,   138,   139,   145,   145,   149,   150,
-     154,   155,   156,   160,   160,   161,   161,   170,   174,   178,
-     179,   180,   181,   182,   183,   184,   185,   186,   187,   188,
-     192,   196
+       0,    29,    29,    31,    34,    36,    40,    41,    42,    43,
+      46,    48,    51,    53
 };
 #endif
 
@@ -522,18 +512,12 @@ static const yytype_uint8 yyrline[] =
 static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "T_NUMBER", "T_STRING", "TEXTO", "STR",
-  "AND", "OU", "IF", "ELSEIF", "DO", "THEN", "WHILE", "ELSE", "NOT",
-  "VIRGULA", "TERMINOU", "DECLARACAO", "FIMFUNC", "FUNCAO", "ESPERA",
-  "EXECUTE", "PASSA", "PRINT", "READ", "LOCAL", "MAIOR", "MENOR", "IGUAL",
-  "SOMA", "SUBT", "MULT", "DIVIDE", "ATRIBUI", "LEFT_PAR", "RIGHT_PAR",
-  "NUMERICAL", "\",\"", "$accept", "Input", "Line", "Tab", "Comando",
-  "Fim", "$@1", "Estrutura", "Function", "$@2", "$@3", "$@4", "Espera",
-  "Espera_Argumentos", "$@5", "$@6", "ChamadaFunc", "$@7", "Passa", "If",
-  "$@8", "$@9", "SeNao", "$@10", "SeNaoSe", "$@11", "$@12", "Enquanto",
-  "$@13", "$@14", "$@15", "$@16", "Then", "Verbo", "Declare", "$@17",
-  "Var_Declaracao", "$@18", "$@19", "Atribua", "$@20", "Expressao",
-  "Imprima", "$@21", "Entrada", "Leia", "Leia_Complemento", "$@22", "$@23",
-  "Variavel", "Numero", "Operador", "Virgula", "NewLine", YY_NULLPTR
+  "AND", "OU", "IF", "DO", "THEN", "WHILE", "ELSE", "NOT", "VIRGULA",
+  "TERMINOU", "DECLARACAO", "FIMFUNC", "FUNCAO", "ESPERA", "EXECUTE",
+  "PASSA", "PRINT", "READ", "LOCAL", "MAIOR", "MENOR", "IGUAL", "SOMA",
+  "SUBT", "MULT", "DIVIDE", "ATRIBUI", "LEFT_PAR", "RIGHT_PAR",
+  "NUMERICAL", "\"\\n\"", "\"#include\"", "$accept", "Etapas",
+  "Comentario_Criador", "Comentario", "Includes", "Include", YY_NULLPTR
 };
 #endif
 
@@ -549,12 +533,12 @@ static const yytype_uint16 yytoknum[] =
 };
 # endif
 
-#define YYPACT_NINF -97
+#define YYPACT_NINF -35
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-97)))
+  (!!((Yystate) == (-35)))
 
-#define YYTABLE_NINF -78
+#define YYTABLE_NINF -13
 
 #define yytable_value_is_error(Yytable_value) \
   0
@@ -563,19 +547,9 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-     -97,     9,   -97,   -97,    56,   -97,   -97,   -97,   -97,   -97,
-     -97,   -97,    19,   -97,     0,   -97,   -97,    26,   -97,   -97,
-     -97,   -97,   -97,   -97,   -97,   -97,   -97,   -97,   -97,    28,
-      11,    16,    16,    16,   -97,     1,    42,   -97,    10,    45,
-      45,   -97,   -97,     2,   -97,   -97,   -97,    -3,    -3,   -97,
-     -97,    46,    47,     3,   -97,    38,   -97,   -97,   -97,   -97,
-     -97,   -97,   -97,   -97,    16,    50,   -97,   -97,   -97,   -97,
-     -97,   -97,   -97,   -97,   -97,   -97,   -97,    16,    16,    50,
-     -97,   -97,   -97,   -97,   -97,    43,    13,   -97,    45,    45,
-     -97,   -97,   -97,   -97,   -97,   -97,   -97,    59,    63,     5,
-     -97,    25,   -97,   -97,   -97,   -97,   -97,   -97,    64,    67,
-     -97,   -97,    57,    61,    66,    66,   -97,     5,     5,   -97,
-     -97
+      -4,    -2,   -27,   -25,   -24,     8,   -34,   -35,   -35,   -35,
+      -2,    -2,   -35,   -18,   -35,   -23,   -35,   -35,     7,   -34,
+     -13,   -35,   -35
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -583,41 +557,21 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       2,     5,     1,     3,     9,    77,    33,    38,    41,    36,
-      52,    16,     0,    66,     0,    91,     8,     0,     7,    11,
-      51,    12,    13,    14,    15,     6,    47,    48,    49,    50,
-       0,     0,     0,     0,    37,     0,     0,    28,     0,     0,
-       0,     4,    10,     0,    60,    78,    34,    63,    62,    39,
-      42,     0,     0,    53,    17,    30,    68,    69,    67,    70,
-      71,    73,    75,    72,     0,     0,    83,    82,    84,    79,
-      80,    81,    85,    86,    87,    88,    89,     0,     0,     0,
-      43,    54,    55,    58,    56,    21,     0,    29,     0,     0,
-      61,    46,    35,    65,    64,    40,    44,     0,     0,     0,
-      18,    31,    32,    74,    76,    45,    59,    57,     0,     0,
-      20,    19,    22,    23,     0,     0,    90,     0,     0,    25,
-      27
+       2,     0,     0,     0,     0,     0,    10,     5,     8,     9,
+       0,     0,     1,     0,     3,     0,     6,     7,     0,    10,
+       0,    11,    13
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -97,   -97,   -97,   -97,   -97,   -97,   -97,   -97,   -97,   -97,
-     -97,   -97,   -97,   -96,   -97,   -97,   -97,   -97,   -97,   -97,
-     -97,   -97,   -97,   -97,   -97,   -97,   -97,   -97,   -97,   -97,
-     -97,   -97,    -7,   -97,   -97,   -97,   -97,   -97,   -97,   -97,
-     -97,   -30,   -97,   -97,   -11,   -97,   -97,   -97,   -97,    -4,
-     -97,    31,   -32,   -97
+     -35,   -35,   -35,     0,    -3,   -35
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     1,     3,     4,    15,    16,    17,    18,    19,    36,
-      85,   111,   100,   110,   114,   115,    20,    55,    87,    21,
-      31,    65,    22,    34,    23,    32,    79,    24,    33,    80,
-      96,   105,    92,    25,    26,    35,    53,    98,    97,    27,
-      64,    57,    28,    38,    58,    29,    63,    88,    89,    47,
-      48,    77,   117,    41
+      -1,     5,     6,     7,    14,    15
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -625,77 +579,41 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      30,    46,    49,    50,    66,    67,    39,    51,    61,     2,
-      83,   108,    68,    45,     5,    56,    45,   101,    56,    45,
-       5,   119,   120,    37,    69,    70,    71,    72,    73,    74,
-      75,    76,   -77,   -77,    90,    59,    60,    40,    52,    62,
-     -77,    84,   109,    42,    43,    44,    54,    93,    94,     5,
-      81,    82,   -77,   -77,   -77,   -77,   -77,   -77,   -77,   -77,
-       5,    86,    91,   106,    99,     6,     7,   107,   112,     8,
-       9,   113,    95,   -24,    10,   102,    11,   -26,    12,    78,
-      13,    14,   116,   118,   103,   104
+       1,     8,     1,   -12,    13,     9,    10,    11,    12,    18,
+      16,    17,    20,    22,    19,     0,    21,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     2,     3,     2,
+       3,     0,     0,     4,    -4,     4
 };
 
-static const yytype_uint8 yycheck[] =
+static const yytype_int8 yycheck[] =
 {
-       4,    31,    32,    33,     7,     8,     6,     6,     6,     0,
-       7,     6,    15,     3,     4,     5,     3,     4,     5,     3,
-       4,   117,   118,     4,    27,    28,    29,    30,    31,    32,
-      33,    34,     7,     8,    64,    39,    40,    37,    37,    37,
-      15,    38,    37,    17,    16,    34,     4,    77,    78,     4,
-       4,     4,    27,    28,    29,    30,    31,    32,    33,    34,
-       4,    23,    12,     4,    21,     9,    10,     4,     4,    13,
-      14,     4,    79,    16,    18,    86,    20,    16,    22,    48,
-      24,    25,    16,   115,    88,    89
+       4,     1,     4,    37,    38,    32,    31,    31,     0,    27,
+      10,    11,     5,    26,    37,    -1,    19,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    31,    32,    31,
+      32,    -1,    -1,    37,    38,    37
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    40,     0,    41,    42,     4,     9,    10,    13,    14,
-      18,    20,    22,    24,    25,    43,    44,    45,    46,    47,
-      55,    58,    61,    63,    66,    72,    73,    78,    81,    84,
-      88,    59,    64,    67,    62,    74,    48,     4,    82,     6,
-      37,    92,    17,    16,    34,     3,    80,    88,    89,    80,
-      80,     6,    37,    75,     4,    56,     5,    80,    83,    88,
-      88,     6,    37,    85,    79,    60,     7,     8,    15,    27,
-      28,    29,    30,    31,    32,    33,    34,    90,    90,    65,
-      68,     4,     4,     7,    38,    49,    23,    57,    86,    87,
-      80,    12,    71,    80,    80,    71,    69,    77,    76,    21,
-      51,     4,    83,    88,    88,    70,     4,     4,     6,    37,
-      52,    50,     4,     4,    53,    54,    16,    91,    91,    52,
-      52
+       0,     4,    31,    32,    37,    40,    41,    42,    42,    32,
+      31,    31,     0,    38,    43,    44,    42,    42,    27,    37,
+       5,    43,    26
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    39,    40,    40,    41,    42,    43,    43,    43,    45,
-      44,    46,    46,    46,    46,    46,    48,    49,    50,    47,
-      51,    51,    52,    52,    53,    52,    54,    52,    56,    55,
-      57,    57,    57,    59,    60,    58,    62,    61,    64,    65,
-      63,    67,    68,    69,    70,    66,    71,    72,    72,    72,
-      72,    72,    74,    73,    75,    75,    76,    75,    77,    75,
-      79,    78,    80,    80,    80,    80,    82,    81,    83,    83,
-      84,    84,    84,    86,    85,    87,    85,    88,    89,    90,
-      90,    90,    90,    90,    90,    90,    90,    90,    90,    90,
-      91,    92
+       0,    39,    40,    40,    41,    41,    42,    42,    42,    42,
+      43,    43,    44,    44
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     0,     2,     3,     0,     1,     1,     1,     0,
-       2,     1,     1,     1,     1,     1,     0,     0,     0,     6,
-       2,     0,     2,     2,     0,     5,     0,     5,     0,     4,
-       0,     2,     2,     0,     0,     5,     0,     2,     0,     0,
-       5,     0,     0,     0,     0,     6,     1,     1,     1,     1,
-       1,     1,     0,     3,     2,     2,     0,     4,     0,     4,
-       0,     4,     1,     1,     3,     3,     0,     3,     1,     1,
-       3,     3,     3,     0,     3,     0,     3,     1,     1,     1,
-       1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
-       1,     0
+       0,     2,     0,     2,     0,     1,     3,     3,     2,     2,
+       0,     3,     0,     4
 };
 
 
@@ -1371,368 +1289,8 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-        case 5:
-#line 39 "bison.y" /* yacc.c:1646  */
-    {Tabulacao(tab);}
-#line 1378 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 9:
-#line 49 "bison.y" /* yacc.c:1646  */
-    {RemoveTab(&saida); tab--;}
-#line 1384 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 10:
-#line 49 "bison.y" /* yacc.c:1646  */
-    {qntEnd++; Inserir(&saida,"end", contadorDeLinhas);}
-#line 1390 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 16:
-#line 61 "bison.y" /* yacc.c:1646  */
-    {qntFuncao++; qntEstru++; Inserir(&saida,"function ", contadorDeLinhas);}
-#line 1396 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 17:
-#line 61 "bison.y" /* yacc.c:1646  */
-    { Inserir(&saida,(yyvsp[0].strval), contadorDeLinhas); Inserir(&saida,"(", contadorDeLinhas);}
-#line 1402 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 18:
-#line 61 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida,")", contadorDeLinhas);}
-#line 1408 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 19:
-#line 61 "bison.y" /* yacc.c:1646  */
-    {tab++;}
-#line 1414 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 22:
-#line 70 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida,(yyvsp[0].strval), contadorDeLinhas); InserirVariavel(&varDeclaradas, (yyvsp[0].strval), "texto", "local");}
-#line 1420 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 23:
-#line 71 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida,(yyvsp[0].strval), contadorDeLinhas); InserirVariavel(&varDeclaradas, (yyvsp[0].strval), "numero", "local");}
-#line 1426 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 24:
-#line 72 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida,(yyvsp[0].strval), contadorDeLinhas); InserirVariavel(&varDeclaradas, (yyvsp[0].strval), "texto", "local");}
-#line 1432 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 26:
-#line 73 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida,(yyvsp[0].strval), contadorDeLinhas); InserirVariavel(&varDeclaradas, (yyvsp[0].strval), "numero", "local");}
-#line 1438 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 28:
-#line 77 "bison.y" /* yacc.c:1646  */
-    { Inserir(&saida, (yyvsp[0].strval), contadorDeLinhas); Inserir(&saida, "(", contadorDeLinhas);}
-#line 1444 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 29:
-#line 77 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida,")", contadorDeLinhas);}
-#line 1450 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 31:
-#line 82 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida, (yyvsp[0].strval), contadorDeLinhas); Inserir(&varUsadas, (yyvsp[0].strval), contadorDeLinhas);}
-#line 1456 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 33:
-#line 87 "bison.y" /* yacc.c:1646  */
-    { qntIf++; qntEstru++; Inserir(&saida, "if ", contadorDeLinhas);}
-#line 1462 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 34:
-#line 87 "bison.y" /* yacc.c:1646  */
-    {qntCondicao++;}
-#line 1468 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 35:
-#line 87 "bison.y" /* yacc.c:1646  */
-    {tab++;}
-#line 1474 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 36:
-#line 91 "bison.y" /* yacc.c:1646  */
-    { RemoveTab(&saida); tab--; qntEstru++; qntEnd++; Inserir(&saida, "else ", contadorDeLinhas);}
-#line 1480 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 37:
-#line 91 "bison.y" /* yacc.c:1646  */
-    {tab++;}
-#line 1486 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 38:
-#line 95 "bison.y" /* yacc.c:1646  */
-    {RemoveTab(&saida); qntEnd++; qntIf++; qntEstru++; tab--;  Inserir(&saida, "elseif ", contadorDeLinhas);}
-#line 1492 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 39:
-#line 95 "bison.y" /* yacc.c:1646  */
-    {qntCondicao++;}
-#line 1498 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 40:
-#line 95 "bison.y" /* yacc.c:1646  */
-    {tab++;}
-#line 1504 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 41:
-#line 99 "bison.y" /* yacc.c:1646  */
-    {qntIf++; qntEstru++; Inserir(&saida, "while ", contadorDeLinhas);}
-#line 1510 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 42:
-#line 99 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida, " do ", contadorDeLinhas);}
-#line 1516 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 43:
-#line 99 "bison.y" /* yacc.c:1646  */
-    {qntCondicao++;}
-#line 1522 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 44:
-#line 99 "bison.y" /* yacc.c:1646  */
-    {tab++;}
-#line 1528 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 45:
-#line 99 "bison.y" /* yacc.c:1646  */
-    {qntThen++;}
-#line 1534 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 46:
-#line 103 "bison.y" /* yacc.c:1646  */
-    {qntThen++; Inserir(&saida," then ", contadorDeLinhas);}
-#line 1540 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 52:
-#line 116 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida,"local ", contadorDeLinhas);}
-#line 1546 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 54:
-#line 120 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida,(yyvsp[0].strval), contadorDeLinhas); InserirVariavel(&varDeclaradas, (yyvsp[0].strval), "texto", "local"); qntDecl++;}
-#line 1552 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 55:
-#line 121 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida,(yyvsp[0].strval), contadorDeLinhas); InserirVariavel(&varDeclaradas, (yyvsp[0].strval), "numero", "local"); qntDecl++;}
-#line 1558 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 56:
-#line 122 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida, ", ", contadorDeLinhas);}
-#line 1564 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 57:
-#line 122 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida,(yyvsp[0].strval), contadorDeLinhas); InserirVariavel(&varDeclaradas, (yyvsp[0].strval), "texto", "local"); qntDecl++;}
-#line 1570 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 58:
-#line 123 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida, ", ", contadorDeLinhas);}
-#line 1576 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 59:
-#line 123 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida,(yyvsp[0].strval), contadorDeLinhas); InserirVariavel(&varDeclaradas, (yyvsp[0].strval), "texto", "local"); qntDecl++;}
-#line 1582 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 60:
-#line 132 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida, " = ", contadorDeLinhas);}
-#line 1588 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 66:
-#line 145 "bison.y" /* yacc.c:1646  */
-    { Inserir(&saida,"print(", contadorDeLinhas); }
-#line 1594 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 67:
-#line 145 "bison.y" /* yacc.c:1646  */
-    { Inserir(&saida,") ", contadorDeLinhas);}
-#line 1600 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 68:
-#line 149 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida,(yyvsp[0].strval), contadorDeLinhas);}
-#line 1606 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 70:
-#line 154 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida," = io.read()", contadorDeLinhas);}
-#line 1612 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 71:
-#line 155 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida," = io.read(\"*number\")", contadorDeLinhas);}
-#line 1618 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 73:
-#line 160 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida,"\n", contadorDeLinhas);}
-#line 1624 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 74:
-#line 160 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida," = io.read()", contadorDeLinhas);}
-#line 1630 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 75:
-#line 161 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida,"\n", contadorDeLinhas);}
-#line 1636 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 76:
-#line 161 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida," = io.read(\"*number\")", contadorDeLinhas);}
-#line 1642 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 77:
-#line 170 "bison.y" /* yacc.c:1646  */
-    { Inserir(&saida,(yyvsp[0].strval), contadorDeLinhas); }
-#line 1648 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 78:
-#line 174 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida,(yyvsp[0].strval), contadorDeLinhas);}
-#line 1654 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 79:
-#line 178 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida," > ", contadorDeLinhas);}
-#line 1660 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 80:
-#line 179 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida," < ", contadorDeLinhas);}
-#line 1666 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 81:
-#line 180 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida," == ", contadorDeLinhas);}
-#line 1672 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 82:
-#line 181 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida," or ", contadorDeLinhas);}
-#line 1678 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 83:
-#line 182 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida," and ", contadorDeLinhas);}
-#line 1684 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 84:
-#line 183 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida," ~= ", contadorDeLinhas);}
-#line 1690 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 85:
-#line 184 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida, " + ", contadorDeLinhas);}
-#line 1696 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 86:
-#line 185 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida, " - ", contadorDeLinhas);}
-#line 1702 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 87:
-#line 186 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida, " * ", contadorDeLinhas);}
-#line 1708 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 88:
-#line 187 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida, " / ", contadorDeLinhas);}
-#line 1714 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 89:
-#line 188 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida, " = ", contadorDeLinhas);}
-#line 1720 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 90:
-#line 192 "bison.y" /* yacc.c:1646  */
-    {Inserir(&saida,", ", contadorDeLinhas);}
-#line 1726 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 91:
-#line 196 "bison.y" /* yacc.c:1646  */
-    {qntLinha++; PulaLinha();}
-#line 1732 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-
-#line 1736 "y.tab.c" /* yacc.c:1646  */
+      
+#line 1294 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1960,7 +1518,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 199 "bison.y" /* yacc.c:1906  */
+#line 59 "bison.y" /* yacc.c:1906  */
 
 
 void main(void){
@@ -1970,44 +1528,6 @@ void main(void){
 	varUsadas = NULL;
 	erroSaida = NULL;
 	yyparse();
-	
-	
-	Compara();
-	
-	
-	if(!(qntIf == qntCondicao && qntEstru == qntEnd && qntIf == qntThen))
-	{
-		correto = 0;
-		Inserir(&erroSaida, "\n--Qnt de fim inferior a Qnt de Estruturas", contadorDeLinhas);
-	}
-		
-	if(checkTipo == 1){
-		correto = 0;
-	}
-	if(CheckVariaveis(varDeclaradas, varUsadas) == 0)
-	{
-		correto = 0;
-		Inserir(&erroSaida, "\n--Variavel nao declarada foi usada", contadorDeLinhas);
-	}
-
-	if(correto)
-		Imprime(saida);
-	else
-	{
-		printf("\n--Ifs: %d\n", qntIf);
-	printf("\n--Estruturas: %d\n", qntEstru);
-	printf("\n--Ends: %d\n", qntEnd);
-	printf("\n--Thens: %d\n", qntThen);
-	printf("\n--Condicoes: %d\n", qntCondicao);
-	
-	printf("--Variaveis Declaradas: ");
-	ImprimeVariavel(varDeclaradas);
-	printf("\n--Variaveis Usadas: ");
-	Imprime(varUsadas);
-	printf("\n\n");
-		ImprimeErro(erroSaida);
-		printf("\n\n");
-	}
 	
 }
 
