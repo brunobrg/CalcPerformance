@@ -36,6 +36,7 @@ Etapas:
 	;
 
 Comentario:
+	/* Empty */
 	| BCOMENT Comentario_Texto Comentario 
 	| LCOMENT Comentario_Texto Comentario
 	| ECOMENT
@@ -48,12 +49,12 @@ Comentario_Texto:
 
 _Includes:
 	/* Empty */
-	| INCLUDE MENOR T_STRING PH MAIOR Includes
+	| INCLUDE {analise(0, 0);} MENOR {analise(0, 0);} T_STRING {analise(0, 0);} PH {analise(0, 0);} MAIOR  {analise(0, 0);} Includes
 	;
 
 Includes:
 	/* Empty */
-	| INCLUDE MENOR T_STRING PH MAIOR Includes
+	| INCLUDE {analise(0, 0);} MENOR {analise(0, 0);} T_STRING {analise(0, 0);} PH {analise(0, 0);} MAIOR  {analise(0, 0);} Includes
 	;
 
 Structs:
@@ -61,12 +62,12 @@ Structs:
 	;
 
 _Prototipos:
-	/* Empty */
-	| Prototipo _Prototipos
+	| Comentario Prototipo _Prototipos
 	;
 
+
 Prototipo:
-	TIPO Func_Declaracao LEFT_PAR Prot_Parametros1 RIGHT_PAR FIM_COMANDO
+	| TIPO {analise(0, 0);} Func_Declaracao {analise(0, 0);} LEFT_PAR {analise(0, 0);} Prot_Parametros1 RIGHT_PAR {analise(0, 0);} FIM_COMANDO {analise(0, 0);}
 	;
 
 Func_Declaracao:
