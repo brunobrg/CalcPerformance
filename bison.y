@@ -16,14 +16,15 @@ extern int contadorDeLinhas;
 %token <strval> T_STRING TEXTO  STR
 %token AND OU IF DO THEN WHILE ELSE NOT 
 %token TERMINOU DECLARACAO FIMFUNC FUNCAO ESPERA EXECUTE PASSA
-%token <strval> PRINT READ LOCAL 
 %token MAIOR MENOR IGUAL SOMA SUBT MULT DIVIDE ATRIBUI 
 %token NUMERICAL
 
+
+//novos
 %token INCLUDE PH BCOMENT ECOMENT LCOMENT TIPO
 %token PVIRGULA FIM_COMANDO LEFT_PAR RIGHT_PAR VIRGULA
 %token ABRE_CHAVE FECHA_CHAVE
-
+%token <strval> PRINTF SCANF VARUSE
 
 %start Etapas
 
@@ -84,7 +85,7 @@ Funcoes:
 	;
 
 Funcao: 
-	TIPO T_STRING LEFT_PAR Parametros1 RIGHT_PAR ABRE_CHAVE FECHA_CHAVE
+	TIPO T_STRING LEFT_PAR Parametros1 RIGHT_PAR Estrutura
 	;
 
 Parametros1:
@@ -97,6 +98,26 @@ Parametros2:
 	| VIRGULA TIPO T_STRING Parametros2
 	;
 
+Estrutura:
+	ABRE_CHAVE Bloco_Comando FECHA_CHAVE
+	;
+
+Bloco_Comando:
+	/* Empty */
+	| Comando Bloco_Comando;
+	;
+
+Comando:
+	Printf
+	| Scanf
+	;
+
+Printf:
+	PRINTF LEFT_PAR TEXTO RIGHT_PAR FIM_COMANDO
+	;
+
+Scanf:
+	SCANF LEFT_PAR 
 
 %%
 

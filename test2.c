@@ -9,4 +9,5 @@ int test();
 
 int main()
 {
+	printf("haha");
 }

@@ -30,10 +30,11 @@ NUMBER [0-9]
 "texto"								return STR;
 "#include"							return INCLUDE;
 (\".*\")+							{yylval.strval = strdup(yytext); return TEXTO;}
-(printf)+    						return PRINT;
-(scanf)+ 	            			return READ;
+(printf)+    						return PRINTF;
+(scanf)+ 	            			return SCANF;
 (if)+                   		    			return IF;
 (int|float|double|char)+ 		    			{yylval.strval = strdup(yytext); return TIPO;}
+(%+d|f|lf|c|s|u|i)					{yylval.strval = strdup(yytext); return VARUSE;}
 "+"								return SOMA;
 "-"								return SUBT;
 "/"								return DIVIDE;
