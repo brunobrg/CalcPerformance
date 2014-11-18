@@ -78,16 +78,17 @@ extern int yydebug;
     BCOMENT = 288,
     ECOMENT = 289,
     LCOMENT = 290,
-    TIPO = 291,
-    PVIRGULA = 292,
-    LEFT_PAR = 293,
-    RIGHT_PAR = 294,
-    VIRGULA = 295,
-    ABRE_CHAVE = 296,
-    FECHA_CHAVE = 297,
-    PRINTF = 298,
-    SCANF = 299,
-    VARUSE = 300
+    PVIRGULA = 291,
+    LEFT_PAR = 292,
+    RIGHT_PAR = 293,
+    VIRGULA = 294,
+    ABRE_CHAVE = 295,
+    FECHA_CHAVE = 296,
+    PRINTF = 297,
+    SCANF = 298,
+    VARUSE = 299,
+    TIPO = 300,
+    STATIC = 301
   };
 #endif
 
@@ -96,12 +97,12 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 10 "bison.y" /* yacc.c:1909  */
+#line 12 "bison.y" /* yacc.c:1909  */
 
    char * strval;
    int    intval;
 
-#line 105 "bison.h" /* yacc.c:1909  */
+#line 106 "bison.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

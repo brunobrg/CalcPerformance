@@ -21,6 +21,7 @@ NUMBER [0-9]
 "*"								return LCOMENT;
 ";"									return PVIRGULA;
 ","									return VIRGULA;
+"static"							return STATIC;
 "espera"							return ESPERA;
 "fimFunc"+"\n"+						{yyterminate(); return FIMFUNC;}
 (f|F)+(uncao)+							return FUNCAO;

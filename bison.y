@@ -5,6 +5,8 @@
 #include <string.h>
 
 extern int contadorDeLinhas;
+int needLines = 0;
+int needSpace = 0;
 %}
 
 %union {
@@ -21,10 +23,11 @@ extern int contadorDeLinhas;
 
 
 //novos
-%token INCLUDE PH BCOMENT ECOMENT LCOMENT TIPO
+%token INCLUDE PH BCOMENT ECOMENT LCOMENT
 %token PVIRGULA LEFT_PAR RIGHT_PAR VIRGULA
 %token ABRE_CHAVE FECHA_CHAVE
 %token <strval> PRINTF SCANF VARUSE
+%token TIPO STATIC
 
 %start Etapas
 
@@ -32,10 +35,11 @@ extern int contadorDeLinhas;
 
 Etapas:
 	/* Empty */
-	| Comentario {inicializaAnalise(); analise(0,0);} _Includes Structs _Prototipos VGlobais Funcoes
+	| Comentario {inicializaAnalise(); needLines = 2;} Includes {needLines = 2;} Structs {needLines = 2;} Prototipos {needLines = 2;} VGlobais {needLines = 2;} Funcoes
 	;
 
 Comentario:
+	/* Empty */
 	| BCOMENT Comentario_Texto Comentario 
 	| LCOMENT Comentario_Texto Comentario
 	| ECOMENT
@@ -46,26 +50,21 @@ Comentario_Texto:
 	| T_STRING Comentario_Texto
 	;
 
-_Includes:
-	/* Empty */
-	| INCLUDE MENOR T_STRING PH MAIOR Includes
-	;
-
 Includes:
 	/* Empty */
-	| INCLUDE MENOR T_STRING PH MAIOR Includes
+	| INCLUDE {analise(needSpace, needLines);} MENOR T_STRING PH MAIOR Includes
 	;
 
 Structs:
 	/* Empty */
 	;
 
-_Prototipos:
+Prototipos:
 	/* Empty */
-	| Prototipo _Prototipos
+	| Prototipo Prototipos
 	;
 
-Prototipo:
+Prototipo: 
 	TIPO Func_Declaracao LEFT_PAR Prot_Parametros1 RIGHT_PAR PVIRGULA
 	;
 
@@ -85,16 +84,16 @@ Prot_Parametros2:
 
 VGlobais:
 	/* Empty */
-	| Declaracao
+	| STATIC Declaracao VGlobais
 	;
 
 Funcoes:
 	/* Empty */
-	| Funcao Funcoes
+	| {needLines = 3;} Funcao Funcoes
 	;
 
 Funcao: 
-	TIPO NewLine {analise(0, 0);} T_STRING {analise(0, 0);} LEFT_PAR {analise(0, 0);} Parametros1 RIGHT_PAR Estrutura
+	TIPO NewLine T_STRING LEFT_PAR Parametros1 RIGHT_PAR Estrutura
 	;
 
 Parametros1:
@@ -121,7 +120,7 @@ Declaracao_Bloco:
 	;
 
 Declaracao:
-	TIPO {analise(0, 0);} T_STRING {analise(0, 0);} PVIRGULA {analise(0, 0);}
+	TIPO T_STRING PVIRGULA
 	;
 
 Comando_Bloco:
@@ -131,7 +130,7 @@ Comando_Bloco:
 	;
 
 Printf:
-	PRINTF {analise(0, 0);} LEFT_PAR {analise(0, 0);} TEXTO {analise(0, 0);} RIGHT_PAR {analise(0, 0);} PVIRGULA {analise(0, 0);}
+	PRINTF LEFT_PAR TEXTO RIGHT_PAR PVIRGULA
 	;
 
 Scanf:

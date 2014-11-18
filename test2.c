@@ -4,6 +4,18 @@
 */
 
 #include <stdio.h>
-#include <stdio.h>
 
-int test();
+int func1();
+int func2();
+
+static int x;
+static int y;
+static float a;
+
+int main()
+{
+	int x;
+	int y;
+
+	printf("hahaha");
+}
