@@ -7,11 +7,27 @@ extern int espacos;
 extern int linhas_puladas;
 extern int contadorDeLinhas;
 
+//prototipos
+void inicializaAnalise();
+void analise(int, int);
 
-void analise()
+
+void inicializaAnalise()
 {
-	if(espacos > 1)
-		printf("--Linha: %d    Espacos: %d\n", contadorDeLinhas+1, espacos);
+	espacos = 0;
+	linhas_puladas = 0;
+}
 
+void analise(int e, int l)
+{
+	if(espacos != e)
+	{	
+		printf("--ERRO1, Linha: %d, Espacos necessarios: %d, Espacos utilizados: %d\n", contadorDeLinhas, e, espacos);
+	}
+	if(linhas_puladas != l)
+	{
+		printf("--ERRO2, Linha: %d, Linhas necessarias: %d, Linhas utilizadas: %d\n", contadorDeLinhas, l, linhas_puladas);
+	}
+	linhas_puladas = 0;
 	espacos = 0;
 }

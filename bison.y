@@ -32,7 +32,7 @@ extern int contadorDeLinhas;
 
 Etapas:
 	/* Empty */
-	| Comentario Includes Structs Prototipos VGlobais Funcoes
+	| Comentario {inicializaAnalise(); analise(0,0);} _Includes Structs Prototipos VGlobais Funcoes
 	;
 
 Comentario:
@@ -47,9 +47,14 @@ Comentario_Texto:
 	| T_STRING Comentario_Texto
 	;
 
+_Includes:
+	/* Empty */
+	| INCLUDE {analise(0, 2);} MENOR {analise(1, 0);} T_STRING {analise(0, 0);} PH {analise(0, 0);} MAIOR  {analise(0, 0);} Includes
+	;
+
 Includes:
 	/* Empty */
-	| INCLUDE MENOR T_STRING PH MAIOR Includes
+	| INCLUDE {analise(0, 1);} MENOR {analise(1, 0);} T_STRING {analise(0, 0);} PH {analise(0, 0);} MAIOR  {analise(0, 0);} Includes
 	;
 
 Structs:
@@ -58,7 +63,7 @@ Structs:
 
 Prototipos:
 	/* Empty */ 
-	| TIPO Func_Declaracao LEFT_PAR Prot_Parametros1 RIGHT_PAR FIM_COMANDO
+	| TIPO {analise(0, 2);} Func_Declaracao {analise(1, 0);} LEFT_PAR {analise(0, 0);} Prot_Parametros1 RIGHT_PAR {analise(0, 0);} FIM_COMANDO {analise(0, 0);}
 	;
 
 Func_Declaracao:
@@ -86,7 +91,7 @@ Funcoes:
 	;
 
 Funcao: 
-	TIPO NewLine T_STRING LEFT_PAR Parametros1 RIGHT_PAR Estrutura
+	TIPO NewLine {analise(0, 1);} T_STRING {analise(0, 0);} LEFT_PAR {analise(0, 0);} Parametros1 RIGHT_PAR Estrutura
 	;
 
 Parametros1:
@@ -113,7 +118,7 @@ Declaracao_Bloco:
 	;
 
 Declaracao:
-	TIPO {analise();} T_STRING {analise();} FIM_COMANDO {analise();}
+	TIPO {analise(0, 2);} T_STRING {analise(1, 0);} FIM_COMANDO {analise(0, 0);}
 	;
 
 Comando_Bloco:
@@ -123,7 +128,7 @@ Comando_Bloco:
 	;
 
 Printf:
-	PRINTF LEFT_PAR TEXTO RIGHT_PAR FIM_COMANDO
+	PRINTF {analise(0, 0);} LEFT_PAR {analise(0, 0);} TEXTO {analise(0, 0);} RIGHT_PAR {analise(0, 0);} FIM_COMANDO {analise(0, 0);}
 	;
 
 Scanf:

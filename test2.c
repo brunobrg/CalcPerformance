@@ -1,7 +1,7 @@
 /* 
 * eu sou foda
 *
-*/ 
+*/
 
 #include <stdio.h>
 #include <stdio.h>
@@ -9,11 +9,11 @@
 int test();
 
 
-int y    ;
-int 
+int y;
+int
 main()
 {
-	int    x   ;
+	int x;
 	printf("PORRA");
 	scanf("haha", x);
 }
