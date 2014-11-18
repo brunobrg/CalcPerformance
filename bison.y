@@ -84,7 +84,7 @@ Prot_Parametros2:
 
 VGlobais:
 	/* Empty */
-	| STATIC Declaracao VGlobais
+	| STATIC {analise(needSpace, needLines); needLines = 0;} Declaracao VGlobais
 	;
 
 Funcoes:
@@ -120,7 +120,7 @@ Declaracao_Bloco:
 	;
 
 Declaracao:
-	TIPO T_STRING PVIRGULA
+	TIPO {analise(needSpace, needLines);} T_STRING {analise(1, 0);} PVIRGULA {analise(0, 0); needLines = 1;}
 	;
 
 Comando_Bloco:
