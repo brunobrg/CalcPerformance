@@ -18,5 +18,5 @@ main()
     int x;
     int y;
 
-	printf("hahaha");
+    printf("hahaha");
 }

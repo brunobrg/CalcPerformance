@@ -36,12 +36,12 @@ int tab = 0;
 
 Etapas:
 	/* Empty */
-	| Comentario {inicializaAnalise(); needLines = 2;} Includes {needLines = 2;} Structs {needLines = 2;} Prototipos {needLines = 2;} VGlobais {needLines = 2;} Funcoes
+	| {needLines = 0;}Comentario {inicializaAnalise();} Includes {needLines = 2;} Structs {needLines = 2;} Prototipos {needLines = 2;} VGlobais {needLines = 2;} Funcoes
 	;
 
 Comentario:
 	/* Empty */
-	| BCOMENT Comentario_Texto Comentario 
+	| { needLines = 2;} BCOMENT Comentario_Texto Comentario 
 	| LCOMENT Comentario_Texto Comentario
 	| ECOMENT
 	;
@@ -108,16 +108,16 @@ Parametros2:
 	;
 
 Estrutura:
-	{analise(getTab(), needLines = 1); addTab();} ABRE_CHAVE Bloco FECHA_CHAVE {remTab();}
+	ABRE_CHAVE {analise(getTab(), needLines = 1); addTab();} Bloco FECHA_CHAVE {remTab();}
 	;
 
 Bloco:
-	Declaracao_Bloco Comando_Bloco
+	Declaracao_Bloco {needLines = 2;} Comando_Bloco
 	;
 
 Declaracao_Bloco:
 	/* Empty */
-	| Declaracao Declaracao_Bloco
+	| Declaracao {needLines = 1;} Declaracao_Bloco
 	;
 
 Declaracao:
@@ -131,7 +131,7 @@ Comando_Bloco:
 	;
 
 Printf:
-	PRINTF LEFT_PAR TEXTO RIGHT_PAR PVIRGULA
+	PRINTF {analise(getTab(), needLines);} LEFT_PAR {analise(0, needLines = 0);} TEXTO {analise(0, needLines);} RIGHT_PAR {analise(0, needLines);} PVIRGULA {analise(0, needLines); needLines = 1;}
 	;
 
 Scanf:

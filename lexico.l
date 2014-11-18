@@ -8,13 +8,14 @@
 %}
 /* TIPOS */
 STRING [a-z]+[a-zA-Z0-9]*
-SPACE [\r\t]+
+SPACE [\r]+
 NUMBER [0-9]
 
 
 
 %% /*REGRAS:*/
 " "									{espacos++;}
+"\t"								{printf("--ERRO3, Linha: %d, Nao utilizar tabulacoes\n", contadorDeLinhas ); }
 "\n"								{contadorDeLinhas++; linhas_puladas++; espacos = 0;}
 "/*"								return BCOMENT;
 "*/"								return ECOMENT;
