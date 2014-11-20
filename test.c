@@ -1,9 +1,15 @@
+/*
+*
+*/
+
+/* Include */
 #include <stdio.h>
 
-int main ()
+int
+main()
 {
-	int a;
-	int b;
+    int a;
+    int b;
 
-	printf("auehauhe");
+    printf("auehauhe");
 }

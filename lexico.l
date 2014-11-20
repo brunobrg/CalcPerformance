@@ -1,9 +1,10 @@
-%{option main
+%{
 
  #include "bison.h"
  int contadorDeLinhas = 1;
  int espacos = 0;
  int linhas_puladas = 0;
+ int OK = 1;
 
 %}
 /* TIPOS */
@@ -15,7 +16,7 @@ NUMBER [0-9]
 
 %% /*REGRAS:*/
 " "									{espacos++;}
-"\t"								{printf("--ERRO3, Linha: %d, Nao utilizar tabulacoes\n", contadorDeLinhas ); }
+"\t"								{printf("Linha %d -- Error03 - Nao utilizar tabulacoes\n", contadorDeLinhas); }
 "\n"								{contadorDeLinhas++; linhas_puladas++; espacos = 0;}
 "/*"								return BCOMENT;
 "*/"								return ECOMENT;
@@ -23,6 +24,9 @@ NUMBER [0-9]
 ";"									return PVIRGULA;
 ","									return VIRGULA;
 "static"							return STATIC;
+(P|p)+(rototipo)					return _PROTOTIPO;
+(S|s)+(truct)						return _STRUCT;
+(I|i)+(nclude)						return _INCLUDE;
 "espera"							return ESPERA;
 "fimFunc"+"\n"+						{yyterminate(); return FIMFUNC;}
 (f|F)+(uncao)+							return FUNCAO;

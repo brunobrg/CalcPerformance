@@ -5,9 +5,16 @@
 #include <string.h>
 
 extern int contadorDeLinhas;
+extern int OK;
 int needLines = 0;
 int needSpace = 0;
 int tab = 0;
+int Possui_Comment_Criador = 0;
+int Possui_Comment_Include = 0;
+int Possui_Comment_Prot = 0;
+extern Error error[20];
+extern int totalError;
+
 %}
 
 %union {
@@ -29,6 +36,7 @@ int tab = 0;
 %token ABRE_CHAVE FECHA_CHAVE
 %token <strval> PRINTF SCANF VARUSE
 %token TIPO STATIC
+%token _PROTOTIPO _INCLUDE _STRUCT
 
 %start Etapas
 
@@ -36,19 +44,23 @@ int tab = 0;
 
 Etapas:
 	/* Empty */
-	| {needLines = 0;}Comentario {inicializaAnalise();} Includes {needLines = 2;} Structs {needLines = 2;} Prototipos {needLines = 2;} VGlobais {needLines = 2;} Funcoes
+	| {needLines = 0;} Comentario {inicializaAnalise();} _Includes {needLines = 2;} Structs {needLines = 2;} _Prototipos {needLines = 2;} VGlobais {needLines = 2;} Funcoes
 	;
 
 Comentario:
 	/* Empty */
-	| { needLines = 2;} BCOMENT Comentario_Texto Comentario 
-	| LCOMENT Comentario_Texto Comentario
-	| ECOMENT
-	;
+	| BCOMENT {Possui_Comment_Criador = 1; }Comentario_Texto ECOMENT {needLines = 2;}
+	; 
 
 Comentario_Texto:
 	/* Empty */
 	| T_STRING Comentario_Texto
+	| LCOMENT Comentario_Texto
+	;
+
+_Includes:
+	/* Empty */
+	| BCOMENT {analise(getTab(), needLines); needLines = 0; Possui_Comment_Include = 1;} _INCLUDE {analise(1, needLines);} ECOMENT {analise(1, needLines); needLines = 1;} Includes
 	;
 
 Includes:
@@ -58,6 +70,11 @@ Includes:
 
 Structs:
 	/* Empty */
+	;
+
+_Prototipos:
+	/* Empty */
+	| BCOMENT {analise(getTab(), needLines); needLines = 0; Possui_Comment_Prot = 1;} _PROTOTIPO {analise(1, needLines);} ECOMENT {analise(1, needLines); needLines = 1;} Prototipos
 	;
 
 Prototipos:
@@ -147,13 +164,44 @@ Esc_Var:
 %%
 
 void main(void){
-	yyparse();	
-	printf("\n--OK!\n");
+	yyparse();
+
+	int i = 0;
+
+	printf("\nAnalise terminada");
+	if(OK)
+		printf("--OK!");
+	else
+	{
+		printf("\n");
+		for(i = 0; i < 20 ; i++)
+		{
+			if(error[i].qnt > 0)
+			{
+				printf("%s: %d\n", error[i].nome, error[i].qnt);
+			}
+		}
+		printf("\nTotal de erros: %d\n", totalError);
+	}
+	printf("\n");
 }
 
 yyerror(char *s){
-	printf("Erro na linha: %d\n", contadorDeLinhas);
-	yyparse();
+	OK = 0;
+	("Erro na linha: %d\n", contadorDeLinhas);
+	
+	if(!Possui_Comment_Criador)
+	{
+		printf("\n---Codigo nao no formato requisitado, por favor, insira comentarios do criador---\n");
+	}
+	if(!Possui_Comment_Include)
+	{
+		printf("\n---Codigo nao no formato requisitado, por favor, insira comentarios antes dos INCLUDES---\n");
+	}
+	if(!Possui_Comment_Prot)
+	{
+		printf("\n---Codigo nao no formato requisitado, por favor, insira comentarios dos PROTOTIPOS---\n");
+	}
 }
 
 int yywrap(void) { return 1; }
