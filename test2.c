@@ -20,6 +20,7 @@ main()
     printf("hahaha");
 
     int g;
+    float h;
 }
 
 /* Funcoes */

@@ -22,6 +22,7 @@ typedef struct _SaidaAnalise
     int contL;
     int nec;
     int uti;
+    char strAux[15];
     struct _SaidaAnalise * proximo;
 }SaidaAnalise;
 
@@ -43,10 +44,12 @@ SaidaAnalise * saidaAna;
 /* prototipos */
 void inicializaAnalise();
 void analise(int, int);
+void analiseBloco(int, char[]);
 void addError(char[7]);
-void inserirSaidaAnalise(int, char[], int, int);
-SaidaAnalise * addSaidaAnalise(int, char[], int, int);
+void inserirSaidaAnalise(int, char[], char[], int, int);
+SaidaAnalise * addSaidaAnalise(int, char[7], char[15], int, int);
 void imprimeAnalise();
+
 
 void inicializaAnalise()
 {
@@ -87,13 +90,13 @@ void analise(int e, int l)
 		OK = 0;
 		strcpy(erro, "Error02");
 		addError(erro);
-		inserirSaidaAnalise(contadorDeLinhas, erro, l, linhas_puladas);
+		inserirSaidaAnalise(contadorDeLinhas, erro, "", l, linhas_puladas);
 		//printf("Linha %d --%s - Linhas necessarias: %d, Linhas utilizadas: %d\n", contadorDeLinhas , erro, l, linhas_puladas);
 	}
 	else if(usouTab)
 	{
 		OK = 0;
-		inserirSaidaAnalise(contadorDeLinhas, "Error03", 0, 0); 
+		inserirSaidaAnalise(contadorDeLinhas, "Error03", "", 0, 0); 
 		addError("Error03");
 	}
 	else if(espacos != e && usouTab == 0)
@@ -101,13 +104,25 @@ void analise(int e, int l)
 		strcpy(erro, "Error01");
 		addError(erro);
 		OK = 0;
-		inserirSaidaAnalise(contadorDeLinhas, erro, e, espacos);
+		inserirSaidaAnalise(contadorDeLinhas, erro, "", e, espacos);
 		//printf("Linha %d -- %s - Espacos necessarios: %d, Espacos utilizados: %d\n", contadorDeLinhas, erro, e, espacos);
 		
 	}
 	usouTab = 0;
 	linhas_puladas = 0;
 	espacos = 0;
+}
+
+void analiseBloco(int inicioBloco, char strAux[15])
+{
+	char erro[7];
+	if(inicioBloco != 1)
+	{
+		strcpy(erro, "Error04");
+		addError(erro);
+		OK = 0;
+		inserirSaidaAnalise(contadorDeLinhas, erro, strAux, 0, 0);
+	}
 }
 
 /* Funcoes de Tabulacoes */
@@ -141,21 +156,22 @@ void addError(char nome[7])
 	totalError++;
 }
 
-SaidaAnalise * addSaidaAnalise(int contL, char erro[7], int nec, int uti)
+SaidaAnalise * addSaidaAnalise(int contL, char erro[7], char strAux[15], int nec, int uti)
 {
     SaidaAnalise * add = (SaidaAnalise*) malloc(sizeof(SaidaAnalise));
-    strcpy(add->erro, erro);
+    strcpy(add->strAux, strAux);
     add->contL = contL;
     add->nec = nec;
     add->uti = uti;
     add->proximo == NULL;
+    strcpy(add->erro, erro);
 
     return add;
 }
 
-void inserirSaidaAnalise(int contL, char erro[7], int nec, int uti)
+void inserirSaidaAnalise(int contL, char erro[7], char strAux[15], int nec, int uti)
 {
-	SaidaAnalise * aux = addSaidaAnalise(contL, erro, nec, uti);
+	SaidaAnalise * aux = addSaidaAnalise(contL, erro, strAux, nec, uti);
 
 	if(saidaAna == NULL)
 	{
@@ -188,6 +204,10 @@ void imprimeAnalise()
 		else if(!(strcmp(aux->erro, "Error03")))
 		{
 			printf("Linha %d -- %s - Nao utilizar tabulacoes\n", aux->contL, aux->erro);
+		}
+		else if(!(strcmp(aux->erro, "Error04")))
+		{
+			printf("Linha %d -- %s - Declaracao da variavel \"%s\" nao se encontra no inicio do bloco.\n", aux->contL, aux->erro, aux->strAux);
 		}
 		aux = aux->proximo;
 	}

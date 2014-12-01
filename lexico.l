@@ -19,7 +19,7 @@ NUMBER [0-9]
 %% /*REGRAS:*/
 " "									{espacos++;}
 "\t"								{usouTab = 1;}
-"\n"								{contadorDeLinhas++; linhas_puladas++; espacos = 0; contadorEspacos = 0;}
+"\n"								{contadorDeLinhas++; linhas_puladas++; espacos = 0; contadorEspacos = 1;}
 "/*"								return BCOMENT;
 "*/"								return ECOMENT;
 "*"									return LCOMENT;
@@ -33,6 +33,7 @@ NUMBER [0-9]
 "/* Variaveis Globais */"			return _VGLOBAIS;
 "/* Funcoes */"						return _FUNC;
 "espera"							return ESPERA;
+"return"							return	RETURN;
 "fimFunc"+"\n"+						{yyterminate(); return FIMFUNC;}
 "main"								return MAIN;
 (f|F)+(uncao)+						return FUNCAO;

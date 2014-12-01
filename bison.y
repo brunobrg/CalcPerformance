@@ -6,12 +6,15 @@
 
 extern int contadorDeLinhas;
 extern int OK;
+extern Error error[20];
+extern int totalError;
+
 int needLines = 0;
 int needSpace = 0;
 int tab = 0;
 int terminou = 0;
-extern Error error[20];
-extern int totalError;
+
+int inicioBloco = 0;
 
 Comment comment_criador, comment_prototipo, comment_include, comment_main, comment_funcoes, comment_vglobais;
 
@@ -33,7 +36,7 @@ Comment comment_criador, comment_prototipo, comment_include, comment_main, comme
 //novos
 %token INCLUDE PH BCOMENT ECOMENT LCOMENT
 %token PVIRGULA LEFT_PAR RIGHT_PAR VIRGULA
-%token ABRE_CHAVE FECHA_CHAVE
+%token ABRE_CHAVE FECHA_CHAVE RETURN
 %token <strval> PRINTF SCANF VARUSE
 %token TIPO STATIC MAIN
 %token _PROTOTIPO _INCLUDE _STRUCT _MAIN _VGLOBAIS _FUNC
@@ -65,7 +68,7 @@ _Includes:
 
 Includes:
 	/* Empty */
-	| INCLUDE {analise(getTab(), needLines);} MENOR T_STRING PH MAIOR Includes
+	| INCLUDE {analise(getTab(), needLines);} MENOR {analise(1, 0);} T_STRING {analise(0, 0);} PH {analise(0, 0);} MAIOR {analise(0, 0);} Includes
 	;
 
 Structs:
@@ -143,22 +146,37 @@ Parametros2:
 	;
 
 Estrutura:
-	ABRE_CHAVE {analise(getTab(), needLines = 1); addTab();} Bloco FECHA_CHAVE {remTab(); analise(getTab(), needLines = 1);}
+	ABRE_CHAVE {analise(getTab(), needLines = 1); addTab();} {inicioBloco = 1;} Bloco FECHA_CHAVE {remTab(); analise(getTab(), needLines = 1);}
 	;
 
 Bloco:
 	/* Empty */
 	| Declaracao Bloco
-	| Printf Bloco
-	| Scanf Bloco
+	| {inicioBloco = 0;}  Printf Bloco
+	| {inicioBloco = 0;}  Scanf Bloco
+	| {inicioBloco = 0;} Return Bloco
+	;
+
+Return:
+	RETURN T_STRING PVIRGULA
+	| RETURN T_NUMBER  PVIRGULA
 	;
 
 Declaracao:
-	TIPO {analise(getTab(), needLines);} T_STRING {analise(1, 0);} PVIRGULA {analise(0, 0); needLines = 1;}
+	TIPO {analise(getTab(), needLines);} T_STRING {analise(1, 0); analiseBloco(inicioBloco, $3);} PVIRGULA {analise(0, 0); needLines = 1;}
 	;
 
 Printf:
-	PRINTF {analise(getTab(), needLines);} LEFT_PAR {analise(0, needLines = 0);} TEXTO {analise(0, needLines);} RIGHT_PAR {analise(0, needLines);} PVIRGULA {analise(0, needLines); needLines = 1;}
+	PRINTF {analise(getTab(), needLines);} LEFT_PAR {analise(0, needLines = 0);} Printf_Param RIGHT_PAR {analise(0, needLines);} PVIRGULA {analise(0, needLines); needLines = 1;}
+	;
+
+Printf_Param:
+	TEXTO {analise(0, needLines);} Printf_Argumentos
+	;
+
+Printf_Argumentos:
+	/* Empty */
+	| VIRGULA T_STRING Printf_Argumentos
 	;
 
 Scanf:
@@ -193,6 +211,7 @@ void main(void){
 			printf("\n\n");
 			imprimeAnalise();
 			printf("\n");
+			printf("\nTotal de erros: %d\n", totalError);
 			for(i = 0; i < 20 ; i++)
 			{
 				if(error[i].qnt > 0)
@@ -200,7 +219,6 @@ void main(void){
 					printf("%s: %d\n", error[i].nome, error[i].qnt);
 				}
 			}
-			printf("\nTotal de erros: %d\n", totalError);
 		}
 		printf("\n");
 	}
