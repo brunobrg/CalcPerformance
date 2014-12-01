@@ -2,6 +2,7 @@
 
  #include "bison.h"
  int contadorDeLinhas = 1;
+ int contadorEspacos = 0;
  int espacos = 0;
  int linhas_puladas = 0;
  int OK = 1;
@@ -17,18 +18,22 @@ NUMBER [0-9]
 %% /*REGRAS:*/
 " "									{espacos++;}
 "\t"								{inserirSaidaAnalise(contadorDeLinhas, "Error03", 0, 0); addError("Error03"); }
-"\n"								{contadorDeLinhas++; linhas_puladas++; espacos = 0;}
+"\n"								{contadorDeLinhas++; linhas_puladas++; espacos = 0; contadorEspacos = 0;}
 "/*"								return BCOMENT;
 "*/"								return ECOMENT;
 "*"								return LCOMENT;
 ";"									return PVIRGULA;
 ","									return VIRGULA;
 "static"							return STATIC;
-(P|p)+(rototipo)					return _PROTOTIPO;
-(S|s)+(truct)						return _STRUCT;
-(I|i)+(nclude)						return _INCLUDE;
+"/* Prototipo */"					return _PROTOTIPO;
+"/* Structs */"						return _STRUCT;
+"/* Includes */"					return _INCLUDE;
+"/* Main */"						return _MAIN;
+"/* Variaveis Globais */"			return _VGLOBAIS;
+"/* Funcoes */"						return _FUNC;
 "espera"							return ESPERA;
 "fimFunc"+"\n"+						{yyterminate(); return FIMFUNC;}
+"main"								return MAIN;
 (f|F)+(uncao)+							return FUNCAO;
 "declare"							return DECLARACAO;
 "("									return LEFT_PAR;

@@ -89,9 +89,12 @@ extern int yydebug;
     VARUSE = 299,
     TIPO = 300,
     STATIC = 301,
-    _PROTOTIPO = 302,
-    _INCLUDE = 303,
-    _STRUCT = 304
+    MAIN = 302,
+    _PROTOTIPO = 303,
+    _INCLUDE = 304,
+    _STRUCT = 305,
+    _MAIN = 306,
+    _VGLOBAIS = 307
   };
 #endif
 
@@ -100,12 +103,12 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 21 "bison.y" /* yacc.c:1909  */
+#line 22 "bison.y" /* yacc.c:1909  */
 
    char * strval;
    int    intval;
 
-#line 109 "bison.h" /* yacc.c:1909  */
+#line 112 "bison.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

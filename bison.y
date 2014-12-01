@@ -12,6 +12,7 @@ int tab = 0;
 int Possui_Comment_Criador = 0;
 int Possui_Comment_Include = 0;
 int Possui_Comment_Prot = 0;
+int Possui_Comment_Main = 0;
 int terminou = 0;
 extern Error error[20];
 extern int totalError;
@@ -36,8 +37,8 @@ extern int totalError;
 %token PVIRGULA LEFT_PAR RIGHT_PAR VIRGULA
 %token ABRE_CHAVE FECHA_CHAVE
 %token <strval> PRINTF SCANF VARUSE
-%token TIPO STATIC
-%token _PROTOTIPO _INCLUDE _STRUCT
+%token TIPO STATIC MAIN
+%token _PROTOTIPO _INCLUDE _STRUCT _MAIN _VGLOBAIS
 
 %start Etapas
 
@@ -45,7 +46,7 @@ extern int totalError;
 
 Etapas:
 	/* Empty */
-	| {needLines = 0;} Comentario {inicializaAnalise();} _Includes {needLines = 2;} Structs {needLines = 2;} _Prototipos {needLines = 2;} VGlobais {needLines = 2;} Funcoes
+	| {needLines = 0;} Comentario {inicializaAnalise();} _Includes {needLines = 2;} Structs {needLines = 2;} _Prototipos {needLines = 2;} _VGlobais {needLines = 2;} _Main {needLines = 2;} Funcoes
 	;
 
 Comentario:
@@ -97,6 +98,11 @@ Prot_Parametros2:
 	| VIRGULA {analise(0, needLines);} TIPO {analise(1, needLines);} Prot_Parametros2
 	;
 
+_VGlobais:
+	/* Empty */
+	| _VGLOBAIS VGlobais
+	;
+
 VGlobais:
 	/* Empty */
 	| STATIC {analise(getTab(), needLines); needLines = 0;} Dec_Global VGlobais
@@ -104,6 +110,14 @@ VGlobais:
 
 Dec_Global:
 	TIPO {analise(1, needLines);} T_STRING {analise(1, 0);} PVIRGULA {analise(0, 0); needLines = 1;}
+	;
+
+_Main:
+	BCOMENT {analise(getTab(), needLines); needLines = 0; Possui_Comment_Main = 1;} _MAIN {analise(1, needLines);} ECOMENT {analise(1, needLines); needLines = 1;} Main
+	;
+
+Main:
+	TIPO {analise(getTab(), needLines); needLines = 1;} MAIN {analise(getTab(), needLines); needLines = 0;} LEFT_PAR {analise(0, needLines);} Parametros1 RIGHT_PAR {analise(0, 0);} Estrutura
 	;
 
 Funcoes:
@@ -175,7 +189,7 @@ void main(void){
 			printf("--OK!");
 		else
 		{
-			printf("\n");
+			printf("\n\n");
 			imprimeAnalise();
 			printf("\n");
 			for(i = 0; i < 20 ; i++)
@@ -193,19 +207,19 @@ void main(void){
 
 yyerror(char *s){
 	OK = 0;
-	printf("Erro na linha: %d\n", contadorDeLinhas);
+	printf("Erro na linha: %d:%d\n", contadorDeLinhas, contadorEspacos);
 	
 	if(!Possui_Comment_Criador)
 	{
-		printf("\n---Codigo nao no formato requisitado, por favor, insira comentarios do criador---\n");
+		printf("\n---Codigo nao se encontra no formato requisitado, por favor, insira comentarios do criador---\n");
 	}
 	if(!Possui_Comment_Include)
 	{
-		printf("\n---Codigo nao no formato requisitado, por favor, insira comentarios antes dos INCLUDES---\n");
+		printf("\n---Codigo nao se encontra no formato requisitado, por favor, insira comentarios antes dos INCLUDES---\n");
 	}
 	if(!Possui_Comment_Prot)
 	{
-		printf("\n---Codigo nao no formato requisitado, por favor, insira comentarios dos PROTOTIPOS---\n");
+		printf("\n---Codigo nao se encontra no formato requisitado, por favor, insira comentarios dos PROTOTIPOS---\n");
 	}
 }
 

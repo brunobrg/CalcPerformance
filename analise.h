@@ -26,6 +26,7 @@ extern int linhas_puladas;
 extern int contadorDeLinhas;
 extern int tab;
 extern int OK;
+extern int contadorEspacos;
 int totalError;
 Error error[20];
 SaidaAnalise * saidaAna;
@@ -65,6 +66,8 @@ void analise(int e, int l)
 	char strLinha[3];
 	char strSaida[200];
 
+
+	contadorEspacos++;
 	if(espacos != e)
 	{	
 		strcpy(erro, "Error01");
