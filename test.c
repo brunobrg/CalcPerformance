@@ -2,14 +2,14 @@
 *
 */
 
-/* include */
+/* Includes */
 #include <stdio.h>
 
-/* Prototipo */
+/* Prototipos */
 int haha();
 
+/* Main */
 int main ()
 {
 
-	return 0;
 }

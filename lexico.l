@@ -21,11 +21,11 @@ NUMBER [0-9]
 "\n"								{contadorDeLinhas++; linhas_puladas++; espacos = 0; contadorEspacos = 0;}
 "/*"								return BCOMENT;
 "*/"								return ECOMENT;
-"*"								return LCOMENT;
+"*"									return LCOMENT;
 ";"									return PVIRGULA;
 ","									return VIRGULA;
 "static"							return STATIC;
-"/* Prototipo */"					return _PROTOTIPO;
+"/* Prototipos */"					return _PROTOTIPO;
 "/* Structs */"						return _STRUCT;
 "/* Includes */"					return _INCLUDE;
 "/* Main */"						return _MAIN;
@@ -34,7 +34,7 @@ NUMBER [0-9]
 "espera"							return ESPERA;
 "fimFunc"+"\n"+						{yyterminate(); return FIMFUNC;}
 "main"								return MAIN;
-(f|F)+(uncao)+							return FUNCAO;
+(f|F)+(uncao)+						return FUNCAO;
 "declare"							return DECLARACAO;
 "("									return LEFT_PAR;
 ")"									return RIGHT_PAR;

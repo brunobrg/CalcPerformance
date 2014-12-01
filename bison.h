@@ -94,7 +94,8 @@ extern int yydebug;
     _INCLUDE = 304,
     _STRUCT = 305,
     _MAIN = 306,
-    _VGLOBAIS = 307
+    _VGLOBAIS = 307,
+    _FUNC = 308
   };
 #endif
 
@@ -103,12 +104,12 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 22 "bison.y" /* yacc.c:1909  */
+#line 20 "bison.y" /* yacc.c:1909  */
 
    char * strval;
    int    intval;
 
-#line 112 "bison.h" /* yacc.c:1909  */
+#line 113 "bison.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

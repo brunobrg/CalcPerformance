@@ -9,13 +9,11 @@ extern int OK;
 int needLines = 0;
 int needSpace = 0;
 int tab = 0;
-int Possui_Comment_Criador = 0;
-int Possui_Comment_Include = 0;
-int Possui_Comment_Prot = 0;
-int Possui_Comment_Main = 0;
 int terminou = 0;
 extern Error error[20];
 extern int totalError;
+
+Comment comment_criador, comment_prototipo, comment_include, comment_main, comment_funcoes, comment_vglobais;
 
 %}
 
@@ -38,7 +36,7 @@ extern int totalError;
 %token ABRE_CHAVE FECHA_CHAVE
 %token <strval> PRINTF SCANF VARUSE
 %token TIPO STATIC MAIN
-%token _PROTOTIPO _INCLUDE _STRUCT _MAIN _VGLOBAIS
+%token _PROTOTIPO _INCLUDE _STRUCT _MAIN _VGLOBAIS _FUNC
 
 %start Etapas
 
@@ -46,12 +44,12 @@ extern int totalError;
 
 Etapas:
 	/* Empty */
-	| {needLines = 0;} Comentario {inicializaAnalise();} _Includes {needLines = 2;} Structs {needLines = 2;} _Prototipos {needLines = 2;} _VGlobais {needLines = 2;} _Main {needLines = 2;} Funcoes
+	| {needLines = 0;} Comentario {inicializaAnalise();} _Includes {needLines = 2;} Structs {needLines = 2;} _Prototipos {needLines = 2;} _VGlobais {needLines = 2;} _Main {needLines = 2;} _Funcoes
 	;
 
 Comentario:
 	/* Empty */
-	| BCOMENT {Possui_Comment_Criador = 1; }Comentario_Texto ECOMENT {needLines = 2;}
+	| BCOMENT {comment_criador.possui = 1; }Comentario_Texto ECOMENT {needLines = 2;}
 	; 
 
 Comentario_Texto:
@@ -62,7 +60,7 @@ Comentario_Texto:
 
 _Includes:
 	/* Empty */
-	| BCOMENT {analise(getTab(), needLines); needLines = 0; Possui_Comment_Include = 1;} _INCLUDE {analise(1, needLines);} ECOMENT {analise(1, needLines); needLines = 1;} Includes
+	| _INCLUDE {analise(getTab(), needLines = 2); needLines = 1;} Includes
 	;
 
 Includes:
@@ -76,7 +74,7 @@ Structs:
 
 _Prototipos:
 	/* Empty */
-	| BCOMENT {analise(getTab(), needLines); needLines = 0; Possui_Comment_Prot = 1;} _PROTOTIPO {analise(1, needLines);} ECOMENT {analise(1, needLines); needLines = 1;} Prototipos
+	| _PROTOTIPO {analise(getTab(), needLines = 2); needLines = 1;} Prototipos
 	;
 
 Prototipos:
@@ -100,7 +98,7 @@ Prot_Parametros2:
 
 _VGlobais:
 	/* Empty */
-	| _VGLOBAIS VGlobais
+	| _VGLOBAIS {analise(getTab(), needLines = 2); needLines = 1;} VGlobais
 	;
 
 VGlobais:
@@ -113,11 +111,16 @@ Dec_Global:
 	;
 
 _Main:
-	BCOMENT {analise(getTab(), needLines); needLines = 0; Possui_Comment_Main = 1;} _MAIN {analise(1, needLines);} ECOMENT {analise(1, needLines); needLines = 1;} Main
+	_MAIN {analise(getTab(), needLines = 2); needLines = 1;} Main
 	;
 
 Main:
 	TIPO {analise(getTab(), needLines); needLines = 1;} MAIN {analise(getTab(), needLines); needLines = 0;} LEFT_PAR {analise(0, needLines);} Parametros1 RIGHT_PAR {analise(0, 0);} Estrutura
+	;
+
+_Funcoes:
+	/* Empty */
+	| _FUNC Funcoes
 	;
 
 Funcoes:
@@ -179,8 +182,14 @@ Esc_Var:
 %%
 
 void main(void){
+	comment_criador.possui = 0;
+	comment_prototipo.possui = 0;
+	comment_include.possui = 0;
+	comment_main.possui = 0;
+	comment_vglobais.possui = 0;
+
 	yyparse();
-	if(terminou)
+	if(terminou && OK)
 	{
 		int i = 0;
 
@@ -206,18 +215,20 @@ void main(void){
 }
 
 yyerror(char *s){
-	OK = 0;
+	if(OK)
 	printf("Erro na linha: %d:%d\n", contadorDeLinhas, contadorEspacos);
 	
-	if(!Possui_Comment_Criador)
+	OK = 0;
+
+	if(comment_criador.possui == 0)
 	{
 		printf("\n---Codigo nao se encontra no formato requisitado, por favor, insira comentarios do criador---\n");
 	}
-	if(!Possui_Comment_Include)
+	if(comment_include.possui == 0)
 	{
 		printf("\n---Codigo nao se encontra no formato requisitado, por favor, insira comentarios antes dos INCLUDES---\n");
 	}
-	if(!Possui_Comment_Prot)
+	if(comment_prototipo.possui == 0)
 	{
 		printf("\n---Codigo nao se encontra no formato requisitado, por favor, insira comentarios dos PROTOTIPOS---\n");
 	}

@@ -5,6 +5,12 @@
 #define MAX 100
 
 /* structs */
+typedef struct _Comment
+{
+	int existe;
+	int possui;
+}Comment;
+
 typedef struct _Error
 {
 	char nome[7];
@@ -27,6 +33,8 @@ extern int contadorDeLinhas;
 extern int tab;
 extern int OK;
 extern int contadorEspacos;
+extern Comment comment_criador, comment_prototipo, comment_include, comment_main, comment_funcoes, comment_vglobais;
+
 int totalError;
 Error error[20];
 SaidaAnalise * saidaAna;
@@ -57,6 +65,12 @@ void inicializaAnalise()
 		strcat(error[i].nome, aux);
 		error[i].qnt = 0;
 	}
+
+	comment_criador.possui = 0;
+	comment_prototipo.possui = 0;
+	comment_include.possui = 0;
+	comment_main.possui = 0;
+	comment_vglobais.possui = 0;
 }
 
 /* Funcoes das Analises */
