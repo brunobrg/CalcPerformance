@@ -1,4 +1,4 @@
-/* meu codigo */
+/* copyright */
 
 /* Includes */
 #include <stdio.h>
@@ -13,7 +13,13 @@ main()
 {
     int a;
     int b;
+    a = 2;
+    b = a;
+    x = 2;
+
     printf("auehaueuhae");
 
-    return 0;
+    if(x)
+
+	return 0;
 }

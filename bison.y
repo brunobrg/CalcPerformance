@@ -154,6 +154,7 @@ Bloco:
 	| Declaracao Bloco
 	| {if(declarando)needLines = 2; declarando = inicioBloco = 0;}  Printf Bloco
 	| {if(declarando)needLines = 2; declarando = inicioBloco = 0;}  Scanf Bloco
+	| {if(declarando)needLines = 2; declarando = inicioBloco = 0;}  If Bloco
 	| {if(declarando)needLines = 2; declarando = inicioBloco = 0;}  Atribuicao Bloco
 	| {needLines = 2; if(inicioBloco) needLines = 1; inicioBloco = 0;} Return Bloco
 	;
@@ -164,7 +165,7 @@ Return:
 	;
 
 Declaracao:
-	TIPO {analise(getTab(), needLines); declarando = 1;} T_STRING {analise(1, 0); analiseBloco(inicioBloco, $3);} PVIRGULA {analise(0, 0); needLines = 1;}
+	TIPO {analise(getTab(), needLines); declarando = 1;} T_STRING {analise(1, 0); analiseBloco(inicioBloco, $3); inserirVar(&varDeclaradas, $1, $3, "escopo");} PVIRGULA {analise(0, 0); needLines = 1;}
 	;
 
 Printf:
@@ -189,8 +190,18 @@ Esc_Var:
 	| VIRGULA T_STRING Esc_Var
 	;
 
+If
+	: IF LEFT_PAR Expressao RIGHT_PAR Fim_If
+	;
+
+Fim_If
+	:
+	| PVIRGULA
+	| Estrutura
+	;
+
 Atribuicao:
-	Variavel ATRIBUI {Inserir(&saida, " = ", contadorDeLinhas);} Expressao
+	Variavel ATRIBUI {} Expressao PVIRGULA
 	;
 
 Expressao:

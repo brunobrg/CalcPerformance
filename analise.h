@@ -268,6 +268,8 @@ void inserirVar(Variaveis ** variaveis, char tipo[10], char var[15], char escopo
 		Variaveis * aux2 = *variaveis;
 		while(aux2->proximo != NULL)
 		{
+			if(!strcmp(aux->var, aux2->var) && !strcmp(aux->escopo, aux2->escopo))
+				return;
 			aux2 = aux2->proximo;
 		}
 		aux2->proximo = aux;
@@ -290,17 +292,14 @@ void analisaVariaveis()
 		aux2 = declaradas;
 		while(aux2 != NULL)
 		{
-			if(!strcmp(aux->var, aux2->var) && !strcmp(aux->escopo, aux2->escopo))
+			if(!strcmp(aux->var, aux2->var) )//&& !strcmp(aux->escopo, aux2->escopo))
 			{
-				encontrou = 1;
+				aux2->utilizada = 1;
 				break;
 			}
+			aux2 = aux2->proximo;
 		}
-		if(encontrou)
-		{
-			aux->utilizada = 1;
-		}
-
+		aux = aux->proximo;
 	}
 
 	aux = declaradas;
@@ -317,3 +316,13 @@ void analisaVariaveis()
 	}
 }
 
+void imprimeVarUsadas()
+{
+	Variaveis * aux = varUsadas;
+
+	while(aux != NULL)
+	{
+		printf("var: %s\n", aux->var);
+		aux = aux->proximo;
+	}
+}
