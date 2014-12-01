@@ -16,10 +16,10 @@ main()
 {
     int x;
     int y;
-
-    printf("hahaha");
     int g;
     float h;
+
+    printf("hahaha", x);
 }
 
 /* Funcoes */

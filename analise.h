@@ -16,6 +16,22 @@ typedef struct _Error
 	int qnt;
 }Error;
 
+typedef struct _Variaveis
+{
+	int linha;
+	int utilizada;
+	char var[15];
+	char tipo[10];
+	char escopo[15];
+	struct _Variaveis * proximo;
+}Variaveis;
+
+typedef struct _ChamadaVariavel
+{
+	int linha;
+	char estrutura[15];
+}ChamadaVariavel;
+
 typedef struct _SaidaAnalise
 {
 	char erro[7];
@@ -41,6 +57,8 @@ int totalError;
 Error error[20];
 SaidaAnalise * saidaAna;
 
+Variaveis * varDeclaradas;
+Variaveis * varUsadas;
 
 /* prototipos */
 void inicializaAnalise();
@@ -51,11 +69,15 @@ void inserirSaidaAnalise(int, int, char[], char[], int, int);
 SaidaAnalise * addSaidaAnalise(int, int, char[7], char[15], int, int);
 void imprimeAnalise();
 
+Variaveis * addVar(int, char[], char[], char[]);
+void inserirVar(Variaveis **, char[],char[], char[]);
 
 void inicializaAnalise()
 {
 	int i;
 
+	varDeclaradas = NULL;
+	varUsadas = NULL;
 	espacos = 0;
 	linhas_puladas = 0;
 	totalError = 0;
@@ -211,7 +233,87 @@ void imprimeAnalise()
 		{
 			printf("Linha %d:%d -- %s - Declaracao da variavel \"%s\" nao se encontra no inicio do bloco.\n", aux->contL, aux->contE, aux->erro, aux->strAux);
 		}
+		else if(!(strcmp(aux->erro, "Error10")))
+		{
+			printf("Linha %d:%d -- %s - Variavel \"%s\" declarada nao utilizada.\n", aux->contL, aux->contE, aux->erro, aux->strAux);
+		}
 		aux = aux->proximo;
 	}
 
 }
+
+
+Variaveis * addVar(int linha, char tipo[10], char var[15], char escopo[15])
+{
+	Variaveis * add = (Variaveis*) malloc(sizeof(Variaveis));
+	add->linha = linha;
+	strcpy(add->tipo, tipo);
+	strcpy(add->var, var);
+	strcpy(add->escopo, escopo);
+	add->proximo = NULL;
+	add->utilizada = 0;
+
+	return add;
+}
+void inserirVar(Variaveis ** variaveis, char tipo[10], char var[15], char escopo[15])
+{
+	Variaveis * aux = addVar(contadorDeLinhas, tipo, var, escopo);
+
+	if(*variaveis == NULL)
+	{
+		*variaveis = aux;
+	}
+	else
+	{
+		Variaveis * aux2 = *variaveis;
+		while(aux2->proximo != NULL)
+		{
+			aux2 = aux2->proximo;
+		}
+		aux2->proximo = aux;
+	}
+}
+
+void analisaVariaveis()
+{
+	Variaveis * declaradas = varDeclaradas;
+	Variaveis * usadas = varUsadas;
+	Variaveis * aux;
+	char erro[7];
+
+	aux = usadas;
+	while(aux != NULL)
+	{
+		Variaveis * aux2;
+		int encontrou = 0;
+
+		aux2 = declaradas;
+		while(aux2 != NULL)
+		{
+			if(!strcmp(aux->var, aux2->var) && !strcmp(aux->escopo, aux2->escopo))
+			{
+				encontrou = 1;
+				break;
+			}
+		}
+		if(encontrou)
+		{
+			aux->utilizada = 1;
+		}
+
+	}
+
+	aux = declaradas;
+	while(aux != NULL)
+	{
+		if(aux->utilizada == 0)
+		{
+			OK = 0;
+			strcpy(erro, "Error10");
+			addError(erro);
+			inserirSaidaAnalise(aux->linha, 2, erro, aux->var, 0, 0);
+		}
+		aux = aux->proximo;
+	}
+}
+

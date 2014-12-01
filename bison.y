@@ -18,7 +18,6 @@ int inicioBloco = 0;
 int declarando = 0;
 
 Comment comment_criador, comment_prototipo, comment_include, comment_main, comment_funcoes, comment_vglobais;
-
 %}
 
 %union {
@@ -26,7 +25,7 @@ Comment comment_criador, comment_prototipo, comment_include, comment_main, comme
    int    intval;
 }
 
-%token <strval> T_NUMBER
+%token <strval> T_NUMBER TIPO
 %token <strval> T_STRING TEXTO  STR
 %token AND OU IF DO THEN WHILE ELSE NOT 
 %token TERMINOU DECLARACAO FIMFUNC FUNCAO ESPERA EXECUTE PASSA
@@ -39,7 +38,7 @@ Comment comment_criador, comment_prototipo, comment_include, comment_main, comme
 %token PVIRGULA LEFT_PAR RIGHT_PAR VIRGULA
 %token ABRE_CHAVE FECHA_CHAVE RETURN
 %token <strval> PRINTF SCANF VARUSE
-%token TIPO STATIC MAIN
+%token STATIC MAIN
 %token _PROTOTIPO _INCLUDE _STRUCT _MAIN _VGLOBAIS _FUNC
 
 %start Etapas
@@ -111,7 +110,7 @@ VGlobais:
 	;
 
 Dec_Global:
-	TIPO {analise(1, needLines);} T_STRING {analise(1, 0);} PVIRGULA {analise(0, 0); needLines = 1;}
+	TIPO {analise(1, needLines);} T_STRING {analise(1, 0); inserirVar(&varDeclaradas, $1, $3, "global");} PVIRGULA {analise(0, 0); needLines = 1;}
 	;
 
 _Main:
@@ -155,6 +154,7 @@ Bloco:
 	| Declaracao Bloco
 	| {if(declarando)needLines = 2; declarando = inicioBloco = 0;}  Printf Bloco
 	| {if(declarando)needLines = 2; declarando = inicioBloco = 0;}  Scanf Bloco
+	| {if(declarando)needLines = 2; declarando = inicioBloco = 0;}  Atribuicao Bloco
 	| {needLines = 2; if(inicioBloco) needLines = 1; inicioBloco = 0;} Return Bloco
 	;
 
@@ -189,6 +189,39 @@ Esc_Var:
 	| VIRGULA T_STRING Esc_Var
 	;
 
+Atribuicao:
+	Variavel ATRIBUI {Inserir(&saida, " = ", contadorDeLinhas);} Expressao
+	;
+
+Expressao:
+	Numero
+	| Variavel
+	| Numero Operador Expressao
+	| Variavel Operador Expressao
+	;
+
+Variavel:
+	T_STRING  {inserirVar(&varUsadas, "null", $1, "escopo");}
+	;
+	
+Numero:
+	T_NUMBER 
+   	;
+   	
+Operador:
+  	MAIOR  {}
+  	| MENOR {}
+  	| IGUAL {}
+  	| OU {}
+  	| AND {}
+	| NOT {}
+  	| SOMA {}
+  	| SUBT {} 
+  	| MULT {} 
+  	| DIVIDE {} 
+  	| ATRIBUI {} 
+  	;
+
 
 %%
 
@@ -202,6 +235,7 @@ void main(void){
 	yyparse();
 	if(terminou)
 	{
+		analisaVariaveis();
 		int i = 0;
 
 		printf("\nAnalise terminada");
