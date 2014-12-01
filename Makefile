@@ -1,7 +1,7 @@
 all: removeold compilabison compilaflex compilac
 
 removeold:
-	rm -rf programa output.lua
+	rm -rf programa
 compilabison: bison.y
 	bison -d -o bison.c bison.y
 compilaflex: lexico.l

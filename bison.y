@@ -176,6 +176,8 @@ void main(void){
 		else
 		{
 			printf("\n");
+			imprimeAnalise();
+			printf("\n");
 			for(i = 0; i < 20 ; i++)
 			{
 				if(error[i].qnt > 0)

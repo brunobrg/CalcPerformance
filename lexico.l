@@ -16,7 +16,7 @@ NUMBER [0-9]
 
 %% /*REGRAS:*/
 " "									{espacos++;}
-"\t"								{printf("Linha %d -- Error03 - Nao utilizar tabulacoes\n", contadorDeLinhas); }
+"\t"								{inserirSaidaAnalise(contadorDeLinhas, "Error03", 0, 0); addError("Error03"); }
 "\n"								{contadorDeLinhas++; linhas_puladas++; espacos = 0;}
 "/*"								return BCOMENT;
 "*/"								return ECOMENT;

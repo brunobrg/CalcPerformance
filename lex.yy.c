@@ -923,7 +923,7 @@ YY_RULE_SETUP
 case 2:
 YY_RULE_SETUP
 #line 19 "lexico.l"
-{printf("Linha %d -- Error03 - Nao utilizar tabulacoes\n", contadorDeLinhas); }
+{inserirSaidaAnalise(contadorDeLinhas, "Error03", 0, 0); addError("Error03"); }
 	YY_BREAK
 case 3:
 /* rule 3 can match eol */
