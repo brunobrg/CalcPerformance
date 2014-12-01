@@ -2,14 +2,14 @@
 *
 */
 
-/* Include */
+/* include */
 #include <stdio.h>
 
-int
-main()
-{
-    int a;
-    int b;
+/* Prototipo */
+int haha();
 
-    printf("auehauhe");
+int main ()
+{
+
+	return 0;
 }

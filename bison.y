@@ -12,6 +12,7 @@ int tab = 0;
 int Possui_Comment_Criador = 0;
 int Possui_Comment_Include = 0;
 int Possui_Comment_Prot = 0;
+int terminou = 0;
 extern Error error[20];
 extern int totalError;
 
@@ -165,30 +166,32 @@ Esc_Var:
 
 void main(void){
 	yyparse();
-
-	int i = 0;
-
-	printf("\nAnalise terminada");
-	if(OK)
-		printf("--OK!");
-	else
+	if(terminou)
 	{
-		printf("\n");
-		for(i = 0; i < 20 ; i++)
+		int i = 0;
+
+		printf("\nAnalise terminada");
+		if(OK)
+			printf("--OK!");
+		else
 		{
-			if(error[i].qnt > 0)
+			printf("\n");
+			for(i = 0; i < 20 ; i++)
 			{
-				printf("%s: %d\n", error[i].nome, error[i].qnt);
+				if(error[i].qnt > 0)
+				{
+					printf("%s: %d\n", error[i].nome, error[i].qnt);
+				}
 			}
+			printf("\nTotal de erros: %d\n", totalError);
 		}
-		printf("\nTotal de erros: %d\n", totalError);
+		printf("\n");
 	}
-	printf("\n");
 }
 
 yyerror(char *s){
 	OK = 0;
-	("Erro na linha: %d\n", contadorDeLinhas);
+	printf("Erro na linha: %d\n", contadorDeLinhas);
 	
 	if(!Possui_Comment_Criador)
 	{
@@ -204,4 +207,8 @@ yyerror(char *s){
 	}
 }
 
-int yywrap(void) { return 1; }
+int yywrap(void)
+{
+	terminou = 1;
+	return 1; 
+}

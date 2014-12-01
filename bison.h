@@ -100,7 +100,7 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 20 "bison.y" /* yacc.c:1909  */
+#line 21 "bison.y" /* yacc.c:1909  */
 
    char * strval;
    int    intval;
