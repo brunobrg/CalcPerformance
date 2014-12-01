@@ -934,7 +934,7 @@ case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
 #line 22 "lexico.l"
-{contadorDeLinhas++; linhas_puladas++; espacos = 0; contadorEspacos = 1;}
+{contadorDeLinhas++; linhas_puladas++; espacos = 0; contadorEspacos = 0;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
@@ -1004,7 +1004,7 @@ return ESPERA;
 case 17:
 YY_RULE_SETUP
 #line 36 "lexico.l"
-return	RETURN;
+return RETURN;
 	YY_BREAK
 case 18:
 /* rule 18 can match eol */

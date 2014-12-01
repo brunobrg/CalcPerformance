@@ -15,6 +15,7 @@ int tab = 0;
 int terminou = 0;
 
 int inicioBloco = 0;
+int declarando = 0;
 
 Comment comment_criador, comment_prototipo, comment_include, comment_main, comment_funcoes, comment_vglobais;
 
@@ -152,18 +153,18 @@ Estrutura:
 Bloco:
 	/* Empty */
 	| Declaracao Bloco
-	| {inicioBloco = 0;}  Printf Bloco
-	| {inicioBloco = 0;}  Scanf Bloco
-	| {inicioBloco = 0;} Return Bloco
+	| {if(declarando)needLines = 2; declarando = inicioBloco = 0;}  Printf Bloco
+	| {if(declarando)needLines = 2; declarando = inicioBloco = 0;}  Scanf Bloco
+	| {needLines = 2; if(inicioBloco) needLines = 1; inicioBloco = 0;} Return Bloco
 	;
 
 Return:
-	RETURN T_STRING PVIRGULA
-	| RETURN T_NUMBER  PVIRGULA
+	RETURN {analise(getTab()+1, needLines);} T_STRING {analise(0, 0);} PVIRGULA {analise(0, 0);} 
+	| RETURN {analise(getTab()+1, needLines);} T_NUMBER {analise(0, 0);} PVIRGULA {analise(0, 0);} 
 	;
 
 Declaracao:
-	TIPO {analise(getTab(), needLines);} T_STRING {analise(1, 0); analiseBloco(inicioBloco, $3);} PVIRGULA {analise(0, 0); needLines = 1;}
+	TIPO {analise(getTab(), needLines); declarando = 1;} T_STRING {analise(1, 0); analiseBloco(inicioBloco, $3);} PVIRGULA {analise(0, 0); needLines = 1;}
 	;
 
 Printf:
@@ -176,7 +177,7 @@ Printf_Param:
 
 Printf_Argumentos:
 	/* Empty */
-	| VIRGULA T_STRING Printf_Argumentos
+	| VIRGULA {analise(0, needLines);} T_STRING {analise(1, needLines);} Printf_Argumentos
 	;
 
 Scanf:

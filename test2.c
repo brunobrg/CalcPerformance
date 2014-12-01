@@ -18,7 +18,6 @@ main()
     int y;
 
     printf("hahaha");
-
     int g;
     float h;
 }

@@ -2,15 +2,16 @@
 
 /* Includes */
 #include <stdio.h>
-#include    <stdlib.h>
+#include <stdlib.h>
 
 /* Main */
-int main()
+int
+main()
 {
-	int num;
-	printf("entre com um numero: ");
-	scanf("%d", &num);
-	printf("o numero %d + 2 = ", num);
-	printf("hah");
-	return 0;
+    int a;
+    int b;
+
+    printf("auehaueuhae");
+
+    return 0;
 }

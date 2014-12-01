@@ -80,11 +80,12 @@ int tab = 0;
 int terminou = 0;
 
 int inicioBloco = 0;
+int declarando = 0;
 
 Comment comment_criador, comment_prototipo, comment_include, comment_main, comment_funcoes, comment_vglobais;
 
 
-#line 88 "bison.c" /* yacc.c:339  */
+#line 89 "bison.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -179,12 +180,12 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 23 "bison.y" /* yacc.c:355  */
+#line 24 "bison.y" /* yacc.c:355  */
 
    char * strval;
    int    intval;
 
-#line 188 "bison.c" /* yacc.c:355  */
+#line 189 "bison.c" /* yacc.c:355  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
@@ -199,7 +200,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 203 "bison.c" /* yacc.c:358  */
+#line 204 "bison.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -441,16 +442,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  3
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   86
+#define YYLAST   85
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  55
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  84
+#define YYNNTS  90
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  107
+#define YYNRULES  113
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  164
+#define YYNSTATES  170
 
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
@@ -501,17 +502,18 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    48,    48,    50,    50,    50,    50,    50,    50,    50,
-      50,    53,    55,    55,    58,    60,    61,    64,    66,    66,
-      69,    71,    71,    71,    71,    71,    71,    74,    78,    80,
-      80,    83,    85,    89,    89,    89,    89,    89,    92,    94,
-      94,    97,    99,    99,    99,   102,   104,   104,   107,   109,
-     109,   113,   113,   113,   117,   117,   121,   121,   121,   121,
-     121,   124,   126,   126,   129,   131,   131,   135,   135,   135,
-     135,   135,   138,   140,   140,   140,   143,   145,   145,   145,
-     145,   149,   149,   149,   152,   154,   155,   155,   156,   156,
-     157,   157,   161,   162,   166,   166,   166,   170,   170,   170,
-     170,   174,   174,   177,   179,   183,   187,   188
+       0,    49,    49,    51,    51,    51,    51,    51,    51,    51,
+      51,    54,    56,    56,    59,    61,    62,    65,    67,    67,
+      70,    72,    72,    72,    72,    72,    72,    75,    79,    81,
+      81,    84,    86,    90,    90,    90,    90,    90,    93,    95,
+      95,    98,   100,   100,   100,   103,   105,   105,   108,   110,
+     110,   114,   114,   114,   118,   118,   122,   122,   122,   122,
+     122,   125,   127,   127,   130,   132,   132,   136,   136,   136,
+     136,   136,   139,   141,   141,   141,   144,   146,   146,   146,
+     146,   150,   150,   150,   153,   155,   156,   156,   157,   157,
+     158,   158,   162,   162,   162,   163,   163,   163,   167,   167,
+     167,   171,   171,   171,   171,   175,   175,   178,   180,   180,
+     180,   184,   188,   189
 };
 #endif
 
@@ -538,8 +540,9 @@ static const char *const yytname[] =
   "$@32", "Funcoes", "$@33", "Funcao", "$@34", "$@35", "$@36", "$@37",
   "Parametros1", "$@38", "$@39", "Parametros2", "$@40", "$@41", "$@42",
   "Estrutura", "$@43", "$@44", "Bloco", "$@45", "$@46", "$@47", "Return",
-  "Declaracao", "$@48", "$@49", "Printf", "$@50", "$@51", "$@52",
-  "Printf_Param", "$@53", "Printf_Argumentos", "Scanf", "Esc_Var", YY_NULLPTR
+  "$@48", "$@49", "$@50", "$@51", "Declaracao", "$@52", "$@53", "Printf",
+  "$@54", "$@55", "$@56", "Printf_Param", "$@57", "Printf_Argumentos",
+  "$@58", "$@59", "Scanf", "Esc_Var", YY_NULLPTR
 };
 #endif
 
@@ -562,7 +565,7 @@ static const yytype_uint16 yytoknum[] =
 #define yypact_value_is_default(Yystate) \
   (!!((Yystate) == (-118)))
 
-#define YYTABLE_NINF -91
+#define YYTABLE_NINF -96
 
 #define yytable_value_is_error(Yytable_value) \
   0
@@ -571,23 +574,23 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-       5,    10,   -25,  -118,  -118,  -118,    -4,   -32,    -4,    -4,
-     -15,  -118,  -118,  -118,  -118,  -118,   -11,  -118,  -118,  -118,
-    -118,    -2,   -27,  -118,  -118,  -118,    19,   -22,   -28,  -118,
-    -118,  -118,   -22,  -118,  -118,    -6,    23,  -118,   -19,   -23,
-    -118,  -118,  -118,  -118,  -118,  -118,    11,    -7,   -14,   -12,
-     -18,  -118,  -118,  -118,   -19,  -118,  -118,  -118,  -118,   -11,
-      -9,    31,  -118,   -10,    -5,  -118,  -118,     1,  -118,  -118,
-    -118,    -3,     3,  -118,     4,     7,  -118,    -5,  -118,  -118,
-      12,  -118,  -118,    41,  -118,     0,  -118,     6,  -118,  -118,
-    -118,    13,    16,     3,    43,  -118,  -118,  -118,  -118,    14,
-       6,    17,  -118,  -118,    20,  -118,  -118,  -118,  -118,    15,
-     -40,    14,  -118,  -118,    18,    21,    22,    25,   -40,  -118,
-      45,    46,  -118,  -118,   -40,    26,   -40,     9,   -40,  -118,
-    -118,  -118,    28,  -118,    50,  -118,    24,    32,  -118,    17,
-      33,  -118,   -24,  -118,  -118,  -118,  -118,    52,  -118,    58,
-      34,  -118,    35,   -24,  -118,    36,  -118,  -118,    67,  -118,
-      38,    36,  -118,  -118
+       5,     8,   -23,  -118,  -118,  -118,    -4,   -34,    -4,    -4,
+     -17,  -118,  -118,  -118,  -118,  -118,   -13,  -118,  -118,  -118,
+    -118,    -3,   -30,  -118,  -118,  -118,    17,   -24,   -29,  -118,
+    -118,  -118,   -24,  -118,  -118,    -9,    21,  -118,   -21,   -25,
+    -118,  -118,  -118,  -118,  -118,  -118,     7,    -7,   -18,   -14,
+     -20,  -118,  -118,  -118,   -21,  -118,  -118,  -118,  -118,   -13,
+     -11,    29,  -118,   -12,    -8,  -118,  -118,    -1,  -118,  -118,
+    -118,    -6,     0,  -118,     9,     4,  -118,    -8,  -118,  -118,
+      10,  -118,  -118,    38,  -118,    -2,  -118,     1,  -118,  -118,
+    -118,    11,    13,     0,    39,  -118,  -118,  -118,  -118,    12,
+       1,    14,  -118,  -118,    16,  -118,  -118,  -118,  -118,     2,
+     -40,    12,  -118,  -118,    15,    18,    19,    20,   -40,  -118,
+      47,    51,  -118,  -118,   -40,    22,   -40,    54,   -40,  -118,
+    -118,  -118,    23,  -118,    53,  -118,    60,    62,  -118,    14,
+      30,  -118,   -26,  -118,  -118,  -118,  -118,    63,  -118,    65,
+      31,    34,    35,  -118,    36,   -26,  -118,  -118,  -118,    33,
+    -118,  -118,  -118,  -118,    37,    71,  -118,  -118,    33,  -118
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -606,26 +609,26 @@ static const yytype_uint8 yydefact[] =
        0,    53,    58,     0,    66,     0,    37,    72,    68,    43,
       73,     0,     0,    41,     0,    59,    69,    44,    74,     0,
       72,    76,    81,    60,     0,    77,    75,    82,    70,     0,
-      84,     0,    78,    94,     0,     0,     0,     0,    84,    71,
-       0,     0,    83,    97,    84,     0,    84,     0,    84,    85,
-      79,    95,     0,    87,     0,    89,     0,     0,    91,    76,
-       0,    98,     0,    93,    92,    80,    96,     0,   106,     0,
-       0,   101,     0,     0,   105,   103,    99,   107,     0,   102,
-       0,   103,   100,   104
+      84,     0,    78,    98,     0,     0,     0,     0,    84,    71,
+       0,     0,    83,   101,    84,     0,    84,    92,    84,    85,
+      79,    99,     0,    87,     0,    89,     0,     0,    91,    76,
+       0,   102,     0,    93,    96,    80,   100,     0,   112,     0,
+       0,     0,     0,   105,     0,     0,   111,    94,    97,   107,
+     103,   113,   108,   106,     0,     0,   104,   109,   107,   110
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
     -118,  -118,  -118,  -118,  -118,  -118,  -118,  -118,  -118,  -118,
-    -118,     8,  -118,  -118,    27,  -118,  -118,  -118,  -118,  -118,
-    -118,  -118,  -118,    40,  -118,  -118,  -118,  -118,  -118,  -118,
-    -118,   -17,  -118,  -118,  -118,  -118,    29,  -118,  -118,  -118,
+    -118,     6,  -118,  -118,    24,  -118,  -118,  -118,  -118,  -118,
+    -118,  -118,  -118,    44,  -118,  -118,  -118,  -118,  -118,  -118,
+    -118,   -16,  -118,  -118,  -118,  -118,    25,  -118,  -118,  -118,
     -118,  -118,  -118,  -118,  -118,  -118,  -118,  -118,  -118,  -118,
-       2,  -118,  -118,  -118,  -118,  -118,  -118,   -20,  -118,  -118,
-     -62,  -118,  -118,  -118,   -33,  -118,  -118,  -117,  -118,  -118,
+       3,  -118,  -118,  -118,  -118,  -118,  -118,   -22,  -118,  -118,
+     -58,  -118,  -118,  -118,   -27,  -118,  -118,  -117,  -118,  -118,
     -118,  -118,  -118,  -118,  -118,  -118,  -118,  -118,  -118,  -118,
-    -118,   -80,  -118,   -71
+    -118,  -118,  -118,  -118,  -118,   -86,  -118,  -118,  -118,   -70
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
@@ -638,8 +641,8 @@ static const yytype_int16 yydefgoto[] =
       74,    45,    49,    56,    63,    75,    87,    99,    58,    64,
       70,    71,    77,    83,    92,   100,   111,    91,    94,   101,
      106,   109,   120,   139,   103,   107,   110,   114,   115,   116,
-     117,   128,   118,   121,   140,   124,   132,   147,   160,   152,
-     155,   159,   126,   150
+     117,   128,   136,   151,   137,   152,   118,   121,   140,   124,
+     132,   147,   164,   154,   159,   163,   165,   168,   126,   150
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -647,28 +650,28 @@ static const yytype_int16 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int16 yytable[] =
 {
-       8,   129,   -90,   -86,   -88,    -2,   113,   133,     4,   135,
-       3,   138,   136,   137,   148,   149,    13,    14,    11,    15,
-      18,    23,    24,    29,    30,    33,    40,    41,    42,    44,
-      52,     9,    53,    51,    55,    68,    57,    66,    69,    73,
-      81,   -65,    78,    76,    82,    88,    89,    98,    86,   130,
-     131,    95,    90,    96,   102,   142,   105,   151,   108,   122,
-     143,   112,   153,   134,   123,   141,   125,   127,   144,   146,
-     154,   161,    37,   156,   162,   158,    97,   145,   119,    84,
-     104,   163,   157,    62,     0,     0,    65
+       8,   129,   -90,   -86,   -88,    -2,   113,   133,     3,   135,
+       4,   138,   148,   149,    13,    14,    11,    15,    18,    24,
+      23,    29,    30,    40,    33,    41,    42,    44,    53,    51,
+      52,     9,    55,    68,    57,    66,    69,    73,   -65,    78,
+      76,    82,    88,    98,    89,    81,    86,    90,   112,    95,
+      96,   130,   102,   105,   108,   131,   122,   -95,   142,   134,
+     141,   123,   127,   125,   143,   144,   146,   156,   153,   155,
+     157,   158,   162,   166,   160,   167,    37,    97,   104,    62,
+      84,   145,   169,    65,   119,   161
 };
 
-static const yytype_int16 yycheck[] =
+static const yytype_uint8 yycheck[] =
 {
-       4,   118,    42,    43,    44,     0,    46,   124,    33,   126,
-       0,   128,     3,     4,    38,    39,     8,     9,    50,    34,
-      31,    23,    49,     4,    46,    53,    32,     4,    47,    52,
-      37,    35,    46,    22,    46,     4,    54,    46,    48,    38,
-      36,    46,    39,    46,    37,     4,    46,     4,    36,     4,
-       4,    38,    46,    37,    40,     5,    39,     5,    38,    41,
-      36,    46,     4,    37,    43,    37,    44,    42,    36,    36,
-      36,     4,    32,    38,    36,    39,    93,   139,   111,    77,
-     100,   161,   153,    54,    -1,    -1,    59
+       4,   118,    42,    43,    44,     0,    46,   124,     0,   126,
+      33,   128,    38,    39,     8,     9,    50,    34,    31,    49,
+      23,     4,    46,    32,    53,     4,    47,    52,    46,    22,
+      37,    35,    46,     4,    54,    46,    48,    38,    46,    39,
+      46,    37,     4,     4,    46,    36,    36,    46,    46,    38,
+      37,     4,    40,    39,    38,     4,    41,     3,     5,    37,
+      37,    43,    42,    44,     4,     3,    36,    36,     5,     4,
+      36,    36,    39,    36,    38,     4,    32,    93,   100,    54,
+      77,   139,   168,    59,   111,   155
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -686,12 +689,12 @@ static const yytype_uint8 yystos[] =
       83,    36,    37,   108,   105,    87,    36,   101,     4,    46,
       46,   112,   109,    88,   113,    38,    37,    86,     4,   102,
      110,   114,    40,   119,   112,    39,   115,   120,    38,   116,
-     121,   111,    46,    46,   122,   123,   124,   125,   127,   119,
-     117,   128,    41,    43,   130,    44,   137,    42,   126,   122,
-       4,     4,   131,   122,    37,   122,     3,     4,   122,   118,
-     129,    37,     5,    36,    36,   115,    36,   132,    38,    39,
-     138,     5,   134,     4,    36,   135,    38,   138,    39,   136,
-     133,     4,    36,   136
+     121,   111,    46,    46,   122,   123,   124,   125,   131,   119,
+     117,   132,    41,    43,   134,    44,   143,    42,   126,   122,
+       4,     4,   135,   122,    37,   122,   127,   129,   122,   118,
+     133,    37,     5,     4,     3,   115,    36,   136,    38,    39,
+     144,   128,   130,     5,   138,     4,    36,    36,    36,   139,
+      38,   144,    39,   140,   137,   141,    36,     4,   142,   140
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
@@ -706,8 +709,9 @@ static const yytype_uint8 yyr1[] =
       98,   103,   104,   103,   105,   106,   105,   108,   109,   110,
      111,   107,   112,   113,   114,   112,   115,   116,   117,   118,
      115,   120,   121,   119,   122,   122,   123,   122,   124,   122,
-     125,   122,   126,   126,   128,   129,   127,   131,   132,   133,
-     130,   135,   134,   136,   136,   137,   138,   138
+     125,   122,   127,   128,   126,   129,   130,   126,   132,   133,
+     131,   135,   136,   137,   134,   139,   138,   140,   141,   142,
+     140,   143,   144,   144
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
@@ -722,8 +726,9 @@ static const yytype_uint8 yyr2[] =
       10,     0,     0,     3,     0,     0,     3,     0,     0,     0,
        0,    10,     0,     0,     0,     5,     0,     0,     0,     0,
        7,     0,     0,     5,     0,     2,     0,     3,     0,     3,
-       0,     3,     3,     3,     0,     0,     5,     0,     0,     0,
-       8,     0,     3,     0,     3,     5,     1,     3
+       0,     3,     0,     0,     5,     0,     0,     5,     0,     0,
+       5,     0,     0,     0,     8,     0,     3,     0,     0,     0,
+       5,     5,     1,     3
 };
 
 
@@ -1400,361 +1405,409 @@ yyreduce:
   switch (yyn)
     {
         case 3:
-#line 50 "bison.y" /* yacc.c:1646  */
+#line 51 "bison.y" /* yacc.c:1646  */
     {needLines = 0;}
-#line 1406 "bison.c" /* yacc.c:1646  */
+#line 1411 "bison.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 50 "bison.y" /* yacc.c:1646  */
+#line 51 "bison.y" /* yacc.c:1646  */
     {inicializaAnalise();}
-#line 1412 "bison.c" /* yacc.c:1646  */
+#line 1417 "bison.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 50 "bison.y" /* yacc.c:1646  */
+#line 51 "bison.y" /* yacc.c:1646  */
     {needLines = 2;}
-#line 1418 "bison.c" /* yacc.c:1646  */
+#line 1423 "bison.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 50 "bison.y" /* yacc.c:1646  */
+#line 51 "bison.y" /* yacc.c:1646  */
     {needLines = 2;}
-#line 1424 "bison.c" /* yacc.c:1646  */
+#line 1429 "bison.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 50 "bison.y" /* yacc.c:1646  */
+#line 51 "bison.y" /* yacc.c:1646  */
     {needLines = 2;}
-#line 1430 "bison.c" /* yacc.c:1646  */
+#line 1435 "bison.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 50 "bison.y" /* yacc.c:1646  */
+#line 51 "bison.y" /* yacc.c:1646  */
     {needLines = 2;}
-#line 1436 "bison.c" /* yacc.c:1646  */
+#line 1441 "bison.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 50 "bison.y" /* yacc.c:1646  */
+#line 51 "bison.y" /* yacc.c:1646  */
     {needLines = 2;}
-#line 1442 "bison.c" /* yacc.c:1646  */
+#line 1447 "bison.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 55 "bison.y" /* yacc.c:1646  */
+#line 56 "bison.y" /* yacc.c:1646  */
     {comment_criador.possui = 1; }
-#line 1448 "bison.c" /* yacc.c:1646  */
+#line 1453 "bison.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 55 "bison.y" /* yacc.c:1646  */
+#line 56 "bison.y" /* yacc.c:1646  */
     {needLines = 2;}
-#line 1454 "bison.c" /* yacc.c:1646  */
+#line 1459 "bison.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 66 "bison.y" /* yacc.c:1646  */
+#line 67 "bison.y" /* yacc.c:1646  */
     {analise(getTab(), needLines = 2); needLines = 1;}
-#line 1460 "bison.c" /* yacc.c:1646  */
+#line 1465 "bison.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 71 "bison.y" /* yacc.c:1646  */
+#line 72 "bison.y" /* yacc.c:1646  */
     {analise(getTab(), needLines);}
-#line 1466 "bison.c" /* yacc.c:1646  */
+#line 1471 "bison.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 71 "bison.y" /* yacc.c:1646  */
+#line 72 "bison.y" /* yacc.c:1646  */
     {analise(1, 0);}
-#line 1472 "bison.c" /* yacc.c:1646  */
+#line 1477 "bison.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 71 "bison.y" /* yacc.c:1646  */
+#line 72 "bison.y" /* yacc.c:1646  */
     {analise(0, 0);}
-#line 1478 "bison.c" /* yacc.c:1646  */
+#line 1483 "bison.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 71 "bison.y" /* yacc.c:1646  */
+#line 72 "bison.y" /* yacc.c:1646  */
     {analise(0, 0);}
-#line 1484 "bison.c" /* yacc.c:1646  */
+#line 1489 "bison.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 71 "bison.y" /* yacc.c:1646  */
+#line 72 "bison.y" /* yacc.c:1646  */
     {analise(0, 0);}
-#line 1490 "bison.c" /* yacc.c:1646  */
+#line 1495 "bison.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 80 "bison.y" /* yacc.c:1646  */
+#line 81 "bison.y" /* yacc.c:1646  */
     {analise(getTab(), needLines = 2); needLines = 1;}
-#line 1496 "bison.c" /* yacc.c:1646  */
+#line 1501 "bison.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 89 "bison.y" /* yacc.c:1646  */
+#line 90 "bison.y" /* yacc.c:1646  */
     {analise(getTab(), needLines); needLines = 0;}
-#line 1502 "bison.c" /* yacc.c:1646  */
+#line 1507 "bison.c" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 89 "bison.y" /* yacc.c:1646  */
+#line 90 "bison.y" /* yacc.c:1646  */
     {analise(1, needLines);}
-#line 1508 "bison.c" /* yacc.c:1646  */
+#line 1513 "bison.c" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 89 "bison.y" /* yacc.c:1646  */
+#line 90 "bison.y" /* yacc.c:1646  */
     {analise(0, needLines);}
-#line 1514 "bison.c" /* yacc.c:1646  */
+#line 1519 "bison.c" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 89 "bison.y" /* yacc.c:1646  */
+#line 90 "bison.y" /* yacc.c:1646  */
     {analise(0, needLines);}
-#line 1520 "bison.c" /* yacc.c:1646  */
+#line 1525 "bison.c" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 89 "bison.y" /* yacc.c:1646  */
+#line 90 "bison.y" /* yacc.c:1646  */
     {analise(needSpace, 0); needLines = 1;}
-#line 1526 "bison.c" /* yacc.c:1646  */
+#line 1531 "bison.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 94 "bison.y" /* yacc.c:1646  */
+#line 95 "bison.y" /* yacc.c:1646  */
     {analise(0, needLines);}
-#line 1532 "bison.c" /* yacc.c:1646  */
+#line 1537 "bison.c" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 99 "bison.y" /* yacc.c:1646  */
+#line 100 "bison.y" /* yacc.c:1646  */
     {analise(0, needLines);}
-#line 1538 "bison.c" /* yacc.c:1646  */
+#line 1543 "bison.c" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 99 "bison.y" /* yacc.c:1646  */
+#line 100 "bison.y" /* yacc.c:1646  */
     {analise(1, needLines);}
-#line 1544 "bison.c" /* yacc.c:1646  */
+#line 1549 "bison.c" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 104 "bison.y" /* yacc.c:1646  */
+#line 105 "bison.y" /* yacc.c:1646  */
     {analise(getTab(), needLines = 2); needLines = 1;}
-#line 1550 "bison.c" /* yacc.c:1646  */
+#line 1555 "bison.c" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 109 "bison.y" /* yacc.c:1646  */
+#line 110 "bison.y" /* yacc.c:1646  */
     {analise(getTab(), needLines); needLines = 0;}
-#line 1556 "bison.c" /* yacc.c:1646  */
+#line 1561 "bison.c" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 113 "bison.y" /* yacc.c:1646  */
+#line 114 "bison.y" /* yacc.c:1646  */
     {analise(1, needLines);}
-#line 1562 "bison.c" /* yacc.c:1646  */
+#line 1567 "bison.c" /* yacc.c:1646  */
     break;
 
   case 52:
-#line 113 "bison.y" /* yacc.c:1646  */
+#line 114 "bison.y" /* yacc.c:1646  */
     {analise(1, 0);}
-#line 1568 "bison.c" /* yacc.c:1646  */
+#line 1573 "bison.c" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 113 "bison.y" /* yacc.c:1646  */
+#line 114 "bison.y" /* yacc.c:1646  */
     {analise(0, 0); needLines = 1;}
-#line 1574 "bison.c" /* yacc.c:1646  */
+#line 1579 "bison.c" /* yacc.c:1646  */
     break;
 
   case 54:
-#line 117 "bison.y" /* yacc.c:1646  */
+#line 118 "bison.y" /* yacc.c:1646  */
     {analise(getTab(), needLines = 2); needLines = 1;}
-#line 1580 "bison.c" /* yacc.c:1646  */
+#line 1585 "bison.c" /* yacc.c:1646  */
     break;
 
   case 56:
-#line 121 "bison.y" /* yacc.c:1646  */
+#line 122 "bison.y" /* yacc.c:1646  */
     {analise(getTab(), needLines); needLines = 1;}
-#line 1586 "bison.c" /* yacc.c:1646  */
+#line 1591 "bison.c" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 121 "bison.y" /* yacc.c:1646  */
+#line 122 "bison.y" /* yacc.c:1646  */
     {analise(getTab(), needLines); needLines = 0;}
-#line 1592 "bison.c" /* yacc.c:1646  */
+#line 1597 "bison.c" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 121 "bison.y" /* yacc.c:1646  */
+#line 122 "bison.y" /* yacc.c:1646  */
     {analise(0, needLines);}
-#line 1598 "bison.c" /* yacc.c:1646  */
+#line 1603 "bison.c" /* yacc.c:1646  */
     break;
 
   case 59:
-#line 121 "bison.y" /* yacc.c:1646  */
+#line 122 "bison.y" /* yacc.c:1646  */
     {analise(0, 0);}
-#line 1604 "bison.c" /* yacc.c:1646  */
+#line 1609 "bison.c" /* yacc.c:1646  */
     break;
 
   case 62:
-#line 126 "bison.y" /* yacc.c:1646  */
+#line 127 "bison.y" /* yacc.c:1646  */
     {analise(getTab(), needLines = 2); needLines = 1;}
-#line 1610 "bison.c" /* yacc.c:1646  */
+#line 1615 "bison.c" /* yacc.c:1646  */
     break;
 
   case 65:
-#line 131 "bison.y" /* yacc.c:1646  */
+#line 132 "bison.y" /* yacc.c:1646  */
     {needLines = 1;}
-#line 1616 "bison.c" /* yacc.c:1646  */
+#line 1621 "bison.c" /* yacc.c:1646  */
     break;
 
   case 67:
-#line 135 "bison.y" /* yacc.c:1646  */
+#line 136 "bison.y" /* yacc.c:1646  */
     {analise(getTab(), needLines); needLines = 1;}
-#line 1622 "bison.c" /* yacc.c:1646  */
+#line 1627 "bison.c" /* yacc.c:1646  */
     break;
 
   case 68:
-#line 135 "bison.y" /* yacc.c:1646  */
+#line 136 "bison.y" /* yacc.c:1646  */
     {analise(getTab(), needLines); needLines = 0;}
-#line 1628 "bison.c" /* yacc.c:1646  */
+#line 1633 "bison.c" /* yacc.c:1646  */
     break;
 
   case 69:
-#line 135 "bison.y" /* yacc.c:1646  */
+#line 136 "bison.y" /* yacc.c:1646  */
     {analise(0, needLines);}
-#line 1634 "bison.c" /* yacc.c:1646  */
+#line 1639 "bison.c" /* yacc.c:1646  */
     break;
 
   case 70:
-#line 135 "bison.y" /* yacc.c:1646  */
+#line 136 "bison.y" /* yacc.c:1646  */
     {analise(0, 0);}
-#line 1640 "bison.c" /* yacc.c:1646  */
+#line 1645 "bison.c" /* yacc.c:1646  */
     break;
 
   case 73:
-#line 140 "bison.y" /* yacc.c:1646  */
+#line 141 "bison.y" /* yacc.c:1646  */
     {analise(0, needLines);}
-#line 1646 "bison.c" /* yacc.c:1646  */
+#line 1651 "bison.c" /* yacc.c:1646  */
     break;
 
   case 74:
-#line 140 "bison.y" /* yacc.c:1646  */
+#line 141 "bison.y" /* yacc.c:1646  */
     {analise(1, needLines);}
-#line 1652 "bison.c" /* yacc.c:1646  */
+#line 1657 "bison.c" /* yacc.c:1646  */
     break;
 
   case 77:
-#line 145 "bison.y" /* yacc.c:1646  */
+#line 146 "bison.y" /* yacc.c:1646  */
     {analise(0, needLines);}
-#line 1658 "bison.c" /* yacc.c:1646  */
+#line 1663 "bison.c" /* yacc.c:1646  */
     break;
 
   case 78:
-#line 145 "bison.y" /* yacc.c:1646  */
+#line 146 "bison.y" /* yacc.c:1646  */
     {analise(1, needLines);}
-#line 1664 "bison.c" /* yacc.c:1646  */
+#line 1669 "bison.c" /* yacc.c:1646  */
     break;
 
   case 79:
-#line 145 "bison.y" /* yacc.c:1646  */
+#line 146 "bison.y" /* yacc.c:1646  */
     {analise(1, needLines);}
-#line 1670 "bison.c" /* yacc.c:1646  */
+#line 1675 "bison.c" /* yacc.c:1646  */
     break;
 
   case 81:
-#line 149 "bison.y" /* yacc.c:1646  */
+#line 150 "bison.y" /* yacc.c:1646  */
     {analise(getTab(), needLines = 1); addTab();}
-#line 1676 "bison.c" /* yacc.c:1646  */
+#line 1681 "bison.c" /* yacc.c:1646  */
     break;
 
   case 82:
-#line 149 "bison.y" /* yacc.c:1646  */
+#line 150 "bison.y" /* yacc.c:1646  */
     {inicioBloco = 1;}
-#line 1682 "bison.c" /* yacc.c:1646  */
+#line 1687 "bison.c" /* yacc.c:1646  */
     break;
 
   case 83:
-#line 149 "bison.y" /* yacc.c:1646  */
+#line 150 "bison.y" /* yacc.c:1646  */
     {remTab(); analise(getTab(), needLines = 1);}
-#line 1688 "bison.c" /* yacc.c:1646  */
+#line 1693 "bison.c" /* yacc.c:1646  */
     break;
 
   case 86:
-#line 155 "bison.y" /* yacc.c:1646  */
-    {inicioBloco = 0;}
-#line 1694 "bison.c" /* yacc.c:1646  */
+#line 156 "bison.y" /* yacc.c:1646  */
+    {if(declarando)needLines = 2; declarando = inicioBloco = 0;}
+#line 1699 "bison.c" /* yacc.c:1646  */
     break;
 
   case 88:
-#line 156 "bison.y" /* yacc.c:1646  */
-    {inicioBloco = 0;}
-#line 1700 "bison.c" /* yacc.c:1646  */
+#line 157 "bison.y" /* yacc.c:1646  */
+    {if(declarando)needLines = 2; declarando = inicioBloco = 0;}
+#line 1705 "bison.c" /* yacc.c:1646  */
     break;
 
   case 90:
-#line 157 "bison.y" /* yacc.c:1646  */
-    {inicioBloco = 0;}
-#line 1706 "bison.c" /* yacc.c:1646  */
+#line 158 "bison.y" /* yacc.c:1646  */
+    {needLines = 2; if(inicioBloco) needLines = 1; inicioBloco = 0;}
+#line 1711 "bison.c" /* yacc.c:1646  */
+    break;
+
+  case 92:
+#line 162 "bison.y" /* yacc.c:1646  */
+    {analise(getTab()+1, needLines);}
+#line 1717 "bison.c" /* yacc.c:1646  */
+    break;
+
+  case 93:
+#line 162 "bison.y" /* yacc.c:1646  */
+    {analise(0, 0);}
+#line 1723 "bison.c" /* yacc.c:1646  */
     break;
 
   case 94:
-#line 166 "bison.y" /* yacc.c:1646  */
-    {analise(getTab(), needLines);}
-#line 1712 "bison.c" /* yacc.c:1646  */
+#line 162 "bison.y" /* yacc.c:1646  */
+    {analise(0, 0);}
+#line 1729 "bison.c" /* yacc.c:1646  */
     break;
 
   case 95:
-#line 166 "bison.y" /* yacc.c:1646  */
-    {analise(1, 0); analiseBloco(inicioBloco, (yyvsp[0].strval));}
-#line 1718 "bison.c" /* yacc.c:1646  */
+#line 163 "bison.y" /* yacc.c:1646  */
+    {analise(getTab()+1, needLines);}
+#line 1735 "bison.c" /* yacc.c:1646  */
     break;
 
   case 96:
-#line 166 "bison.y" /* yacc.c:1646  */
-    {analise(0, 0); needLines = 1;}
-#line 1724 "bison.c" /* yacc.c:1646  */
+#line 163 "bison.y" /* yacc.c:1646  */
+    {analise(0, 0);}
+#line 1741 "bison.c" /* yacc.c:1646  */
     break;
 
   case 97:
-#line 170 "bison.y" /* yacc.c:1646  */
-    {analise(getTab(), needLines);}
-#line 1730 "bison.c" /* yacc.c:1646  */
+#line 163 "bison.y" /* yacc.c:1646  */
+    {analise(0, 0);}
+#line 1747 "bison.c" /* yacc.c:1646  */
     break;
 
   case 98:
-#line 170 "bison.y" /* yacc.c:1646  */
-    {analise(0, needLines = 0);}
-#line 1736 "bison.c" /* yacc.c:1646  */
+#line 167 "bison.y" /* yacc.c:1646  */
+    {analise(getTab(), needLines); declarando = 1;}
+#line 1753 "bison.c" /* yacc.c:1646  */
     break;
 
   case 99:
-#line 170 "bison.y" /* yacc.c:1646  */
-    {analise(0, needLines);}
-#line 1742 "bison.c" /* yacc.c:1646  */
+#line 167 "bison.y" /* yacc.c:1646  */
+    {analise(1, 0); analiseBloco(inicioBloco, (yyvsp[0].strval));}
+#line 1759 "bison.c" /* yacc.c:1646  */
     break;
 
   case 100:
-#line 170 "bison.y" /* yacc.c:1646  */
-    {analise(0, needLines); needLines = 1;}
-#line 1748 "bison.c" /* yacc.c:1646  */
+#line 167 "bison.y" /* yacc.c:1646  */
+    {analise(0, 0); needLines = 1;}
+#line 1765 "bison.c" /* yacc.c:1646  */
     break;
 
   case 101:
-#line 174 "bison.y" /* yacc.c:1646  */
+#line 171 "bison.y" /* yacc.c:1646  */
+    {analise(getTab(), needLines);}
+#line 1771 "bison.c" /* yacc.c:1646  */
+    break;
+
+  case 102:
+#line 171 "bison.y" /* yacc.c:1646  */
+    {analise(0, needLines = 0);}
+#line 1777 "bison.c" /* yacc.c:1646  */
+    break;
+
+  case 103:
+#line 171 "bison.y" /* yacc.c:1646  */
     {analise(0, needLines);}
-#line 1754 "bison.c" /* yacc.c:1646  */
+#line 1783 "bison.c" /* yacc.c:1646  */
+    break;
+
+  case 104:
+#line 171 "bison.y" /* yacc.c:1646  */
+    {analise(0, needLines); needLines = 1;}
+#line 1789 "bison.c" /* yacc.c:1646  */
+    break;
+
+  case 105:
+#line 175 "bison.y" /* yacc.c:1646  */
+    {analise(0, needLines);}
+#line 1795 "bison.c" /* yacc.c:1646  */
+    break;
+
+  case 108:
+#line 180 "bison.y" /* yacc.c:1646  */
+    {analise(0, needLines);}
+#line 1801 "bison.c" /* yacc.c:1646  */
+    break;
+
+  case 109:
+#line 180 "bison.y" /* yacc.c:1646  */
+    {analise(1, needLines);}
+#line 1807 "bison.c" /* yacc.c:1646  */
     break;
 
 
-#line 1758 "bison.c" /* yacc.c:1646  */
+#line 1811 "bison.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1982,7 +2035,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 192 "bison.y" /* yacc.c:1906  */
+#line 193 "bison.y" /* yacc.c:1906  */
 
 
 void main(void){
