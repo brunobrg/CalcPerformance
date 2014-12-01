@@ -10,17 +10,21 @@
 int func1();
 int func2();
 
-
-static int x;
-static int y;
-static float u;
-
 /* Main */
 int
 main()
 {
-	int x;
-	int y;
+    int x;
+    int y;
 
     printf("hahaha");
+
+    int g;
+}
+
+/* Funcoes */
+int
+func1()
+{
+    int z;
 }

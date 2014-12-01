@@ -120,12 +120,12 @@ Main:
 
 _Funcoes:
 	/* Empty */
-	| _FUNC Funcoes
+	| _FUNC {analise(getTab(), needLines = 2); needLines = 1;} Funcoes
 	;
 
 Funcoes:
 	/* Empty */
-	| {needLines = 2;} Funcao Funcoes
+	| {needLines = 1;} Funcao Funcoes
 	;
 
 Funcao: 
@@ -143,26 +143,18 @@ Parametros2:
 	;
 
 Estrutura:
-	ABRE_CHAVE {analise(getTab(), needLines = 1); addTab();} Bloco FECHA_CHAVE {remTab();}
+	ABRE_CHAVE {analise(getTab(), needLines = 1); addTab();} Bloco FECHA_CHAVE {remTab(); analise(getTab(), needLines = 1);}
 	;
 
 Bloco:
-	Declaracao_Bloco {needLines = 2;} Comando_Bloco
-	;
-
-Declaracao_Bloco:
 	/* Empty */
-	| Declaracao {needLines = 1;} Declaracao_Bloco
+	| Declaracao Bloco
+	| Printf Bloco
+	| Scanf Bloco
 	;
 
 Declaracao:
 	TIPO {analise(getTab(), needLines);} T_STRING {analise(1, 0);} PVIRGULA {analise(0, 0); needLines = 1;}
-	;
-
-Comando_Bloco:
-	/* Empty */
-	| Printf Comando_Bloco
-	| Scanf Comando_Bloco
 	;
 
 Printf:
@@ -189,7 +181,7 @@ void main(void){
 	comment_vglobais.possui = 0;
 
 	yyparse();
-	if(terminou && OK)
+	if(terminou)
 	{
 		int i = 0;
 
@@ -215,7 +207,6 @@ void main(void){
 }
 
 yyerror(char *s){
-	if(OK)
 	printf("Erro na linha: %d:%d\n", contadorDeLinhas, contadorEspacos);
 	
 	OK = 0;

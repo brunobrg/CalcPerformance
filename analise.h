@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <string.h>
 #define MAX 100
 
 /* structs */
@@ -33,6 +32,7 @@ extern int contadorDeLinhas;
 extern int tab;
 extern int OK;
 extern int contadorEspacos;
+extern int usouTab;
 extern Comment comment_criador, comment_prototipo, comment_include, comment_main, comment_funcoes, comment_vglobais;
 
 int totalError;
@@ -82,7 +82,21 @@ void analise(int e, int l)
 
 
 	contadorEspacos++;
-	if(espacos != e)
+	if(l > 0 && linhas_puladas != l)
+	{
+		OK = 0;
+		strcpy(erro, "Error02");
+		addError(erro);
+		inserirSaidaAnalise(contadorDeLinhas, erro, l, linhas_puladas);
+		//printf("Linha %d --%s - Linhas necessarias: %d, Linhas utilizadas: %d\n", contadorDeLinhas , erro, l, linhas_puladas);
+	}
+	else if(usouTab)
+	{
+		OK = 0;
+		inserirSaidaAnalise(contadorDeLinhas, "Error03", 0, 0); 
+		addError("Error03");
+	}
+	else if(espacos != e && usouTab == 0)
 	{	
 		strcpy(erro, "Error01");
 		addError(erro);
@@ -91,14 +105,7 @@ void analise(int e, int l)
 		//printf("Linha %d -- %s - Espacos necessarios: %d, Espacos utilizados: %d\n", contadorDeLinhas, erro, e, espacos);
 		
 	}
-	if(linhas_puladas != l)
-	{
-		OK = 0;
-		strcpy(erro, "Error02");
-		addError(erro);
-		inserirSaidaAnalise(contadorDeLinhas, erro, l, linhas_puladas);
-		//printf("Linha %d --%s - Linhas necessarias: %d, Linhas utilizadas: %d\n", contadorDeLinhas , erro, l, linhas_puladas);
-	}
+	usouTab = 0;
 	linhas_puladas = 0;
 	espacos = 0;
 }

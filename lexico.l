@@ -5,6 +5,7 @@
  int contadorEspacos = 0;
  int espacos = 0;
  int linhas_puladas = 0;
+ int usouTab = 0;
  int OK = 1;
 
 %}
@@ -17,7 +18,7 @@ NUMBER [0-9]
 
 %% /*REGRAS:*/
 " "									{espacos++;}
-"\t"								{inserirSaidaAnalise(contadorDeLinhas, "Error03", 0, 0); addError("Error03"); }
+"\t"								{usouTab = 1;}
 "\n"								{contadorDeLinhas++; linhas_puladas++; espacos = 0; contadorEspacos = 0;}
 "/*"								return BCOMENT;
 "*/"								return ECOMENT;
