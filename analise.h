@@ -43,6 +43,14 @@ typedef struct _SaidaAnalise
     struct _SaidaAnalise * proximo;
 }SaidaAnalise;
 
+typedef struct _SaidaError
+{
+	char palavra[15];
+	char str[50];
+	int linha;
+	int espaco;
+}SaidaError;
+
 /* variaveis globais */
 extern int espacos;
 extern int linhas_puladas;
@@ -56,7 +64,7 @@ extern Comment comment_criador, comment_prototipo, comment_include, comment_main
 int totalError;
 Error error[20];
 SaidaAnalise * saidaAna;
-
+SaidaError * saidaError;
 Variaveis * varDeclaradas;
 Variaveis * varUsadas;
 
@@ -78,6 +86,7 @@ void inicializaAnalise()
 
 	varDeclaradas = NULL;
 	varUsadas = NULL;
+	saidaError = NULL;
 	espacos = 0;
 	linhas_puladas = 0;
 	totalError = 0;

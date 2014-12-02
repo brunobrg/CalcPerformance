@@ -20,6 +20,11 @@ main()
     printf("auehaueuhae");
 
     if(x)
+    {
+    	x = x + 2;
+    }
+    else
+    	y =2;
 
 	return 0;
 }

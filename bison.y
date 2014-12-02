@@ -29,7 +29,7 @@ Comment comment_criador, comment_prototipo, comment_include, comment_main, comme
 %token <strval> T_STRING TEXTO  STR
 %token AND OU IF DO THEN WHILE ELSE NOT 
 %token TERMINOU DECLARACAO FIMFUNC FUNCAO ESPERA EXECUTE PASSA
-%token MAIOR MENOR IGUAL SOMA SUBT MULT DIVIDE ATRIBUI 
+%token MAIOR MENOR IGUAL SOMA SUBT MULT DIVIDE ATRIBUI MOD ENDERECO
 %token NUMERICAL
 
 
@@ -38,7 +38,7 @@ Comment comment_criador, comment_prototipo, comment_include, comment_main, comme
 %token PVIRGULA LEFT_PAR RIGHT_PAR VIRGULA
 %token ABRE_CHAVE FECHA_CHAVE RETURN
 %token <strval> PRINTF SCANF VARUSE
-%token STATIC MAIN
+%token STATIC MAIN error
 %token _PROTOTIPO _INCLUDE _STRUCT _MAIN _VGLOBAIS _FUNC
 
 %start Etapas
@@ -157,6 +157,7 @@ Bloco:
 	| {if(declarando)needLines = 2; declarando = inicioBloco = 0;}  If Bloco
 	| {if(declarando)needLines = 2; declarando = inicioBloco = 0;}  Atribuicao Bloco
 	| {needLines = 2; if(inicioBloco) needLines = 1; inicioBloco = 0;} Return Bloco
+	| error {yyerrok; yyclearin; printf("Erro aqui! no bloco porra\n\n");}
 	;
 
 Return:
@@ -187,7 +188,7 @@ Scanf:
 
 Esc_Var:
 	RIGHT_PAR
-	| VIRGULA T_STRING Esc_Var
+	| VIRGULA ENDERECO T_STRING Esc_Var
 	;
 
 If
@@ -197,7 +198,14 @@ If
 Fim_If
 	:
 	| PVIRGULA
-	| Estrutura
+	| Estrutura Else
+	| Else
+	;
+
+Else
+	: ELSE
+	| ELSE If
+	| ELSE Estrutura
 	;
 
 Atribuicao:
@@ -231,6 +239,7 @@ Operador:
   	| MULT {} 
   	| DIVIDE {} 
   	| ATRIBUI {} 
+  	| MOD
   	;
 
 
@@ -272,7 +281,6 @@ void main(void){
 
 yyerror(char *s){
 	printf("Erro na linha: %d:%d\n", contadorDeLinhas, contadorEspacos);
-	
 	OK = 0;
 
 	if(comment_criador.possui == 0)

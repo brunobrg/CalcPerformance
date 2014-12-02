@@ -10,7 +10,7 @@
 
 %}
 /* TIPOS */
-STRING [a-z]+[a-zA-Z0-9]*
+STRING [a-z|A-Z]+[a-zA-Z0-9]*
 SPACE [\r]+
 NUMBER [0-9]
 
@@ -59,9 +59,11 @@ NUMBER [0-9]
 (\>)+ 					    			return MAIOR;
 (\<)+ 					    			return MENOR;
 (\=)+ 					    			return IGUAL;
+(\%)+								return MOD;
 "!="								return NOT;
 (\|\|)+ 					    			return OU;
 (&&)+ 					    			return AND;
+(&)+									return ENDERECO;
 (else)+ 				    			return ELSE;
 (while)+ 				    			return WHILE;
 (do)+ 				    			return DO;

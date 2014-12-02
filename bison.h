@@ -73,30 +73,32 @@ extern int yydebug;
     MULT = 283,
     DIVIDE = 284,
     ATRIBUI = 285,
-    NUMERICAL = 286,
-    INCLUDE = 287,
-    PH = 288,
-    BCOMENT = 289,
-    ECOMENT = 290,
-    LCOMENT = 291,
-    PVIRGULA = 292,
-    LEFT_PAR = 293,
-    RIGHT_PAR = 294,
-    VIRGULA = 295,
-    ABRE_CHAVE = 296,
-    FECHA_CHAVE = 297,
-    RETURN = 298,
-    PRINTF = 299,
-    SCANF = 300,
-    VARUSE = 301,
-    STATIC = 302,
-    MAIN = 303,
-    _PROTOTIPO = 304,
-    _INCLUDE = 305,
-    _STRUCT = 306,
-    _MAIN = 307,
-    _VGLOBAIS = 308,
-    _FUNC = 309
+    MOD = 286,
+    ENDERECO = 287,
+    NUMERICAL = 288,
+    INCLUDE = 289,
+    PH = 290,
+    BCOMENT = 291,
+    ECOMENT = 292,
+    LCOMENT = 293,
+    PVIRGULA = 294,
+    LEFT_PAR = 295,
+    RIGHT_PAR = 296,
+    VIRGULA = 297,
+    ABRE_CHAVE = 298,
+    FECHA_CHAVE = 299,
+    RETURN = 300,
+    PRINTF = 301,
+    SCANF = 302,
+    VARUSE = 303,
+    STATIC = 304,
+    MAIN = 305,
+    _PROTOTIPO = 306,
+    _INCLUDE = 307,
+    _STRUCT = 308,
+    _MAIN = 309,
+    _VGLOBAIS = 310,
+    _FUNC = 311
   };
 #endif
 
@@ -110,7 +112,7 @@ union YYSTYPE
    char * strval;
    int    intval;
 
-#line 114 "bison.h" /* yacc.c:1909  */
+#line 116 "bison.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
