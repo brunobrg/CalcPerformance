@@ -8,6 +8,9 @@ extern int contadorDeLinhas;
 extern int OK;
 extern Error error[20];
 extern int totalError;
+extern char * yytext;
+extern int yylineno;
+extern FILE * yyin;
 
 int needLines = 0;
 int needSpace = 0;
@@ -47,7 +50,7 @@ Comment comment_criador, comment_prototipo, comment_include, comment_main, comme
 
 Etapas:
 	/* Empty */
-	| {needLines = 0;} Comentario {inicializaAnalise();} _Includes {needLines = 2;} Structs {needLines = 2;} _Prototipos {needLines = 2;} _VGlobais {needLines = 2;} _Main {needLines = 2;} _Funcoes
+	| {needLines = 0;} Comentario {inicializaAnalise(); comment_criador.possui = 1;} _Includes {needLines = 2;} Structs {needLines = 2;} _Prototipos {needLines = 2;} _VGlobais {needLines = 2;} _Main {needLines = 2;} _Funcoes
 	;
 
 Comentario:
@@ -63,7 +66,7 @@ Comentario_Texto:
 
 _Includes:
 	/* Empty */
-	| _INCLUDE {analise(getTab(), needLines = 2); needLines = 1;} Includes
+	| _INCLUDE {analise(getTab(), needLines = 2); needLines = 1; comment_include.possui = 1;} Includes
 	;
 
 Includes:
@@ -77,7 +80,7 @@ Structs:
 
 _Prototipos:
 	/* Empty */
-	| _PROTOTIPO {analise(getTab(), needLines = 2); needLines = 1;} Prototipos
+	| _PROTOTIPO {analise(getTab(), needLines = 2); needLines = 1; comment_prototipo.possui = 1;} Prototipos
 	;
 
 Prototipos:
@@ -157,7 +160,7 @@ Bloco:
 	| {if(declarando)needLines = 2; declarando = inicioBloco = 0;}  If Bloco
 	| {if(declarando)needLines = 2; declarando = inicioBloco = 0;}  Atribuicao Bloco
 	| {needLines = 2; if(inicioBloco) needLines = 1; inicioBloco = 0;} Return Bloco
-	| error {yyerrok; yyclearin; printf("Erro aqui! no bloco porra\n\n");}
+	| error {yyclearin; inserirSaidaError(yytext, "teste", contadorDeLinhas, contadorEspacos);} Bloco
 	;
 
 Return:
@@ -246,11 +249,28 @@ Operador:
 %%
 
 void main(void){
+	
+	char arq[20];
+
 	comment_criador.possui = 0;
 	comment_prototipo.possui = 0;
 	comment_include.possui = 0;
 	comment_main.possui = 0;
 	comment_vglobais.possui = 0;
+
+	//Lendo arquivos
+	printf("arquivo: ");
+	scanf("%s", arq);
+
+	FILE * myfile = fopen(arq, "r");
+	if(!myfile)
+	{
+		printf("\nArquivo nao encontrado. Abortando...\n");
+		scanf("%*c");
+		exit(1);
+	}
+
+	yyin = myfile;
 
 	yyparse();
 	if(terminou)
@@ -258,6 +278,7 @@ void main(void){
 		analisaVariaveis();
 		int i = 0;
 
+		imprimeSaidaError();
 		printf("\nAnalise terminada");
 		if(OK)
 			printf("--OK!");
@@ -280,7 +301,7 @@ void main(void){
 }
 
 yyerror(char *s){
-	printf("Erro na linha: %d:%d\n", contadorDeLinhas, contadorEspacos);
+
 	OK = 0;
 
 	if(comment_criador.possui == 0)

@@ -1,7 +1,0 @@
-#!/bin/bash
-
-export input=$@
-export output=${input%.*}
-
-cat $input | /home/$USER/Portugol-Lua/programa > "`pwd`"/$output.lua
-

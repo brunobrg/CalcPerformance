@@ -49,6 +49,7 @@ typedef struct _SaidaError
 	char str[50];
 	int linha;
 	int espaco;
+	struct _SaidaError * proximo;
 }SaidaError;
 
 /* variaveis globais */
@@ -332,6 +333,46 @@ void imprimeVarUsadas()
 	while(aux != NULL)
 	{
 		printf("var: %s\n", aux->var);
+		aux = aux->proximo;
+	}
+}
+
+SaidaError * addSaidaError(char palavra[15], char str[45], int linha, int espaco)
+{
+	SaidaError * add = (SaidaError*) malloc(sizeof(SaidaError));
+	strcpy(add->palavra, palavra);
+	strcpy(add->str, str);
+	add->linha = linha;
+	add->espaco = espaco;
+	add->proximo = NULL;
+
+	return add;
+}
+void inserirSaidaError(char palavra[15], char str[45], int linha, int espaco)
+{
+	SaidaError * add = addSaidaError(palavra, str, linha, espaco);
+
+	if(saidaError == NULL)
+	{
+		saidaError = add;
+	}
+	else
+	{
+		SaidaError * aux = saidaError;
+		while(aux->proximo != NULL)
+		{
+			
+		}
+	}
+}
+
+void imprimeSaidaError()
+{
+	SaidaError * aux = saidaError;
+
+	while(aux != NULL)
+	{
+		printf("Linha: %d, erro encontrado! %s\n", aux->linha, aux->palavra);
 		aux = aux->proximo;
 	}
 }

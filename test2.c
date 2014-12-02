@@ -18,9 +18,17 @@ main()
     int y;
     int g;
     float h;
-
-    printf("hahaha", x);
+    
     else
+printf("hahaha", x);
+printf("hahaha", x);
+printf("hahaha", x);
+printf("hahaha", x);
+
+printf("hahaha", x);
+printf("hahaha", x);
+
+
 }
 
 /* Funcoes */
