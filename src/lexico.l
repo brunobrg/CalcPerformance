@@ -18,7 +18,7 @@ NUMBER [0-9]
 
 %% /*REGRAS:*/
 " "									{espacos++;}
-"\t"								{usouTab = 1;}
+"\t"								{usouTab = 1; printf("usou tab\n");}
 "\n"								{contadorDeLinhas++; linhas_puladas++; espacos = 0; contadorEspacos = 0;}
 "/*"								return BCOMENT;
 "*/"								return ECOMENT;

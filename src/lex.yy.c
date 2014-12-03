@@ -942,7 +942,7 @@ YY_RULE_SETUP
 case 2:
 YY_RULE_SETUP
 #line 21 "lexico.l"
-{usouTab = 1;}
+{usouTab = 1; printf("usou tab\n");}
 	YY_BREAK
 case 3:
 /* rule 3 can match eol */

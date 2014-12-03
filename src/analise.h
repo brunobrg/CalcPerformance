@@ -1,9 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 #define MAX 100
 
 /* structs */
+struct stat st = {0};
+
 typedef struct _Comment
 {
 	int existe;
@@ -61,6 +66,7 @@ extern int OK;
 extern int contadorEspacos;
 extern int usouTab;
 extern Comment comment_criador, comment_prototipo, comment_include, comment_main, comment_funcoes, comment_vglobais;
+extern FILE * yyin;
 
 int totalError;
 Error error[20];
@@ -118,7 +124,7 @@ void analise(int e, int l)
 
 
 	contadorEspacos++;
-	if(l > 0 && linhas_puladas != l)
+	if(linhas_puladas != l)
 	{
 		OK = 0;
 		strcpy(erro, "Error02");
@@ -126,8 +132,9 @@ void analise(int e, int l)
 		inserirSaidaAnalise(contadorDeLinhas, contadorEspacos, erro, "", l, linhas_puladas);
 		//printf("Linha %d --%s - Linhas necessarias: %d, Linhas utilizadas: %d\n", contadorDeLinhas , erro, l, linhas_puladas);
 	}
-	else if(usouTab)
+	if(usouTab == 1)
 	{
+		printf("entrou tab");
 		OK = 0;
 		inserirSaidaAnalise(contadorDeLinhas, contadorEspacos, "Error03", "", 0, 0); 
 		addError("Error03");
@@ -375,4 +382,51 @@ void imprimeSaidaError()
 		printf("Linha: %d, erro encontrado! %s\n", aux->linha, aux->palavra);
 		aux = aux->proximo;
 	}
+}
+
+
+/*INICIO DO PROGRAMA
+* INSERIR NOME E Tabulacoes
+*/
+
+void inicio()
+{
+	char arq[20];
+	char arq2[20];
+	char aluno[30];
+	char dir[30];
+	int result;
+
+	strcpy(dir, "../CalcPerformance/");
+	//Lendo arquivos
+	printf("aluno: ");
+	scanf("%s", aluno);
+
+	strcat(dir, aluno);
+	printf("%s\n", dir);
+	if(stat(dir, &st) == -1)
+	{
+		mkdir(dir, 0777);
+	}
+
+	printf("arquivo: ");
+	scanf("%s", arq);
+
+	strcat(dir, "/");
+	strcpy(arq2, dir);
+	strcat(arq2, arq);
+	FILE * myfile = fopen(arq2, "r");
+	if(!myfile)
+	{
+		myfile = fopen(arq, "r");
+		if(!myfile)
+		{
+			printf("\nArquivo nao encontrado. Abortando...\n");
+			scanf("%*c");
+			exit(1);
+		}
+		rename(arq, arq2);
+	}
+
+	yyin = myfile;
 }

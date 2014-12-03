@@ -2180,28 +2180,14 @@ yyreturn:
 
 
 void main(void){
-	
-	char arq[20];
-
 	comment_criador.possui = 0;
 	comment_prototipo.possui = 0;
 	comment_include.possui = 0;
 	comment_main.possui = 0;
 	comment_vglobais.possui = 0;
 
-	//Lendo arquivos
-	printf("arquivo: ");
-	scanf("%s", arq);
-
-	FILE * myfile = fopen(arq, "r");
-	if(!myfile)
-	{
-		printf("\nArquivo nao encontrado. Abortando...\n");
-		scanf("%*c");
-		exit(1);
-	}
-
-	yyin = myfile;
+	//Funcao referente ao inicio
+	inicio();
 
 	yyparse();
 	if(terminou)

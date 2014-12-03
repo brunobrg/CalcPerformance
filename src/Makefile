@@ -7,4 +7,4 @@ compilabison: bison.y
 compilaflex: lexico.l
 	flex lexico.l
 compilac: bison.tab.c lex.yy.c
-	gcc bison.c lex.yy.c -o programa
+	gcc bison.c lex.yy.c -o ../programa
