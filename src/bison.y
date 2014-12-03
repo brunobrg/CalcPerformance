@@ -17,6 +17,7 @@ int needSpace = 0;
 int tab = 0;
 int terminou = 0;
 
+
 int inicioBloco = 0;
 int declarando = 0;
 
@@ -249,41 +250,9 @@ Operador:
 %%
 
 void main(void){
-	comment_criador.possui = 0;
-	comment_prototipo.possui = 0;
-	comment_include.possui = 0;
-	comment_main.possui = 0;
-	comment_vglobais.possui = 0;
-
 	//Funcao referente ao inicio
 	inicio();
-
-	yyparse();
-	if(terminou)
-	{
-		analisaVariaveis();
-		int i = 0;
-
-		imprimeSaidaError();
-		printf("\nAnalise terminada");
-		if(OK)
-			printf("--OK!");
-		else
-		{
-			printf("\n\n");
-			imprimeAnalise();
-			printf("\n");
-			printf("\nTotal de erros: %d\n", totalError);
-			for(i = 0; i < 20 ; i++)
-			{
-				if(error[i].qnt > 0)
-				{
-					printf("%s: %d\n", error[i].nome, error[i].qnt);
-				}
-			}
-		}
-		printf("\n");
-	}
+	printf("\n--Analise terminada");
 }
 
 yyerror(char *s){

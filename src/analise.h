@@ -4,6 +4,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <dirent.h>
 #define MAX 100
 
 /* structs */
@@ -65,6 +66,7 @@ extern int tab;
 extern int OK;
 extern int contadorEspacos;
 extern int usouTab;
+extern int terminou;
 extern Comment comment_criador, comment_prototipo, comment_include, comment_main, comment_funcoes, comment_vglobais;
 extern FILE * yyin;
 
@@ -90,10 +92,11 @@ void inserirVar(Variaveis **, char[],char[], char[]);
 void inicializaAnalise()
 {
 	int i;
-
+ 	contadorDeLinhas = 1;
 	varDeclaradas = NULL;
 	varUsadas = NULL;
 	saidaError = NULL;
+	saidaAna = NULL;
 	espacos = 0;
 	linhas_puladas = 0;
 	totalError = 0;
@@ -134,7 +137,6 @@ void analise(int e, int l)
 	}
 	if(usouTab == 1)
 	{
-		printf("entrou tab");
 		OK = 0;
 		inserirSaidaAnalise(contadorDeLinhas, contadorEspacos, "Error03", "", 0, 0); 
 		addError("Error03");
@@ -389,44 +391,129 @@ void imprimeSaidaError()
 * INSERIR NOME E Tabulacoes
 */
 
+void inicializaVariaveis()
+{
+	comment_criador.possui = 0;
+	comment_prototipo.possui = 0;
+	comment_include.possui = 0;
+	comment_main.possui = 0;
+	comment_vglobais.possui = 0;
+
+}
+
 void inicio()
 {
-	char arq[20];
-	char arq2[20];
+	char ex[30];
+	char arq[40], arq2[40], arq3[40];
 	char aluno[30];
-	char dir[30];
-	int result;
+	char dir[30], dirExercicios[30], dirEntradaEx[30], dirAlunos[30], dirEntradaAl[30];
+	int result, i;
+	DIR *d;
+	struct dirent * pasta;
+	strcpy(dir, ".");
+	strcpy(dirExercicios, dir);
+	strcat(dirExercicios, "/exercicios");
+	strcpy(dirAlunos, dir);
+	strcat(dirAlunos, "/alunos");
 
-	strcpy(dir, "../CalcPerformance/");
-	//Lendo arquivos
-	printf("aluno: ");
-	scanf("%s", aluno);
-
-	strcat(dir, aluno);
-	printf("%s\n", dir);
-	if(stat(dir, &st) == -1)
+	if(stat(dirExercicios, &st) == -1)
 	{
-		mkdir(dir, 0777);
+		mkdir(dirExercicios, 0777);
+	}
+	if(stat(dirAlunos, &st) == -1)
+		mkdir(dirAlunos, 0777);
+
+	d = opendir(dir);
+
+	printf("exercicio: ");
+	scanf("%s", ex);
+	printf("entradas analisadas:");
+	strcpy(arq, dir);
+	strcat(arq, "/");
+	strcpy(dirEntradaEx, dirExercicios);
+	strcat(dirEntradaEx, "/");
+	strcat(dirEntradaEx, ex);
+	for(i = 2; dirEntradaEx[i] != '.' ;i++);
+		dirEntradaEx[i] = '\0';
+
+	if(stat(dirEntradaEx, &st) != -1)
+	{
+		d = opendir(dirEntradaEx);
 	}
 
-	printf("arquivo: ");
-	scanf("%s", arq);
-
-	strcat(dir, "/");
-	strcpy(arq2, dir);
-	strcat(arq2, arq);
-	FILE * myfile = fopen(arq2, "r");
-	if(!myfile)
+	if(d)
 	{
-		myfile = fopen(arq, "r");
-		if(!myfile)
+		result = 0;
+		while((pasta = readdir(d)) != NULL)
 		{
-			printf("\nArquivo nao encontrado. Abortando...\n");
-			scanf("%*c");
+			if(strstr(pasta->d_name, ex))
+			{
+				if(stat(dirExercicios, &st) == -1)
+				{
+					mkdir(dirEntradaEx, 0777);
+				}
+				
+				for(i = 0; pasta->d_name[i] != '_'; i++)
+				{
+					aluno[i] = pasta->d_name[i];
+				}
+				aluno[i] = '\0';
+
+				strcpy(dirEntradaAl, dirAlunos);
+				strcat(dirEntradaAl, "/");
+				strcat(dirEntradaAl, aluno);
+				if(stat(dirEntradaAl, &st) == -1)
+				{
+					mkdir(dirEntradaAl, 0777);
+				}
+
+				strcpy(arq2, arq);
+				strcat(arq2, pasta->d_name);
+				strcpy(arq3, dirEntradaAl);
+				strcat(arq3, "/");
+				strcat(arq3, pasta->d_name);
+				remove(arq3);
+				rename(arq2,arq3);
+
+				FILE * myfile = fopen(arq3, "r");
+				result = 1;
+				yyin = myfile;
+				printf("\n%s", pasta->d_name);
+				yyparse();
+				fclose(myfile);
+
+				if(terminou)
+				{
+					analisaVariaveis();
+					int i = 0;
+
+					imprimeSaidaError();
+					if(OK)
+						printf("--OK!");
+					else
+					{
+						printf("\n");
+						imprimeAnalise();
+						printf("\n");
+						printf("\nTotal de erros: %d\n", totalError);
+						for(i = 0; i < 20 ; i++)
+						{
+							if(error[i].qnt > 0)
+							{
+								printf("%s: %d\n", error[i].nome, error[i].qnt);
+							}
+						}
+					}
+					printf("\n");
+				}
+
+			}
+		}
+		if(result == 0)
+		{
+			printf("Arquivo nao encontrado. Abortando...\n");
 			exit(1);
 		}
-		rename(arq, arq2);
+		closedir(d);
 	}
-
-	yyin = myfile;
 }
