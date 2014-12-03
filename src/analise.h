@@ -100,7 +100,7 @@ void inserirVar(Variaveis **, char[],char[], char[]);
 
 void entradaArquivoAluno(char[]);
 void saidaArquivoAluno(char[]);
-void inserirAnaliseAluno(char[], int, int, Error[]);
+void inserirDadosAluno(char[], int, int, Error[]);
 void imprimeAnaliseAluno();
 
 void inicializaAnalise()
@@ -538,11 +538,9 @@ void inicio()
 					strcat(arqAnaliseAluno, alunoAtual);
 					strcat(arqAnaliseAluno, ".txt");
 					entradaArquivoAluno(arqAnaliseAluno);
-					printf("leu arquivo, indo ler o do ex\n");
-					printf("%s, %d, %d", ex, contadorDeLinhas, totalError);
-					inserirAnaliseAluno(ex, contadorDeLinhas, totalError, error);
+					inserirDadosAluno(ex, contadorDeLinhas, totalError, error);
 					saidaArquivoAluno(arqAnaliseAluno);
-					imprimeAnaliseAluno();
+					//imprimeAnaliseAluno();
 					//arquivoAluno(arqAnaliseAluno);
 				}
 			}
@@ -576,21 +574,33 @@ AnaliseAluno * addAnaliseAluno(char exercicio[40], int qntLinhas, int qntErros, 
 	return add;
 }
 
-void inserirAnaliseAluno(char exercicio[40], int qntLinhas, int qntErros, Error erros[20])
+void inserirDadosAluno(char exercicio[40], int qntLinhas, int qntErros, Error erros[20])
 {
 	AnaliseAluno * add = addAnaliseAluno(exercicio, qntLinhas, qntErros, erros);
 
 	if(analiseAluno == NULL)
 	{
 		analiseAluno = add;
-		printf("era null, eh add\n");
 	}
 	else
 	{
 		AnaliseAluno * aux = analiseAluno;
 
+		if(!strcmp(aux->exercicio, add->exercicio))
+		{
+			add->proximo = aux->proximo;
+			analiseAluno = add;
+			return;
+		}		
+
 		while(aux->proximo != NULL)
 		{
+			if(!strcmp(aux->proximo->exercicio, add->exercicio))
+			{
+				add->proximo = aux->proximo->proximo;
+				aux->proximo = add;
+				return;
+			}
 			aux = aux->proximo;
 		}
 		aux->proximo = add;
@@ -605,7 +615,6 @@ void entradaArquivoAluno(char arq[40])
 	Error erros[20];
 	int i, j;
 	FILE * file = fopen(arq, "r");
-	printf("entrou entrada, arq = %s\n", arq);
 	if(file)
 	{
 		while(!feof(file))
@@ -616,7 +625,7 @@ void entradaArquivoAluno(char arq[40])
 				fscanf(file," %s %d", erros[j].nome, &erros[j].qnt);
 			}
 			fscanf(file,"\n");
-			inserirAnaliseAluno(exercicio, qntLinhas, qntErros, erros);
+			inserirDadosAluno(exercicio, qntLinhas, qntErros, erros);
 			
 		}
 		fclose(file);
