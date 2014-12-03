@@ -98,10 +98,14 @@ void imprimeAnalise();
 Variaveis * addVar(int, char[], char[], char[]);
 void inserirVar(Variaveis **, char[],char[], char[]);
 
+/* Dados */
 void entradaArquivoAluno(char[]);
 void saidaArquivoAluno(char[]);
 void inserirDadosAluno(char[], int, int, Error[]);
 void imprimeAnaliseAluno();
+
+/* Analise */
+void analisaExercicio(char[]);
 
 void inicializaAnalise()
 {
@@ -466,6 +470,9 @@ void inicio()
 		d = opendir(dirEntradaEx);
 	}
 
+	/*
+	* Bloco imenso de optencao de dados
+	*/
 	if(d)
 	{
 		result = 0;
@@ -552,6 +559,8 @@ void inicio()
 		}
 		closedir(d);
 	}
+
+	analisaExercicio(ex);
 }
 
 
@@ -666,4 +675,44 @@ void imprimeAnaliseAluno()
 		printf("ex: %s\n", aux->exercicio);
 		aux = aux->proximo;
 	}
+}
+
+
+
+/*
+* MECHENDO COM ANALISE DE DADOS
+*/
+
+void analisaExercicio(char exercicio[40])
+{
+	char nome[40];
+	char arq[40];
+	char dirAlunos[40];
+	char dirExercicios[40];
+	DIR *d;
+	struct dirent * pasta;
+
+	strcpy(dirAlunos, "./alunos/");
+	strcpy(dirExercicios, "./exercicios");
+
+	d = opendir(dirAlunos);
+	if(d)
+	{
+		while((pasta = readdir(d)) != NULL)
+		{
+			if((strcmp(pasta->d_name, ".") && strcmp(pasta->d_name, "..")))
+			{
+				strcpy(nome, pasta->d_name);
+				strcpy(arq, dirAlunos);
+				strcat(arq, pasta->d_name);
+				strcat(arq, "/");
+				strcat(arq, nome);
+				strcat(arq, ".txt");
+				//FILE * file = fopen(arq)
+
+				printf("%s\n", pasta->d_name);
+			}
+		}
+	}
+
 }
