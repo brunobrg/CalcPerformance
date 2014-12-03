@@ -10,6 +10,15 @@
 /* structs */
 struct stat st = {0};
 
+typedef struct _Analise{
+	char exercicio[40];
+	int submissoes;
+	int qntLinhas;
+	int qntErros;
+	struct _Error error;
+	struct _Analise * proximo;
+}Analise;
+
 typedef struct _Comment
 {
 	int existe;
@@ -62,7 +71,6 @@ typedef struct _SaidaError
 extern int espacos;
 extern int linhas_puladas;
 extern int contadorDeLinhas;
-extern int tab;
 extern int OK;
 extern int contadorEspacos;
 extern int usouTab;
@@ -70,12 +78,14 @@ extern int terminou;
 extern Comment comment_criador, comment_prototipo, comment_include, comment_main, comment_funcoes, comment_vglobais;
 extern FILE * yyin;
 
-int totalError;
+int totalError, tab = 0;
 Error error[20];
 SaidaAnalise * saidaAna;
 SaidaError * saidaError;
 Variaveis * varDeclaradas;
 Variaveis * varUsadas;
+Analise * analiseAluno;
+char exAtual[40], alunoAtual[40], arqAtual[40];
 
 /* prototipos */
 void inicializaAnalise();
@@ -238,23 +248,30 @@ void imprimeAnalise()
 	{
 		if(!(strcmp(aux->erro, "Error01")))
 		{
-			printf("Linha %d:%d -- %s - Espacos necessarios: %d, Espacos utilizados: %d\n", aux->contL, aux->contE, aux->erro, aux->nec, aux->uti);
+			if(aux->nec - aux->uti > 0)
+				printf("%s:%d:%d -- %s: Espacamento em falta, por favor, acrescentar < %d > espaco(s).\n", arqAtual, aux->contL, aux->contE, aux->erro, aux->nec - aux->uti);
+			else
+				printf("%s:%d:%d -- %s: Espacamento em excesso, por favor, apagar < %d > espaco(s).\n", arqAtual, aux->contL, aux->contE, aux->erro, aux->uti - aux->nec);
 		}
 		else if(!(strcmp(aux->erro, "Error02")))
 		{
-			printf("Linha %d:%d -- %s - Linhas necessarias: %d, Linhas utilizadas: %d\n", aux->contL, aux->contE, aux->erro, aux->nec, aux->uti);
+			printf("%s:%d:%d -- %s - Quebra de linhas em ",arqAtual, aux->contL, aux->contE, aux->erro);
+			if(aux->nec - aux->uti > 0)
+				printf("falta, por favor, acrescentar < %d > linha(s).\n", aux->nec - aux->uti);
+			else
+				printf("excesso, por favor, apagar < %d > linha(s).\n", aux->uti - aux->nec);
 		}
 		else if(!(strcmp(aux->erro, "Error03")))
 		{
-			printf("Linha %d:%d -- %s - Nao utilizar tabulacoes\n", aux->contL, aux->contE, aux->erro);
+			printf("%s:%d:%d -- %s: Nao utilizar tabulacoes, por favor, troque por < %d > espacamentos.\n", arqAtual, aux->contL, aux->contE, aux->erro, getTab());
 		}
 		else if(!(strcmp(aux->erro, "Error04")))
 		{
-			printf("Linha %d:%d -- %s - Declaracao da variavel \"%s\" nao se encontra no inicio do bloco.\n", aux->contL, aux->contE, aux->erro, aux->strAux);
+			printf("%s:%d:%d -- %s: Declaracao da variavel \"%s\" nao se encontra no inicio do bloco.\n", arqAtual, aux->contL, aux->contE, aux->erro, aux->strAux);
 		}
 		else if(!(strcmp(aux->erro, "Error10")))
 		{
-			printf("Linha %d:%d -- %s - Variavel \"%s\" declarada nao utilizada.\n", aux->contL, aux->contE, aux->erro, aux->strAux);
+			printf("%s:%d:%d -- %s: Variavel \"%s\" declarada nao utilizada.\n", arqAtual, aux->contL, aux->contE, aux->erro, aux->strAux);
 		}
 		aux = aux->proximo;
 	}
@@ -404,7 +421,7 @@ void inicializaVariaveis()
 void inicio()
 {
 	char ex[30];
-	char arq[40], arq2[40], arq3[40];
+	char arq[40], arq2[40], arq3[40], arqAnaliseAluno[40];
 	char aluno[30];
 	char dir[30], dirExercicios[30], dirEntradaEx[30], dirAlunos[30], dirEntradaAl[30];
 	int result, i;
@@ -435,6 +452,9 @@ void inicio()
 	strcat(dirEntradaEx, ex);
 	for(i = 2; dirEntradaEx[i] != '.' ;i++);
 		dirEntradaEx[i] = '\0';
+	strcpy(exAtual, ex); //Global Exercicio
+	for(i = 0; exAtual[i] != '.' ;i++);
+		exAtual[i] = '\0';
 
 	if(stat(dirEntradaEx, &st) != -1)
 	{
@@ -448,6 +468,7 @@ void inicio()
 		{
 			if(strstr(pasta->d_name, ex))
 			{
+				strcpy(arqAtual, pasta->d_name);
 				if(stat(dirExercicios, &st) == -1)
 				{
 					mkdir(dirEntradaEx, 0777);
@@ -458,6 +479,7 @@ void inicio()
 					aluno[i] = pasta->d_name[i];
 				}
 				aluno[i] = '\0';
+				strcpy(alunoAtual, aluno); //global para acessar
 
 				strcpy(dirEntradaAl, dirAlunos);
 				strcat(dirEntradaAl, "/");
@@ -479,6 +501,7 @@ void inicio()
 				result = 1;
 				yyin = myfile;
 				printf("\n%s", pasta->d_name);
+				inicializaAnalise();
 				yyparse();
 				fclose(myfile);
 
@@ -505,8 +528,12 @@ void inicio()
 						}
 					}
 					printf("\n");
+					strcpy(arqAnaliseAluno, dirEntradaAl);
+					strcat(arqAnaliseAluno, "/");
+					strcat(arqAnaliseAluno, alunoAtual);
+					entradaArquivoAluno(arqAnaliseAluno);
+					arquivoAluno(arqAnaliseAluno);
 				}
-
 			}
 		}
 		if(result == 0)
@@ -516,4 +543,30 @@ void inicio()
 		}
 		closedir(d);
 	}
+}
+
+
+/* MECHENDO COM MANIPULACAO DE DADOS, AQUI QUE O BIXO PEGA */
+
+entradaArquivoAluno(char arq[40])
+{
+	FILE * file = fopen(arq, "r");
+	if(file)
+	{
+
+	}
+	else
+	{
+		analiseAluno = NULL;
+	}
+	fclose(file);
+}
+
+saidaArquivoAluno(char aluno[40], char arq[40])
+{
+	
+
+	file = fopen(arq, "w")
+
+
 }

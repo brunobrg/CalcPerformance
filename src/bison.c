@@ -76,18 +76,20 @@ extern int totalError;
 extern char * yytext;
 extern int yylineno;
 extern FILE * yyin;
+extern char exAtual[40], alunoAtual[40], arqAtual[40];
 
 int needLines = 0;
 int needSpace = 0;
-int tab = 0;
+extern int tab;
 int terminou = 0;
+
 
 int inicioBloco = 0;
 int declarando = 0;
 
 Comment comment_criador, comment_prototipo, comment_include, comment_main, comment_funcoes, comment_vglobais;
 
-#line 91 "bison.c" /* yacc.c:339  */
+#line 93 "bison.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -184,12 +186,12 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 26 "bison.y" /* yacc.c:355  */
+#line 28 "bison.y" /* yacc.c:355  */
 
    char * strval;
    int    intval;
 
-#line 193 "bison.c" /* yacc.c:355  */
+#line 195 "bison.c" /* yacc.c:355  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
@@ -204,7 +206,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 208 "bison.c" /* yacc.c:358  */
+#line 210 "bison.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -507,21 +509,21 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    51,    51,    53,    53,    53,    53,    53,    53,    53,
-      53,    56,    58,    58,    61,    63,    64,    67,    69,    69,
-      72,    74,    74,    74,    74,    74,    74,    77,    81,    83,
-      83,    86,    88,    92,    92,    92,    92,    92,    95,    97,
-      97,   100,   102,   102,   102,   105,   107,   107,   110,   112,
-     112,   116,   116,   116,   120,   120,   124,   124,   124,   124,
-     124,   127,   129,   129,   132,   134,   134,   138,   138,   138,
-     138,   138,   141,   143,   143,   143,   146,   148,   148,   148,
-     148,   152,   152,   152,   155,   157,   158,   158,   159,   159,
-     160,   160,   161,   161,   162,   162,   163,   163,   167,   167,
-     167,   168,   168,   168,   172,   172,   172,   176,   176,   176,
-     176,   180,   180,   183,   185,   185,   185,   189,   193,   194,
-     198,   201,   203,   204,   205,   209,   210,   211,   215,   215,
-     219,   220,   221,   222,   226,   230,   234,   235,   236,   237,
-     238,   239,   240,   241,   242,   243,   244,   245
+       0,    53,    53,    55,    55,    55,    55,    55,    55,    55,
+      55,    58,    60,    60,    63,    65,    66,    69,    71,    71,
+      74,    76,    76,    76,    76,    76,    76,    79,    83,    85,
+      85,    88,    90,    94,    94,    94,    94,    94,    97,    99,
+      99,   102,   104,   104,   104,   107,   109,   109,   112,   114,
+     114,   118,   118,   118,   122,   122,   126,   126,   126,   126,
+     126,   129,   131,   131,   134,   136,   136,   140,   140,   140,
+     140,   140,   143,   145,   145,   145,   148,   150,   150,   150,
+     150,   154,   154,   154,   157,   159,   160,   160,   161,   161,
+     162,   162,   163,   163,   164,   164,   165,   165,   169,   169,
+     169,   170,   170,   170,   174,   174,   174,   178,   178,   178,
+     178,   182,   182,   185,   187,   187,   187,   191,   195,   196,
+     200,   203,   205,   206,   207,   211,   212,   213,   217,   217,
+     221,   222,   223,   224,   228,   232,   236,   237,   238,   239,
+     240,   241,   242,   243,   244,   245,   246,   247
 };
 #endif
 
@@ -1450,505 +1452,505 @@ yyreduce:
   switch (yyn)
     {
         case 3:
-#line 53 "bison.y" /* yacc.c:1646  */
+#line 55 "bison.y" /* yacc.c:1646  */
     {needLines = 0;}
-#line 1456 "bison.c" /* yacc.c:1646  */
+#line 1458 "bison.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 53 "bison.y" /* yacc.c:1646  */
-    {inicializaAnalise(); comment_criador.possui = 1;}
-#line 1462 "bison.c" /* yacc.c:1646  */
+#line 55 "bison.y" /* yacc.c:1646  */
+    {linhas_puladas = 0; comment_criador.possui = 1;}
+#line 1464 "bison.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 53 "bison.y" /* yacc.c:1646  */
+#line 55 "bison.y" /* yacc.c:1646  */
     {needLines = 2;}
-#line 1468 "bison.c" /* yacc.c:1646  */
+#line 1470 "bison.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 53 "bison.y" /* yacc.c:1646  */
+#line 55 "bison.y" /* yacc.c:1646  */
     {needLines = 2;}
-#line 1474 "bison.c" /* yacc.c:1646  */
+#line 1476 "bison.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 53 "bison.y" /* yacc.c:1646  */
+#line 55 "bison.y" /* yacc.c:1646  */
     {needLines = 2;}
-#line 1480 "bison.c" /* yacc.c:1646  */
+#line 1482 "bison.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 53 "bison.y" /* yacc.c:1646  */
+#line 55 "bison.y" /* yacc.c:1646  */
     {needLines = 2;}
-#line 1486 "bison.c" /* yacc.c:1646  */
+#line 1488 "bison.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 53 "bison.y" /* yacc.c:1646  */
+#line 55 "bison.y" /* yacc.c:1646  */
     {needLines = 2;}
-#line 1492 "bison.c" /* yacc.c:1646  */
+#line 1494 "bison.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 58 "bison.y" /* yacc.c:1646  */
+#line 60 "bison.y" /* yacc.c:1646  */
     {comment_criador.possui = 1; }
-#line 1498 "bison.c" /* yacc.c:1646  */
+#line 1500 "bison.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 58 "bison.y" /* yacc.c:1646  */
+#line 60 "bison.y" /* yacc.c:1646  */
     {needLines = 2;}
-#line 1504 "bison.c" /* yacc.c:1646  */
+#line 1506 "bison.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 69 "bison.y" /* yacc.c:1646  */
+#line 71 "bison.y" /* yacc.c:1646  */
     {analise(getTab(), needLines = 2); needLines = 1; comment_include.possui = 1;}
-#line 1510 "bison.c" /* yacc.c:1646  */
+#line 1512 "bison.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 74 "bison.y" /* yacc.c:1646  */
+#line 76 "bison.y" /* yacc.c:1646  */
     {analise(getTab(), needLines);}
-#line 1516 "bison.c" /* yacc.c:1646  */
+#line 1518 "bison.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 74 "bison.y" /* yacc.c:1646  */
+#line 76 "bison.y" /* yacc.c:1646  */
     {analise(1, 0);}
-#line 1522 "bison.c" /* yacc.c:1646  */
+#line 1524 "bison.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 74 "bison.y" /* yacc.c:1646  */
+#line 76 "bison.y" /* yacc.c:1646  */
     {analise(0, 0);}
-#line 1528 "bison.c" /* yacc.c:1646  */
+#line 1530 "bison.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 74 "bison.y" /* yacc.c:1646  */
+#line 76 "bison.y" /* yacc.c:1646  */
     {analise(0, 0);}
-#line 1534 "bison.c" /* yacc.c:1646  */
+#line 1536 "bison.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 74 "bison.y" /* yacc.c:1646  */
+#line 76 "bison.y" /* yacc.c:1646  */
     {analise(0, 0);}
-#line 1540 "bison.c" /* yacc.c:1646  */
+#line 1542 "bison.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 83 "bison.y" /* yacc.c:1646  */
+#line 85 "bison.y" /* yacc.c:1646  */
     {analise(getTab(), needLines = 2); needLines = 1; comment_prototipo.possui = 1;}
-#line 1546 "bison.c" /* yacc.c:1646  */
+#line 1548 "bison.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 92 "bison.y" /* yacc.c:1646  */
+#line 94 "bison.y" /* yacc.c:1646  */
     {analise(getTab(), needLines); needLines = 0;}
-#line 1552 "bison.c" /* yacc.c:1646  */
+#line 1554 "bison.c" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 92 "bison.y" /* yacc.c:1646  */
+#line 94 "bison.y" /* yacc.c:1646  */
     {analise(1, needLines);}
-#line 1558 "bison.c" /* yacc.c:1646  */
+#line 1560 "bison.c" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 92 "bison.y" /* yacc.c:1646  */
+#line 94 "bison.y" /* yacc.c:1646  */
     {analise(0, needLines);}
-#line 1564 "bison.c" /* yacc.c:1646  */
+#line 1566 "bison.c" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 92 "bison.y" /* yacc.c:1646  */
+#line 94 "bison.y" /* yacc.c:1646  */
     {analise(0, needLines);}
-#line 1570 "bison.c" /* yacc.c:1646  */
+#line 1572 "bison.c" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 92 "bison.y" /* yacc.c:1646  */
+#line 94 "bison.y" /* yacc.c:1646  */
     {analise(needSpace, 0); needLines = 1;}
-#line 1576 "bison.c" /* yacc.c:1646  */
+#line 1578 "bison.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 97 "bison.y" /* yacc.c:1646  */
+#line 99 "bison.y" /* yacc.c:1646  */
     {analise(0, needLines);}
-#line 1582 "bison.c" /* yacc.c:1646  */
+#line 1584 "bison.c" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 102 "bison.y" /* yacc.c:1646  */
+#line 104 "bison.y" /* yacc.c:1646  */
     {analise(0, needLines);}
-#line 1588 "bison.c" /* yacc.c:1646  */
+#line 1590 "bison.c" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 102 "bison.y" /* yacc.c:1646  */
+#line 104 "bison.y" /* yacc.c:1646  */
     {analise(1, needLines);}
-#line 1594 "bison.c" /* yacc.c:1646  */
+#line 1596 "bison.c" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 107 "bison.y" /* yacc.c:1646  */
+#line 109 "bison.y" /* yacc.c:1646  */
     {analise(getTab(), needLines = 2); needLines = 1;}
-#line 1600 "bison.c" /* yacc.c:1646  */
+#line 1602 "bison.c" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 112 "bison.y" /* yacc.c:1646  */
+#line 114 "bison.y" /* yacc.c:1646  */
     {analise(getTab(), needLines); needLines = 0;}
-#line 1606 "bison.c" /* yacc.c:1646  */
+#line 1608 "bison.c" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 116 "bison.y" /* yacc.c:1646  */
+#line 118 "bison.y" /* yacc.c:1646  */
     {analise(1, needLines);}
-#line 1612 "bison.c" /* yacc.c:1646  */
+#line 1614 "bison.c" /* yacc.c:1646  */
     break;
 
   case 52:
-#line 116 "bison.y" /* yacc.c:1646  */
+#line 118 "bison.y" /* yacc.c:1646  */
     {analise(1, 0); inserirVar(&varDeclaradas, (yyvsp[-2].strval), (yyvsp[0].strval), "global");}
-#line 1618 "bison.c" /* yacc.c:1646  */
+#line 1620 "bison.c" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 116 "bison.y" /* yacc.c:1646  */
+#line 118 "bison.y" /* yacc.c:1646  */
     {analise(0, 0); needLines = 1;}
-#line 1624 "bison.c" /* yacc.c:1646  */
+#line 1626 "bison.c" /* yacc.c:1646  */
     break;
 
   case 54:
-#line 120 "bison.y" /* yacc.c:1646  */
+#line 122 "bison.y" /* yacc.c:1646  */
     {analise(getTab(), needLines = 2); needLines = 1;}
-#line 1630 "bison.c" /* yacc.c:1646  */
+#line 1632 "bison.c" /* yacc.c:1646  */
     break;
 
   case 56:
-#line 124 "bison.y" /* yacc.c:1646  */
+#line 126 "bison.y" /* yacc.c:1646  */
     {analise(getTab(), needLines); needLines = 1;}
-#line 1636 "bison.c" /* yacc.c:1646  */
+#line 1638 "bison.c" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 124 "bison.y" /* yacc.c:1646  */
+#line 126 "bison.y" /* yacc.c:1646  */
     {analise(getTab(), needLines); needLines = 0;}
-#line 1642 "bison.c" /* yacc.c:1646  */
+#line 1644 "bison.c" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 124 "bison.y" /* yacc.c:1646  */
+#line 126 "bison.y" /* yacc.c:1646  */
     {analise(0, needLines);}
-#line 1648 "bison.c" /* yacc.c:1646  */
+#line 1650 "bison.c" /* yacc.c:1646  */
     break;
 
   case 59:
-#line 124 "bison.y" /* yacc.c:1646  */
+#line 126 "bison.y" /* yacc.c:1646  */
     {analise(0, 0);}
-#line 1654 "bison.c" /* yacc.c:1646  */
+#line 1656 "bison.c" /* yacc.c:1646  */
     break;
 
   case 62:
-#line 129 "bison.y" /* yacc.c:1646  */
+#line 131 "bison.y" /* yacc.c:1646  */
     {analise(getTab(), needLines = 2); needLines = 1;}
-#line 1660 "bison.c" /* yacc.c:1646  */
+#line 1662 "bison.c" /* yacc.c:1646  */
     break;
 
   case 65:
-#line 134 "bison.y" /* yacc.c:1646  */
+#line 136 "bison.y" /* yacc.c:1646  */
     {needLines = 1;}
-#line 1666 "bison.c" /* yacc.c:1646  */
+#line 1668 "bison.c" /* yacc.c:1646  */
     break;
 
   case 67:
-#line 138 "bison.y" /* yacc.c:1646  */
+#line 140 "bison.y" /* yacc.c:1646  */
     {analise(getTab(), needLines); needLines = 1;}
-#line 1672 "bison.c" /* yacc.c:1646  */
+#line 1674 "bison.c" /* yacc.c:1646  */
     break;
 
   case 68:
-#line 138 "bison.y" /* yacc.c:1646  */
+#line 140 "bison.y" /* yacc.c:1646  */
     {analise(getTab(), needLines); needLines = 0;}
-#line 1678 "bison.c" /* yacc.c:1646  */
+#line 1680 "bison.c" /* yacc.c:1646  */
     break;
 
   case 69:
-#line 138 "bison.y" /* yacc.c:1646  */
+#line 140 "bison.y" /* yacc.c:1646  */
     {analise(0, needLines);}
-#line 1684 "bison.c" /* yacc.c:1646  */
+#line 1686 "bison.c" /* yacc.c:1646  */
     break;
 
   case 70:
-#line 138 "bison.y" /* yacc.c:1646  */
+#line 140 "bison.y" /* yacc.c:1646  */
     {analise(0, 0);}
-#line 1690 "bison.c" /* yacc.c:1646  */
+#line 1692 "bison.c" /* yacc.c:1646  */
     break;
 
   case 73:
-#line 143 "bison.y" /* yacc.c:1646  */
+#line 145 "bison.y" /* yacc.c:1646  */
     {analise(0, needLines);}
-#line 1696 "bison.c" /* yacc.c:1646  */
+#line 1698 "bison.c" /* yacc.c:1646  */
     break;
 
   case 74:
-#line 143 "bison.y" /* yacc.c:1646  */
+#line 145 "bison.y" /* yacc.c:1646  */
     {analise(1, needLines);}
-#line 1702 "bison.c" /* yacc.c:1646  */
+#line 1704 "bison.c" /* yacc.c:1646  */
     break;
 
   case 77:
-#line 148 "bison.y" /* yacc.c:1646  */
+#line 150 "bison.y" /* yacc.c:1646  */
     {analise(0, needLines);}
-#line 1708 "bison.c" /* yacc.c:1646  */
+#line 1710 "bison.c" /* yacc.c:1646  */
     break;
 
   case 78:
-#line 148 "bison.y" /* yacc.c:1646  */
+#line 150 "bison.y" /* yacc.c:1646  */
     {analise(1, needLines);}
-#line 1714 "bison.c" /* yacc.c:1646  */
+#line 1716 "bison.c" /* yacc.c:1646  */
     break;
 
   case 79:
-#line 148 "bison.y" /* yacc.c:1646  */
+#line 150 "bison.y" /* yacc.c:1646  */
     {analise(1, needLines);}
-#line 1720 "bison.c" /* yacc.c:1646  */
+#line 1722 "bison.c" /* yacc.c:1646  */
     break;
 
   case 81:
-#line 152 "bison.y" /* yacc.c:1646  */
+#line 154 "bison.y" /* yacc.c:1646  */
     {analise(getTab(), needLines = 1); addTab();}
-#line 1726 "bison.c" /* yacc.c:1646  */
+#line 1728 "bison.c" /* yacc.c:1646  */
     break;
 
   case 82:
-#line 152 "bison.y" /* yacc.c:1646  */
+#line 154 "bison.y" /* yacc.c:1646  */
     {inicioBloco = 1;}
-#line 1732 "bison.c" /* yacc.c:1646  */
+#line 1734 "bison.c" /* yacc.c:1646  */
     break;
 
   case 83:
-#line 152 "bison.y" /* yacc.c:1646  */
+#line 154 "bison.y" /* yacc.c:1646  */
     {remTab(); analise(getTab(), needLines = 1);}
-#line 1738 "bison.c" /* yacc.c:1646  */
+#line 1740 "bison.c" /* yacc.c:1646  */
     break;
 
   case 86:
-#line 158 "bison.y" /* yacc.c:1646  */
+#line 160 "bison.y" /* yacc.c:1646  */
     {if(declarando)needLines = 2; declarando = inicioBloco = 0;}
-#line 1744 "bison.c" /* yacc.c:1646  */
+#line 1746 "bison.c" /* yacc.c:1646  */
     break;
 
   case 88:
-#line 159 "bison.y" /* yacc.c:1646  */
+#line 161 "bison.y" /* yacc.c:1646  */
     {if(declarando)needLines = 2; declarando = inicioBloco = 0;}
-#line 1750 "bison.c" /* yacc.c:1646  */
+#line 1752 "bison.c" /* yacc.c:1646  */
     break;
 
   case 90:
-#line 160 "bison.y" /* yacc.c:1646  */
+#line 162 "bison.y" /* yacc.c:1646  */
     {if(declarando)needLines = 2; declarando = inicioBloco = 0;}
-#line 1756 "bison.c" /* yacc.c:1646  */
+#line 1758 "bison.c" /* yacc.c:1646  */
     break;
 
   case 92:
-#line 161 "bison.y" /* yacc.c:1646  */
+#line 163 "bison.y" /* yacc.c:1646  */
     {if(declarando)needLines = 2; declarando = inicioBloco = 0;}
-#line 1762 "bison.c" /* yacc.c:1646  */
+#line 1764 "bison.c" /* yacc.c:1646  */
     break;
 
   case 94:
-#line 162 "bison.y" /* yacc.c:1646  */
+#line 164 "bison.y" /* yacc.c:1646  */
     {needLines = 2; if(inicioBloco) needLines = 1; inicioBloco = 0;}
-#line 1768 "bison.c" /* yacc.c:1646  */
+#line 1770 "bison.c" /* yacc.c:1646  */
     break;
 
   case 96:
-#line 163 "bison.y" /* yacc.c:1646  */
+#line 165 "bison.y" /* yacc.c:1646  */
     {yyclearin; inserirSaidaError(yytext, "teste", contadorDeLinhas, contadorEspacos);}
-#line 1774 "bison.c" /* yacc.c:1646  */
+#line 1776 "bison.c" /* yacc.c:1646  */
     break;
 
   case 98:
-#line 167 "bison.y" /* yacc.c:1646  */
+#line 169 "bison.y" /* yacc.c:1646  */
     {analise(getTab()+1, needLines);}
-#line 1780 "bison.c" /* yacc.c:1646  */
+#line 1782 "bison.c" /* yacc.c:1646  */
     break;
 
   case 99:
-#line 167 "bison.y" /* yacc.c:1646  */
+#line 169 "bison.y" /* yacc.c:1646  */
     {analise(0, 0);}
-#line 1786 "bison.c" /* yacc.c:1646  */
+#line 1788 "bison.c" /* yacc.c:1646  */
     break;
 
   case 100:
-#line 167 "bison.y" /* yacc.c:1646  */
+#line 169 "bison.y" /* yacc.c:1646  */
     {analise(0, 0);}
-#line 1792 "bison.c" /* yacc.c:1646  */
+#line 1794 "bison.c" /* yacc.c:1646  */
     break;
 
   case 101:
-#line 168 "bison.y" /* yacc.c:1646  */
+#line 170 "bison.y" /* yacc.c:1646  */
     {analise(getTab()+1, needLines);}
-#line 1798 "bison.c" /* yacc.c:1646  */
+#line 1800 "bison.c" /* yacc.c:1646  */
     break;
 
   case 102:
-#line 168 "bison.y" /* yacc.c:1646  */
+#line 170 "bison.y" /* yacc.c:1646  */
     {analise(0, 0);}
-#line 1804 "bison.c" /* yacc.c:1646  */
+#line 1806 "bison.c" /* yacc.c:1646  */
     break;
 
   case 103:
-#line 168 "bison.y" /* yacc.c:1646  */
+#line 170 "bison.y" /* yacc.c:1646  */
     {analise(0, 0);}
-#line 1810 "bison.c" /* yacc.c:1646  */
+#line 1812 "bison.c" /* yacc.c:1646  */
     break;
 
   case 104:
-#line 172 "bison.y" /* yacc.c:1646  */
+#line 174 "bison.y" /* yacc.c:1646  */
     {analise(getTab(), needLines); declarando = 1;}
-#line 1816 "bison.c" /* yacc.c:1646  */
+#line 1818 "bison.c" /* yacc.c:1646  */
     break;
 
   case 105:
-#line 172 "bison.y" /* yacc.c:1646  */
+#line 174 "bison.y" /* yacc.c:1646  */
     {analise(1, 0); analiseBloco(inicioBloco, (yyvsp[0].strval)); inserirVar(&varDeclaradas, (yyvsp[-2].strval), (yyvsp[0].strval), "escopo");}
-#line 1822 "bison.c" /* yacc.c:1646  */
+#line 1824 "bison.c" /* yacc.c:1646  */
     break;
 
   case 106:
-#line 172 "bison.y" /* yacc.c:1646  */
+#line 174 "bison.y" /* yacc.c:1646  */
     {analise(0, 0); needLines = 1;}
-#line 1828 "bison.c" /* yacc.c:1646  */
+#line 1830 "bison.c" /* yacc.c:1646  */
     break;
 
   case 107:
-#line 176 "bison.y" /* yacc.c:1646  */
+#line 178 "bison.y" /* yacc.c:1646  */
     {analise(getTab(), needLines);}
-#line 1834 "bison.c" /* yacc.c:1646  */
+#line 1836 "bison.c" /* yacc.c:1646  */
     break;
 
   case 108:
-#line 176 "bison.y" /* yacc.c:1646  */
+#line 178 "bison.y" /* yacc.c:1646  */
     {analise(0, needLines = 0);}
-#line 1840 "bison.c" /* yacc.c:1646  */
+#line 1842 "bison.c" /* yacc.c:1646  */
     break;
 
   case 109:
-#line 176 "bison.y" /* yacc.c:1646  */
+#line 178 "bison.y" /* yacc.c:1646  */
     {analise(0, needLines);}
-#line 1846 "bison.c" /* yacc.c:1646  */
+#line 1848 "bison.c" /* yacc.c:1646  */
     break;
 
   case 110:
-#line 176 "bison.y" /* yacc.c:1646  */
+#line 178 "bison.y" /* yacc.c:1646  */
     {analise(0, needLines); needLines = 1;}
-#line 1852 "bison.c" /* yacc.c:1646  */
+#line 1854 "bison.c" /* yacc.c:1646  */
     break;
 
   case 111:
-#line 180 "bison.y" /* yacc.c:1646  */
+#line 182 "bison.y" /* yacc.c:1646  */
     {analise(0, needLines);}
-#line 1858 "bison.c" /* yacc.c:1646  */
+#line 1860 "bison.c" /* yacc.c:1646  */
     break;
 
   case 114:
-#line 185 "bison.y" /* yacc.c:1646  */
+#line 187 "bison.y" /* yacc.c:1646  */
     {analise(0, needLines);}
-#line 1864 "bison.c" /* yacc.c:1646  */
+#line 1866 "bison.c" /* yacc.c:1646  */
     break;
 
   case 115:
-#line 185 "bison.y" /* yacc.c:1646  */
+#line 187 "bison.y" /* yacc.c:1646  */
     {analise(1, needLines);}
-#line 1870 "bison.c" /* yacc.c:1646  */
+#line 1872 "bison.c" /* yacc.c:1646  */
     break;
 
   case 128:
-#line 215 "bison.y" /* yacc.c:1646  */
+#line 217 "bison.y" /* yacc.c:1646  */
     {}
-#line 1876 "bison.c" /* yacc.c:1646  */
+#line 1878 "bison.c" /* yacc.c:1646  */
     break;
 
   case 134:
-#line 226 "bison.y" /* yacc.c:1646  */
+#line 228 "bison.y" /* yacc.c:1646  */
     {inserirVar(&varUsadas, "null", (yyvsp[0].strval), "escopo");}
-#line 1882 "bison.c" /* yacc.c:1646  */
+#line 1884 "bison.c" /* yacc.c:1646  */
     break;
 
   case 136:
-#line 234 "bison.y" /* yacc.c:1646  */
+#line 236 "bison.y" /* yacc.c:1646  */
     {}
-#line 1888 "bison.c" /* yacc.c:1646  */
+#line 1890 "bison.c" /* yacc.c:1646  */
     break;
 
   case 137:
-#line 235 "bison.y" /* yacc.c:1646  */
+#line 237 "bison.y" /* yacc.c:1646  */
     {}
-#line 1894 "bison.c" /* yacc.c:1646  */
+#line 1896 "bison.c" /* yacc.c:1646  */
     break;
 
   case 138:
-#line 236 "bison.y" /* yacc.c:1646  */
+#line 238 "bison.y" /* yacc.c:1646  */
     {}
-#line 1900 "bison.c" /* yacc.c:1646  */
+#line 1902 "bison.c" /* yacc.c:1646  */
     break;
 
   case 139:
-#line 237 "bison.y" /* yacc.c:1646  */
+#line 239 "bison.y" /* yacc.c:1646  */
     {}
-#line 1906 "bison.c" /* yacc.c:1646  */
+#line 1908 "bison.c" /* yacc.c:1646  */
     break;
 
   case 140:
-#line 238 "bison.y" /* yacc.c:1646  */
+#line 240 "bison.y" /* yacc.c:1646  */
     {}
-#line 1912 "bison.c" /* yacc.c:1646  */
+#line 1914 "bison.c" /* yacc.c:1646  */
     break;
 
   case 141:
-#line 239 "bison.y" /* yacc.c:1646  */
+#line 241 "bison.y" /* yacc.c:1646  */
     {}
-#line 1918 "bison.c" /* yacc.c:1646  */
+#line 1920 "bison.c" /* yacc.c:1646  */
     break;
 
   case 142:
-#line 240 "bison.y" /* yacc.c:1646  */
+#line 242 "bison.y" /* yacc.c:1646  */
     {}
-#line 1924 "bison.c" /* yacc.c:1646  */
+#line 1926 "bison.c" /* yacc.c:1646  */
     break;
 
   case 143:
-#line 241 "bison.y" /* yacc.c:1646  */
+#line 243 "bison.y" /* yacc.c:1646  */
     {}
-#line 1930 "bison.c" /* yacc.c:1646  */
+#line 1932 "bison.c" /* yacc.c:1646  */
     break;
 
   case 144:
-#line 242 "bison.y" /* yacc.c:1646  */
+#line 244 "bison.y" /* yacc.c:1646  */
     {}
-#line 1936 "bison.c" /* yacc.c:1646  */
+#line 1938 "bison.c" /* yacc.c:1646  */
     break;
 
   case 145:
-#line 243 "bison.y" /* yacc.c:1646  */
+#line 245 "bison.y" /* yacc.c:1646  */
     {}
-#line 1942 "bison.c" /* yacc.c:1646  */
+#line 1944 "bison.c" /* yacc.c:1646  */
     break;
 
   case 146:
-#line 244 "bison.y" /* yacc.c:1646  */
+#line 246 "bison.y" /* yacc.c:1646  */
     {}
-#line 1948 "bison.c" /* yacc.c:1646  */
+#line 1950 "bison.c" /* yacc.c:1646  */
     break;
 
 
-#line 1952 "bison.c" /* yacc.c:1646  */
+#line 1954 "bison.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2176,13 +2178,13 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 249 "bison.y" /* yacc.c:1906  */
+#line 251 "bison.y" /* yacc.c:1906  */
 
 
 void main(void){
 	//Funcao referente ao inicio
 	inicio();
-	printf("\n--Analise terminada");
+	printf("--Analise terminada\n");
 }
 
 yyerror(char *s){

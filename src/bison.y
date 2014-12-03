@@ -11,10 +11,11 @@ extern int totalError;
 extern char * yytext;
 extern int yylineno;
 extern FILE * yyin;
+extern char exAtual[40], alunoAtual[40], arqAtual[40];
 
 int needLines = 0;
 int needSpace = 0;
-int tab = 0;
+extern int tab;
 int terminou = 0;
 
 
@@ -51,7 +52,7 @@ Comment comment_criador, comment_prototipo, comment_include, comment_main, comme
 
 Etapas:
 	/* Empty */
-	| {needLines = 0;} Comentario {inicializaAnalise(); comment_criador.possui = 1;} _Includes {needLines = 2;} Structs {needLines = 2;} _Prototipos {needLines = 2;} _VGlobais {needLines = 2;} _Main {needLines = 2;} _Funcoes
+	| {needLines = 0;} Comentario {linhas_puladas = 0; comment_criador.possui = 1;} _Includes {needLines = 2;} Structs {needLines = 2;} _Prototipos {needLines = 2;} _VGlobais {needLines = 2;} _Main {needLines = 2;} _Funcoes
 	;
 
 Comentario:
@@ -252,7 +253,7 @@ Operador:
 void main(void){
 	//Funcao referente ao inicio
 	inicio();
-	printf("\n--Analise terminada");
+	printf("--Analise terminada\n");
 }
 
 yyerror(char *s){

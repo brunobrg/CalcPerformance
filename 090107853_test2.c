@@ -18,18 +18,16 @@ main()
     int y;
     int g;
     float h;
-	printf("hahaha", x);
-	
-	if (X == 2)
-	{
-		y = x;
-	}
-	else
-	{
-		x = y;
-	}
 
-
+    printf("hahaha", x);
+    if (X == 2)
+    {
+        y = x;
+    }
+    else
+    {
+        x = y;
+    }
 }
 
 /* Funcoes */
