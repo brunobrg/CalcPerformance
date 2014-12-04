@@ -4,6 +4,7 @@
 #include "analise.h"
 #include <string.h>
 
+extern int contadorEspacos;
 extern int contadorDeLinhas;
 extern int OK;
 extern Error error[20];
@@ -197,7 +198,7 @@ Esc_Var:
 	;
 
 If
-	: IF LEFT_PAR Expressao RIGHT_PAR Fim_If
+	: IF {analise(getTab(), needLines = 1);} LEFT_PAR {analise(1, 0);} Expressao RIGHT_PAR {analise(0, 0);}Fim_If
 	;
 
 Fim_If
@@ -218,7 +219,7 @@ Atribuicao:
 	;
 
 Expressao:
-	Numero
+	Numero {if(analise(, needLines);}
 	| Variavel
 	| Numero Operador Expressao
 	| Variavel Operador Expressao

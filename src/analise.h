@@ -17,6 +17,7 @@ typedef struct _Error
 }Error;
 
 typedef struct _AnaliseAluno{
+	char nome[40];
 	char exercicio[40];
 	int qntLinhas;
 	int qntErros;
@@ -101,11 +102,12 @@ void inserirVar(Variaveis **, char[],char[], char[]);
 /* Dados */
 void entradaArquivoAluno(char[]);
 void saidaArquivoAluno(char[]);
-void inserirDadosAluno(char[], int, int, Error[]);
+void inserirDadosAluno(AnaliseAluno **, char[], int, int, Error[]);
 void imprimeAnaliseAluno();
 
 /* Analise */
 void analisaExercicio(char[]);
+void saidaArquivoExercicio();
 
 void inicializaAnalise()
 {
@@ -453,6 +455,15 @@ void inicio()
 
 	printf("exercicio: ");
 	scanf("%s", ex);
+
+	for(i = 0; ex[i] != '\0'; i++);
+	if(ex[i-2] != '.' || ex[i-1] != 'c')
+	{
+		printf("Extensao do exercicio invalido.");
+		printf("\nApenas arquivos \".c\" sao permitidos. Abortando ...\n");
+		exit(1);
+	}
+
 	printf("entradas analisadas:");
 	strcpy(arq, dir);
 	strcat(arq, "/");
@@ -545,7 +556,7 @@ void inicio()
 					strcat(arqAnaliseAluno, alunoAtual);
 					strcat(arqAnaliseAluno, ".txt");
 					entradaArquivoAluno(arqAnaliseAluno);
-					inserirDadosAluno(ex, contadorDeLinhas, totalError, error);
+					inserirDadosAluno(&analiseAluno, ex, contadorDeLinhas, totalError, error);
 					saidaArquivoAluno(arqAnaliseAluno);
 					//imprimeAnaliseAluno();
 					//arquivoAluno(arqAnaliseAluno);
@@ -583,22 +594,22 @@ AnaliseAluno * addAnaliseAluno(char exercicio[40], int qntLinhas, int qntErros, 
 	return add;
 }
 
-void inserirDadosAluno(char exercicio[40], int qntLinhas, int qntErros, Error erros[20])
+void inserirDadosAluno(AnaliseAluno ** temp, char exercicio[40], int qntLinhas, int qntErros, Error erros[20])
 {
 	AnaliseAluno * add = addAnaliseAluno(exercicio, qntLinhas, qntErros, erros);
 
-	if(analiseAluno == NULL)
+	if(*temp == NULL)
 	{
-		analiseAluno = add;
+		*temp = add;
 	}
 	else
 	{
-		AnaliseAluno * aux = analiseAluno;
+		AnaliseAluno * aux = *temp;
 
 		if(!strcmp(aux->exercicio, add->exercicio))
 		{
 			add->proximo = aux->proximo;
-			analiseAluno = add;
+			*temp = add;
 			return;
 		}		
 
@@ -634,7 +645,7 @@ void entradaArquivoAluno(char arq[40])
 				fscanf(file," %s %d", erros[j].nome, &erros[j].qnt);
 			}
 			fscanf(file,"\n");
-			inserirDadosAluno(exercicio, qntLinhas, qntErros, erros);
+			inserirDadosAluno(&analiseAluno, exercicio, qntLinhas, qntErros, erros);
 			
 		}
 		fclose(file);
@@ -666,13 +677,13 @@ void saidaArquivoAluno(char arq[40])
 	fclose(file);
 }
 
-void imprimeAnaliseAluno()
+void imprimeAnaliseAluno(AnaliseAluno * temp)
 {
-	AnaliseAluno * aux = analiseAluno;
+	AnaliseAluno * aux = temp;
 
 	while(aux != NULL)
 	{
-		printf("ex: %s\n", aux->exercicio);
+		printf("ex: %s\n", aux->nome);
 		aux = aux->proximo;
 	}
 }
@@ -683,17 +694,31 @@ void imprimeAnaliseAluno()
 * MECHENDO COM ANALISE DE DADOS
 */
 
-void analisaExercicio(char exercicio[40])
+typedef struct _AnaliseExercicio
 {
 	char nome[40];
+	int nAlunos;
+	int totalError;
+	Error error[20];
+	AnaliseAluno * aluno;
+}AnaliseExercicio;
+
+AnaliseExercicio analiseExercicio;
+void analisaExercicio(char exercicio[40])
+{
+	char nome[40], nome2[40];
 	char arq[40];
 	char dirAlunos[40];
-	char dirExercicios[40];
+	int qntErros, qntLinhas, j;
+	Error erros[20];
 	DIR *d;
 	struct dirent * pasta;
 
 	strcpy(dirAlunos, "./alunos/");
-	strcpy(dirExercicios, "./exercicios");
+
+	strcpy(analiseExercicio.nome, exercicio);
+	analiseExercicio.nAlunos = 0;
+	analiseExercicio.aluno == NULL;
 
 	d = opendir(dirAlunos);
 	if(d)
@@ -708,11 +733,89 @@ void analisaExercicio(char exercicio[40])
 				strcat(arq, "/");
 				strcat(arq, nome);
 				strcat(arq, ".txt");
-				//FILE * file = fopen(arq)
+				FILE * file = fopen(arq, "r");
+				if(file)
+				{
+					while(!feof(file))
+					{
+						fscanf(file, "%s %d %d\n", nome2, &qntLinhas, &qntErros);
+						for(j = 0; j < 20; j++)
+						{
+							fscanf(file," %s %d", erros[j].nome, &erros[j].qnt);
+							strcpy(analiseExercicio.error[j].nome, erros[j].nome);
+							
+						}
+						fscanf(file,"\n");
+						if(!strcmp(analiseExercicio.nome,nome2))
+						{
+							AnaliseAluno * add = addAnaliseAluno(exercicio, qntLinhas, qntErros, erros);
+							
+							for(j = 0; j < 20; j++)
+							{
+								analiseExercicio.error[j].qnt += add->error[j].qnt;
+								analiseExercicio.totalError += add->error[j].qnt;
+								
+							}
+							strcpy(add->nome, nome);
+							if(analiseExercicio.aluno == NULL)
+							{
+								analiseExercicio.aluno = add;
+							}
+							else
+							{
+								AnaliseAluno * aux = analiseExercicio.aluno;
 
-				printf("%s\n", pasta->d_name);
+								while(aux->proximo != NULL)
+								{
+									aux = aux->proximo;
+								}
+								aux->proximo = add;
+							}
+							analiseExercicio.nAlunos++;
+						}
+					}
+					fclose(file);
+				}
 			}
 		}
 	}
+	saidaArquivoExercicio();
+}
 
+
+void saidaArquivoExercicio()
+{
+	int i, j;
+	char dirExercicios[40];
+	char arq[40];
+	strcpy(dirExercicios, "./exercicios/");
+	strcpy(arq, dirExercicios);
+	strcat(arq,analiseExercicio.nome);
+	for(i = 5; arq[i] != '.'; i++);
+		arq[i] = '\0';
+	strcat(arq, ".txt");
+	FILE * file = fopen(arq, "w");
+
+	if(file)
+	{
+		fprintf(file, "%s %d %d\n", analiseExercicio.nome, analiseExercicio.nAlunos, analiseExercicio.totalError);
+		for(i = 0; i < 20; i++)
+		{
+			fprintf(file, " %s %d", analiseExercicio.error[i].nome, analiseExercicio.error[i].qnt);
+		}
+		fprintf(file, "\n");
+		AnaliseAluno * aux = analiseExercicio.aluno;
+
+		for(j = 0; j < analiseExercicio.nAlunos; j++)
+		{
+			fprintf(file, "%s %d %d\n", aux->nome, aux->qntLinhas, aux->qntErros);
+			for(i = 0; i < 20; i++)
+			{
+				fprintf(file, " %s %d", aux->error[i].nome, aux->error[i].qnt);
+			}
+			fprintf(file, "\n");
+			aux = aux->proximo;
+		}
+		fclose(file);
+	}
 }
