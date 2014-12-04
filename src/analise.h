@@ -121,6 +121,7 @@ void inicializaAnalise()
 	espacos = 0;
 	linhas_puladas = 0;
 	totalError = 0;
+	OK = 1;
 	for(i = 0; i < 20; i++)
 	{
 		char aux[2];

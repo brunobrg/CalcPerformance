@@ -198,7 +198,7 @@ Esc_Var:
 	;
 
 If
-	: IF {analise(getTab(), needLines = 1);} LEFT_PAR {analise(1, 0);} Expressao RIGHT_PAR {analise(0, 0);}Fim_If
+	: IF {analise(getTab(), needLines = 1);} LEFT_PAR {analise(1, 0); needLines = 0, needSpace = 0;} Expressao RIGHT_PAR {analise(0, 0);}Fim_If
 	;
 
 Fim_If
@@ -209,20 +209,24 @@ Fim_If
 	;
 
 Else
-	: ELSE
-	| ELSE If
-	| ELSE Estrutura
+	: ELSE {analise(getTab(), 1);}
+	| Else Else2
+	;
+
+Else2
+	: If
+	| Estrutura
 	;
 
 Atribuicao:
-	Variavel ATRIBUI {} Expressao PVIRGULA
+	Variavel {analise(getTab(), 1);} ATRIBUI {analise(0, 1); needLines = 0; needSpace = 1;} Expressao PVIRGULA
 	;
 
 Expressao:
-	Numero {if(analise(, needLines);}
-	| Variavel
-	| Numero Operador Expressao
-	| Variavel Operador Expressao
+	Numero {analise(needSpace, needLines); needSpace = 1; needLines = 0;}
+	| Variavel {analise(needSpace, needLines);}
+	| Numero {analise(needSpace, needLines); needSpace = 1; needLines = 0;} Operador {analise(needSpace, needLines);} Expressao
+	| Variavel {analise(needSpace, needLines);} Operador {analise(needSpace, needLines);}  Expressao
 	;
 
 Variavel:
@@ -260,7 +264,7 @@ void main(void){
 yyerror(char *s){
 
 	OK = 0;
-
+	printf("Erro na linha %d\n", contadorDeLinhas);
 	if(comment_criador.possui == 0)
 	{
 		printf("\n---Codigo nao se encontra no formato requisitado, por favor, insira comentarios do criador---\n");

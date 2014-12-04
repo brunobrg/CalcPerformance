@@ -1,0 +1,4 @@
+test2.c 2 19
+ Error00 0 Error01 7 Error02 9 Error03 0 Error04 0 Error05 0 Error06 0 Error07 0 Error08 0 Error09 0 Error10 3 Error11 0 Error12 0 Error13 0 Error14 0 Error15 0 Error16 0 Error17 0 Error18 0 Error19 0
+ 20 12
+ Error00 0 Error01 7 Error02 5 Error03 0 Error04 0 Error05 0 Error06 0 Error07 0 Error08 0 Error09 0 Error10 0 Error11 0 Error12 0 Error13 0 Error14 0 Error15 0 Error16 0 Error17 0 Error18 0 Error19 0
