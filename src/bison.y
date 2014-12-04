@@ -161,6 +161,7 @@ Bloco:
 	| {if(declarando)needLines = 2; declarando = inicioBloco = 0;}  Printf Bloco
 	| {if(declarando)needLines = 2; declarando = inicioBloco = 0;}  Scanf Bloco
 	| {if(declarando)needLines = 2; declarando = inicioBloco = 0;}  If Bloco
+	| {if(declarando)needLines = 2; declarando = inicioBloco = 0;}  Else Bloco
 	| {if(declarando)needLines = 2; declarando = inicioBloco = 0;}  Atribuicao Bloco
 	| {needLines = 2; if(inicioBloco) needLines = 1; inicioBloco = 0;} Return Bloco
 	| error {yyclearin; inserirSaidaError(yytext, "teste", contadorDeLinhas, contadorEspacos);} Bloco
@@ -204,8 +205,7 @@ If
 Fim_If
 	:
 	| PVIRGULA
-	| Estrutura Else
-	| Else
+	| Estrutura
 	;
 
 Else
@@ -222,11 +222,11 @@ Atribuicao:
 	Variavel {analise(getTab(), 1);} ATRIBUI {analise(0, 1); needLines = 0; needSpace = 1;} Expressao PVIRGULA
 	;
 
-Expressao:
-	Numero {analise(needSpace, needLines); needSpace = 1; needLines = 0;}
-	| Variavel {analise(needSpace, needLines);}
-	| Numero {analise(needSpace, needLines); needSpace = 1; needLines = 0;} Operador {analise(needSpace, needLines);} Expressao
-	| Variavel {analise(needSpace, needLines);} Operador {analise(needSpace, needLines);}  Expressao
+Expressao
+	: LEFT_PAR Expressao RIGHT_PAR
+	| Numero {analise(needSpace, needLines); needSpace = 1; needLines = 0;}
+	| Variavel 
+	| Expressao  Operador  Expressao
 	;
 
 Variavel:
@@ -250,6 +250,9 @@ Operador:
   	| DIVIDE {} 
   	| ATRIBUI {} 
   	| MOD
+  	| MENOR ATRIBUI
+  	| MAIOR ATRIBUI
+  	| NOT ATRIBUI
   	;
 
 
@@ -264,7 +267,7 @@ void main(void){
 yyerror(char *s){
 
 	OK = 0;
-	printf("Erro na linha %d\n", contadorDeLinhas);
+	printf("Erro na linha %d:%d\n", contadorDeLinhas, contadorEspacos);
 	if(comment_criador.possui == 0)
 	{
 		printf("\n---Codigo nao se encontra no formato requisitado, por favor, insira comentarios do criador---\n");
