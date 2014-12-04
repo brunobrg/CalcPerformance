@@ -18,6 +18,7 @@ int needLines = 0;
 int needSpace = 0;
 extern int tab;
 int terminou = 0;
+char tipo[10];
 
 
 int inicioBloco = 0;
@@ -35,7 +36,7 @@ Comment comment_criador, comment_prototipo, comment_include, comment_main, comme
 %token <strval> T_STRING TEXTO  STR
 %token AND OU IF DO THEN WHILE ELSE NOT 
 %token TERMINOU DECLARACAO FIMFUNC FUNCAO ESPERA EXECUTE PASSA
-%token MAIOR MENOR IGUAL SOMA SUBT MULT DIVIDE ATRIBUI MOD ENDERECO
+%token IGUAL SOMA SUBT MULT DIVIDE ATRIBUI MOD ENDERECO
 %token NUMERICAL
 
 
@@ -74,7 +75,7 @@ _Includes:
 
 Includes:
 	/* Empty */
-	| INCLUDE {analise(getTab(), needLines);} MENOR {analise(1, 0);} T_STRING {analise(0, 0);} PH {analise(0, 0);} MAIOR {analise(0, 0);} Includes
+	| INCLUDE {analise(getTab(), needLines);} '<' {analise(1, 0);} T_STRING {analise(0, 0);} PH {analise(0, 0);} '>' {analise(0, 0);} Includes
 	;
 
 Structs:
@@ -173,7 +174,12 @@ Return:
 	;
 
 Declaracao:
-	TIPO {analise(getTab(), needLines); declarando = 1;} T_STRING {analise(1, 0); analiseBloco(inicioBloco, $3); inserirVar(&varDeclaradas, $1, $3, "escopo");} PVIRGULA {analise(0, 0); needLines = 1;}
+	TIPO {analise(getTab(), needLines); declarando = 1; strcpy(tipo, $1);} T_STRING {analise(1, 0); analiseBloco(inicioBloco, $3); inserirVar(&varDeclaradas, $1, $3, "escopo");} Declaracao2
+	;
+
+Declaracao2
+	: PVIRGULA {analise(0, 0); needLines = 1;}
+	| VIRGULA {analise(0, 0);} T_STRING {analise(1, 0); analiseBloco(inicioBloco, $3); inserirVar(&varDeclaradas, tipo, $3, "escopo");} Declaracao2
 	;
 
 Printf:
@@ -190,12 +196,12 @@ Printf_Argumentos:
 	;
 
 Scanf:
-	SCANF LEFT_PAR TEXTO Esc_Var PVIRGULA
+	SCANF {analise(getTab(), needLines);} LEFT_PAR {analise(0, 0);} TEXTO {analise(0, 0);} Esc_Var PVIRGULA {analise(0, 0); needLines = 1;}
 	;
 
 Esc_Var:
-	RIGHT_PAR
-	| VIRGULA ENDERECO T_STRING Esc_Var
+	RIGHT_PAR {analise(0, 0);}
+	| VIRGULA {analise(0, 0);} ENDERECO {analise(1, 0);} T_STRING {analise(0, 0);} Esc_Var
 	;
 
 If
@@ -219,40 +225,37 @@ Else2
 	;
 
 Atribuicao:
-	Variavel {analise(getTab(), 1);} ATRIBUI {analise(0, 1); needLines = 0; needSpace = 1;} Expressao PVIRGULA
+	Variavel {analise(getTab(), 1);} ATRIBUI {analise(1, 0); needLines = 0; needSpace = 1;} Expressao PVIRGULA {analise(0, 0); needLines = 1;}
 	;
 
 Expressao
-	: LEFT_PAR Expressao RIGHT_PAR
-	| Numero {analise(needSpace, needLines); needSpace = 1; needLines = 0;}
-	| Variavel 
-	| Expressao  Operador  Expressao
+	: LEFT_PAR {analise(needSpace, 0); needSpace = 0;} Expressao RIGHT_PAR {analise(0, 0);}
+	| T_NUMBER {analise(needSpace, needLines); needSpace = 0; needLines = 0;}
+	| T_STRING {analise(needSpace, needLines); needSpace = 0; needLines = 0; inserirVar(&varUsadas, "null", $1, "escopo");}
+	| Expressao Operador  Expressao
 	;
 
 Variavel:
 	T_STRING  {inserirVar(&varUsadas, "null", $1, "escopo");}
 	;
 	
-Numero:
-	T_NUMBER 
-   	;
    	
 Operador:
-  	MAIOR  {}
-  	| MENOR {}
-  	| IGUAL {}
-  	| OU {}
-  	| AND {}
-	| NOT {}
-  	| SOMA {}
-  	| SUBT {} 
-  	| MULT {} 
-  	| DIVIDE {} 
-  	| ATRIBUI {} 
-  	| MOD
-  	| MENOR ATRIBUI
-  	| MAIOR ATRIBUI
-  	| NOT ATRIBUI
+  	'>' {analise(2, 0); needSpace = 0;}
+  	| '<' {analise(2, 0); needSpace = 0;}
+  	| IGUAL {analise(1, 0); needSpace = 1;}
+  	| OU {analise(1, 0); needSpace = 1;}
+  	| AND {analise(1, 0); needSpace = 1;}
+	| NOT {analise(1, 0); needSpace = 0;}
+  	| SOMA {analise(1, 0); needSpace = 1;}
+  	| SUBT {analise(1, 0); needSpace = 1;}
+  	| MULT {analise(1, 0); needSpace = 1;}
+  	| DIVIDE {analise(1, 0); needSpace = 1;}
+  	| ATRIBUI {analise(1, 0); needSpace = 1;}
+  	| MOD {analise(1, 0); needSpace = 1;}
+  	| '<' {analise(1, 0);} ATRIBUI {analise(0, 0); needSpace = 1;}
+  	| '>' {analise(1, 0);} ATRIBUI {analise(0, 0); needSpace = 1;}
+  	| NOT {analise(1, 0);} ATRIBUI {analise(0, 0); needSpace = 1;}
   	;
 
 

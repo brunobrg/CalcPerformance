@@ -4,10 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/* Prototipos */
-
-/* Variaveis Globais */
-
 /* Main */
 int main()
 {
@@ -15,16 +11,17 @@ int main()
 
     scanf("%f %f", &N1, &N2);
     M = ((N1 + N2) / 2);
-
-    if (M < 3) {
+    if (M < 3)
+    {
         printf("REPROVADO");
     }
-
-    if (M >= 7) {
+    if (M >= 7)
+    {
         printf("APROVADO");
     }
-
-    if (M >= 3 && M <7) {
+    int x;
+    if (M > 3 && M < 7)
+    {
         printf("EXAME");
     }
 

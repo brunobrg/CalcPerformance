@@ -1,4 +1,4 @@
-ex3.c 1 23
- Error00 0 Error01 12 Error02 11 Error03 0 Error04 0 Error05 0 Error06 0 Error07 0 Error08 0 Error09 0 Error10 0 Error11 0 Error12 0 Error13 0 Error14 0 Error15 0 Error16 0 Error17 0 Error18 0 Error19 0
-090107853 34 23
- Error00 0 Error01 12 Error02 11 Error03 0 Error04 0 Error05 0 Error06 0 Error07 0 Error08 0 Error09 0 Error10 0 Error11 0 Error12 0 Error13 0 Error14 0 Error15 0 Error16 0 Error17 0 Error18 0 Error19 0
+ex3.c 1 18
+ Error00 0 Error01 14 Error02 2 Error03 0 Error04 1 Error05 0 Error06 0 Error07 0 Error08 0 Error09 0 Error10 1 Error11 0 Error12 0 Error13 0 Error14 0 Error15 0 Error16 0 Error17 0 Error18 0 Error19 0
+090107853 31 18
+ Error00 0 Error01 14 Error02 2 Error03 0 Error04 1 Error05 0 Error06 0 Error07 0 Error08 0 Error09 0 Error10 1 Error11 0 Error12 0 Error13 0 Error14 0 Error15 0 Error16 0 Error17 0 Error18 0 Error19 0

@@ -85,6 +85,7 @@ SaidaError * saidaError;
 Variaveis * varDeclaradas;
 Variaveis * varUsadas;
 AnaliseAluno * analiseAluno;
+int erroEspaco = 1;
 char exAtual[40], alunoAtual[40], arqAtual[40];
 
 /* prototipos */
@@ -152,6 +153,7 @@ void analise(int e, int l)
 	if(linhas_puladas != l)
 	{
 		OK = 0;
+		erroEspaco = 0;
 		strcpy(erro, "Error02");
 		addError(erro);
 		inserirSaidaAnalise(contadorDeLinhas, contadorEspacos, erro, "", l, linhas_puladas);
@@ -159,11 +161,12 @@ void analise(int e, int l)
 	}
 	if(usouTab == 1)
 	{
+		erroEspaco = 0;
 		OK = 0;
 		inserirSaidaAnalise(contadorDeLinhas, contadorEspacos, "Error03", "", 0, 0); 
 		addError("Error03");
 	}
-	else if(espacos != e && usouTab == 0)
+	if(espacos != e && erroEspaco == 1)
 	{	
 		strcpy(erro, "Error01");
 		addError(erro);
@@ -175,6 +178,7 @@ void analise(int e, int l)
 	usouTab = 0;
 	linhas_puladas = 0;
 	espacos = 0;
+	erroEspaco = 1;
 }
 
 void analiseBloco(int inicioBloco, char strAux[15])
@@ -524,7 +528,7 @@ void inicio()
 				FILE * myfile = fopen(arq3, "r");
 				result = 1;
 				yyin = myfile;
-				printf("\n%s", pasta->d_name);
+				printf("\n\"%s\"", pasta->d_name);
 				inicializaAnalise();
 				yyparse();
 				fclose(myfile);
@@ -541,7 +545,6 @@ void inicio()
 					{
 						printf("\n");
 						imprimeAnalise();
-						printf("\n");
 						printf("\nTotal de erros: %d\n", totalError);
 						for(i = 0; i < 20 ; i++)
 						{

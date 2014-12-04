@@ -56,17 +56,17 @@ NUMBER [0-9]
 "-"								return SUBT;
 "/"								return DIVIDE;
 "="								return ATRIBUI;
-(\>)+ 					    			return MAIOR;
-(\<)+ 					    			return MENOR;
-(\=)+ 					    			return IGUAL;
-(\%)+								return MOD;
-"!="								return NOT;
-(\|\|)+ 					    			return OU;
-(&&)+ 					    			return AND;
-(&)+									return ENDERECO;
-(else)+ 				    			return ELSE;
-(while)+ 				    			return WHILE;
-(do)+ 				    			return DO;
+"<"								return('<');
+">"								return('>');
+"==" 					    			return IGUAL;
+"%"								return MOD;
+"!"								return NOT;
+"||" 					    			return OU;
+"&&" 					    			return AND;
+"&"									return ENDERECO;
+"else" 				    			return ELSE;
+"while"				    			return WHILE;
+"do"			    			return DO;
 
 {NUMBER}+                               			{yylval.strval = strdup(yytext); return T_NUMBER;}
 {STRING}				    			{yylval.strval = strdup(yytext); return T_STRING;}

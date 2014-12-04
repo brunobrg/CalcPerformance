@@ -65,40 +65,39 @@ extern int yydebug;
     ESPERA = 275,
     EXECUTE = 276,
     PASSA = 277,
-    MAIOR = 278,
-    MENOR = 279,
-    IGUAL = 280,
-    SOMA = 281,
-    SUBT = 282,
-    MULT = 283,
-    DIVIDE = 284,
-    ATRIBUI = 285,
-    MOD = 286,
-    ENDERECO = 287,
-    NUMERICAL = 288,
-    INCLUDE = 289,
-    PH = 290,
-    BCOMENT = 291,
-    ECOMENT = 292,
-    LCOMENT = 293,
-    PVIRGULA = 294,
-    LEFT_PAR = 295,
-    RIGHT_PAR = 296,
-    VIRGULA = 297,
-    ABRE_CHAVE = 298,
-    FECHA_CHAVE = 299,
-    RETURN = 300,
-    PRINTF = 301,
-    SCANF = 302,
-    VARUSE = 303,
-    STATIC = 304,
-    MAIN = 305,
-    _PROTOTIPO = 306,
-    _INCLUDE = 307,
-    _STRUCT = 308,
-    _MAIN = 309,
-    _VGLOBAIS = 310,
-    _FUNC = 311
+    IGUAL = 278,
+    SOMA = 279,
+    SUBT = 280,
+    MULT = 281,
+    DIVIDE = 282,
+    ATRIBUI = 283,
+    MOD = 284,
+    ENDERECO = 285,
+    INCREMENTO = 286,
+    NUMERICAL = 287,
+    INCLUDE = 288,
+    PH = 289,
+    BCOMENT = 290,
+    ECOMENT = 291,
+    LCOMENT = 292,
+    PVIRGULA = 293,
+    LEFT_PAR = 294,
+    RIGHT_PAR = 295,
+    VIRGULA = 296,
+    ABRE_CHAVE = 297,
+    FECHA_CHAVE = 298,
+    RETURN = 299,
+    PRINTF = 300,
+    SCANF = 301,
+    VARUSE = 302,
+    STATIC = 303,
+    MAIN = 304,
+    _PROTOTIPO = 305,
+    _INCLUDE = 306,
+    _STRUCT = 307,
+    _MAIN = 308,
+    _VGLOBAIS = 309,
+    _FUNC = 310
   };
 #endif
 
@@ -107,12 +106,12 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 29 "bison.y" /* yacc.c:1909  */
+#line 30 "bison.y" /* yacc.c:1909  */
 
    char * strval;
    int    intval;
 
-#line 116 "bison.h" /* yacc.c:1909  */
+#line 115 "bison.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
